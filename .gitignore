@@ -7,6 +7,9 @@ dist/
 .env
 .env.*
 !.env.example
+# Sauf les valeurs par défaut de production : sans elles, le build échoue sur
+# le marqueur %VITE_MEDIA_BASE% resté dans index.html. Aucun secret dedans.
+!.env.production
 
 # Sources de travail : rushes vidéo, originaux photo, sauvegardes.
 # ~3 Go, sans aucune utilité pour le site déployé — seuls les fichiers

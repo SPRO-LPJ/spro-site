@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SPRO — HQE, le nuancier</title>
+<link rel="stylesheet" href="/fonts/fonts.css" />
+<style>
+:root{
+  --ink:#0e1114; --paper:#f3f1ec; --paper-2:#eceae3;
+  --line-ink:rgba(14,17,20,.12); --ink-muted:#5a6169;
+  --vert:#3d6b4f;
+  --font-display:'Space Grotesk', system-ui, sans-serif;
+  --font-body:'Inter', system-ui, sans-serif;
+  --marge:clamp(20px,4vw,84px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--font-body);-webkit-font-smoothing:antialiased}
+.section{padding:120px var(--marge) 130px}
+.tete{max-width:900px;margin:0 auto 90px;text-align:center}
+.kicker{font-family:var(--font-display);font-weight:600;font-size:.76rem;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--vert);display:inline-flex;align-items:center;gap:14px;margin-bottom:22px}
+.kicker::before{content:"";width:38px;height:1px;background:var(--vert)}
+h2{font-family:var(--font-display);font-weight:600;font-size:clamp(2.1rem,4.4vw,3.4rem);
+  line-height:1.04;letter-spacing:-.02em;margin-bottom:26px}
+.lead{font-size:1.05rem;line-height:1.75;color:var(--ink-muted)}
+
+.plateau{display:grid;grid-template-columns:minmax(0,44%) minmax(0,1fr);
+  gap:clamp(36px,5vw,88px);align-items:center;max-width:1560px;margin:0 auto}
+
+/* ===================== L'éventail, en volume =====================
+   Le nuancier est posé à plat et vu de trois quarts : c'est ce basculement
+   qui lui donne son épaisseur d'objet. L'inclinaison reste faible (14°),
+   au-delà les libellés imprimés sur les lames deviennent illisibles. */
+.deck-scene{perspective:1600px;perspective-origin:32% 62%}
+.deck{position:relative;height:590px;user-select:none;
+  transform:rotateX(14deg) rotateZ(-3deg);transform-style:preserve-3d}
+
+.rivet{position:absolute;left:92px;bottom:66px;width:30px;height:30px;border-radius:50%;
+  background:linear-gradient(145deg,#2b3238,#0e1114);z-index:60;transform:translate(-50%,50%) translateZ(58px);
+  box-shadow:0 3px 8px rgba(14,17,20,.5)}
+.rivet::after{content:"";position:absolute;inset:10px;border-radius:50%;
+  background:linear-gradient(145deg,#fbfaf7,#cfcbc2)}
+
+.lame{
+  position:absolute;left:92px;bottom:66px;
+  width:490px;height:78px;margin:0 0 -39px -39px;
+  transform-origin:39px 39px;transform-style:preserve-3d;
+  border:none;border-radius:39px;padding:0 32px 0 78px;
+  display:flex;align-items:center;justify-content:flex-end;gap:15px;
+  font-family:var(--font-display);font-weight:600;font-size:1.06rem;letter-spacing:-.01em;
+  color:#fff;cursor:pointer;
+  transition:transform .68s cubic-bezier(.22,1,.36,1), box-shadow .5s, filter .45s;
+  /* La tranche de la lame : un liseré sombre en bas donne l'épaisseur du carton. */
+  box-shadow:0 1px 0 rgba(255,255,255,.26) inset,
+             0 -3px 0 rgba(14,17,20,.22) inset,
+             0 14px 30px rgba(14,17,20,.18);
+}
+.lame .nom{white-space:nowrap;opacity:.95;text-shadow:0 1px 2px rgba(14,17,20,.28)}
+.lame .num{font-size:.72rem;letter-spacing:.14em;opacity:.66;font-weight:500}
+.lame:hover{filter:brightness(1.08)}
+.lame.active{font-size:1.2rem;
+  box-shadow:0 1px 0 rgba(255,255,255,.34) inset,
+             0 -3px 0 rgba(14,17,20,.24) inset,
+             0 46px 70px rgba(14,17,20,.34)}
+.lame:focus-visible{outline:2px solid var(--ink);outline-offset:5px}
+
+.aide{margin-top:30px;font-size:.84rem;color:var(--ink-muted);letter-spacing:.04em}
+
+/* ===================== Le volet de lecture ===================== */
+.volet{position:relative}
+.media{position:relative;width:100%;aspect-ratio:16/10;border-radius:5px;overflow:hidden;
+  background:var(--paper-2);margin-bottom:34px;box-shadow:0 18px 44px rgba(14,17,20,.14)}
+.media img{width:100%;height:100%;object-fit:cover;display:block}
+/* Faute de photo, la lame devient un essai de teinte passé au mur : un aplat
+   aux bords tirés à la brosse, sur l'enduit clair. Un dessin, jamais un faux
+   document — rien n'y prétend montrer les locaux ou le matériel de SPRO. */
+.carte-teinte{position:absolute;inset:0;background:
+  radial-gradient(120% 90% at 30% 12%, #fbfaf7 0%, #e9e6de 100%)}
+.carte-teinte svg{position:absolute;inset:0;width:100%;height:100%}
+.carte-teinte .stries{mix-blend-mode:overlay;opacity:.34}
+.carte-teinte .ref{position:absolute;left:30px;bottom:26px;
+  font-family:var(--font-display);font-weight:600;font-size:1.02rem;letter-spacing:.02em;color:var(--ink)}
+.carte-teinte .ref span{display:block;font-weight:500;font-size:.72rem;letter-spacing:.22em;
+  text-transform:uppercase;opacity:.6;margin-bottom:7px}
+.media figcaption{position:absolute;left:0;right:0;bottom:0;padding:52px 26px 18px;color:#fff;
+  font-size:.86rem;letter-spacing:.01em;
+  background:linear-gradient(180deg,rgba(14,17,20,0),rgba(14,17,20,.72))}
+
+.volet-num{font-family:var(--font-display);font-weight:600;font-size:.76rem;letter-spacing:.22em;
+  text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:14px}
+.volet-num::before{content:"";width:38px;height:2px;background:currentColor}
+.volet h3{font-family:var(--font-display);font-weight:600;font-size:clamp(1.7rem,2.7vw,2.5rem);
+  line-height:1.1;letter-spacing:-.018em;margin-bottom:22px;color:var(--ink)}
+.volet p{font-size:1.06rem;line-height:1.8;color:var(--ink-muted);max-width:62ch}
+.volet ul{list-style:none;margin-top:30px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px 36px;color:var(--ink)}
+.volet li{position:relative;padding-left:24px;font-size:.97rem;line-height:1.55}
+.volet li::before{content:"";position:absolute;left:0;top:.62em;width:11px;height:2px;background:currentColor;opacity:.8}
+.corps{animation:entree .55s cubic-bezier(.22,1,.36,1) both}
+@keyframes entree{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+@media(max-width:1180px){
+  .plateau{grid-template-columns:1fr;gap:56px}
+  .deck{height:470px;transform:rotateX(11deg)}
+  .lame{width:376px}
+  .volet ul{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){ .lame,.corps{transition:none;animation:none} }
+</style>
+</head>
+<body>
+
+<section class="section">
+  <div class="tete">
+    <div class="kicker">Démarche HQE</div>
+    <h2>Notre démarche HQE</h2>
+    <p class="lead">Chez SPRO, chaque décision est guidée par le respect de l'environnement et la volonté de proposer des solutions plus durables. Notre démarche HQE s'appuie sur des actions concrètes mises en œuvre au quotidien, dans nos méthodes de travail, nos équipements et le choix de nos produits.</p>
+  </div>
+
+  <div class="plateau">
+    <div>
+      <div class="deck-scene">
+        <div class="deck" id="deck"><div class="rivet"></div></div>
+      </div>
+      <p class="aide">Tirez une lame pour parcourir nos engagements.</p>
+    </div>
+    <div class="volet" id="volet"></div>
+  </div>
+</section>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <!-- Bords rongés : un bruit déplace le contour du rectangle, ce qui donne
+       l'irrégularité d'un aplat passé à la brosse plutôt qu'une découpe nette. -->
+  <filter id="brosse-bord" x="-8%" y="-12%" width="116%" height="124%">
+    <feTurbulence type="fractalNoise" baseFrequency=".009 .05" numOctaves="3" seed="9" result="b"/>
+    <feDisplacementMap in="SourceGraphic" in2="b" scale="30" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <!-- Traînées verticales : la trace du rouleau dans la matière. -->
+  <filter id="brosse-stries" x="-8%" y="-12%" width="116%" height="124%">
+    <feTurbulence type="fractalNoise" baseFrequency=".85 .012" numOctaves="4" seed="7" result="s"/>
+    <feColorMatrix type="saturate" values="0"/>
+    <feDisplacementMap in2="s" scale="30" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+
+<script>
+// Textes repris mot pour mot de la page « Démarche HQE » de spro.fr.
+const ENGAGEMENTS = [
+  { num:'01 — ECODDS', teinte:'#6E7B5B', nom:'ECODDS', tonalite:'Olive de chantier',
+    titre:'Collecte et recyclage ECODDS',
+    texte:"SPRO participe au dispositif ECODDS afin d'assurer la collecte, le tri et le recyclage des déchets issus de ses chantiers. Cette organisation permet de limiter l'impact environnemental de nos activités tout en garantissant une gestion responsable des déchets professionnels.",
+    liste:['Pots de peinture et vernis','Bidons et emballages souillés','Aérosols et solvants','Bâches et films plastiques','Outillage de peinture','Déchets diffus spécifiques DDS'] },
+
+  { num:'02 — Mobilité', teinte:'#3F6B63', nom:'Parc électrique', tonalite:'Vert profond',
+    titre:'Parc automobile électrique',
+    texte:"Afin de réduire nos émissions de CO₂, notre parc automobile de bureau est composé de véhicules électriques. Cette démarche participe à une mobilité plus propre et limite l'empreinte carbone liée aux déplacements quotidiens de l'entreprise." },
+
+  { num:'03 — Énergie', teinte:'#C08A3E', nom:'Panneaux solaires', tonalite:'Ocre solaire',
+    titre:'Panneaux solaires',
+    texte:"Nos locaux sont équipés de panneaux solaires produisant une énergie renouvelable utilisée au quotidien pour alimenter nos bureaux, contribuer au chauffage des locaux et assurer la recharge de nos véhicules électriques.",
+    liste:['Recharge des véhicules électriques','Alimentation des bureaux','Participation au chauffage des locaux'],
+    image:'/img/hqe-panneaux-poster.webp', legende:"Panneaux solaires sur la toiture de l'entreprise, Z.I. du Prat à Vannes" },
+
+  { num:'04 — Naé', teinte:'#7D8F55', nom:'Peintures biosourcées', tonalite:'Vert biosourcé',
+    titre:'Peintures biosourcées Naé',
+    texte:"Nous privilégions l'utilisation de peintures biosourcées telles que la gamme Naé by Unikalo. Formulées à partir de composants naturels et renouvelables, elles s'inscrivent pleinement dans une démarche HQE tout en garantissant des performances techniques élevées et un meilleur confort pour les occupants." },
+
+  { num:'05 — Aqualine', teinte:'#4A7C8C', nom:'Bas carbone', tonalite:'Bleu Aqualine',
+    titre:'Peintures bas carbone Aqualine',
+    texte:"La gamme Aqualine by Unikalo s'intègre dans notre démarche de réduction de l'empreinte carbone grâce à une formulation éco-conçue associant performance, durabilité et respect de l'environnement.",
+    liste:['Haut rendement',"Confort d'application",'Faibles émissions de COV',"Réduction de l'empreinte carbone"] },
+
+  { num:'06 — Nerpel', teinte:'#8A7355', nom:'Protections', tonalite:'Kraft naturel',
+    titre:'Protections Nerpel',
+    texte:"Pour limiter l'impact environnemental de nos chantiers, nous utilisons des protections Nerpel conçues à partir de matériaux responsables et recyclables.",
+    liste:['Certification PEFC',"Jusqu'à 7 recyclages possibles",'Faibles émissions','Biodégradable','Issu de la nature'],
+    image:'/img/exp-produits-unikalo.webp', legende:'Protections de sol en place sur un chantier SPRO' },
+];
+
+const deck = document.getElementById('deck');
+const volet = document.getElementById('volet');
+const lames = [];
+let actif = 0;
+
+const ANGLE_BASE = -9, PAS = -12.6, ANGLE_SORTIE = 4;
+
+const eclaircir = (hex, k) => {
+  const n = parseInt(hex.slice(1), 16), f = c => Math.min(255, Math.round(c + (255 - c) * k));
+  return `rgb(${f(n>>16 & 255)},${f(n>>8 & 255)},${f(n & 255)})`;
+};
+const assombrir = (hex, k) => {
+  const n = parseInt(hex.slice(1), 16), f = c => Math.max(0, Math.round(c * (1 - k)));
+  return `rgb(${f(n>>16 & 255)},${f(n>>8 & 255)},${f(n & 255)})`;
+};
+
+ENGAGEMENTS.forEach((e, i) => {
+  const b = document.createElement('button');
+  b.className = 'lame';
+  b.style.background = `linear-gradient(102deg, ${assombrir(e.teinte,.1)} 0%, ${e.teinte} 42%, ${eclaircir(e.teinte,.15)} 100%)`;
+  b.innerHTML = `<span class="nom">${e.nom}</span><span class="num">${String(i+1).padStart(2,'0')}</span>`;
+  b.setAttribute('aria-label', e.titre);
+  b.addEventListener('click', () => choisir(i));
+  b.addEventListener('keydown', ev => {
+    const d = {ArrowDown:1, ArrowRight:1, ArrowUp:-1, ArrowLeft:-1}[ev.key];
+    if (d) { ev.preventDefault(); choisir((actif + d + ENGAGEMENTS.length) % ENGAGEMENTS.length); lames[actif].focus(); }
+  });
+  deck.appendChild(b);
+  lames.push(b);
+});
+
+function choisir(i){
+  actif = i;
+  lames.forEach((l, j) => {
+    const sorti = j === i;
+    const angle = sorti ? ANGLE_SORTIE : ANGLE_BASE + PAS * j - (j > i ? 2.5 : 0);
+    // translateZ : la lame choisie se soulève franchement au-dessus du paquet.
+    l.style.transform = `translateZ(${sorti ? 62 : j * 5}px) rotate(${angle}deg) translateX(${sorti ? 32 : 0}px)`;
+    l.style.zIndex = sorti ? 50 : 10 + (ENGAGEMENTS.length - j);
+    l.classList.toggle('active', sorti);
+    l.setAttribute('aria-pressed', sorti);
+  });
+
+  const e = ENGAGEMENTS[i];
+  const media = e.image
+    ? `<img src="${e.image}" alt="${e.legende}"><figcaption>${e.legende}</figcaption>`
+    : `<div class="carte-teinte">
+         <svg viewBox="0 0 800 500" preserveAspectRatio="none" aria-hidden="true">
+           <defs>
+             <linearGradient id="d${i}" x1="0" y1="0" x2="1" y2="1">
+               <stop offset="0" stop-color="${eclaircir(e.teinte,.12)}"/>
+               <stop offset=".5" stop-color="${e.teinte}"/>
+               <stop offset="1" stop-color="${assombrir(e.teinte,.15)}"/>
+             </linearGradient>
+           </defs>
+           <rect x="54" y="46" width="692" height="360" fill="url(#d${i})" filter="url(#brosse-bord)"/>
+           <rect class="stries" x="54" y="46" width="692" height="360" filter="url(#brosse-stries)"/>
+         </svg>
+         <div class="ref"><span>Teinte ${String(i+1).padStart(2,'0')}</span>${e.tonalite}</div>
+       </div>`;
+
+  volet.innerHTML = `
+    <div class="corps">
+      <figure class="media">${media}</figure>
+      <div class="volet-num" style="color:${e.teinte}">${e.num}</div>
+      <h3>${e.titre}</h3>
+      <p>${e.texte}</p>
+      ${e.liste ? `<ul>${e.liste.map(x => `<li>${x}</li>`).join('')}</ul>` : ''}
+    </div>`;
+}
+
+choisir(0);
+</script>
+</body>
+</html>

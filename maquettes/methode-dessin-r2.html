@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Maquette — Méthode · coupe technique (option C)</title>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<style>
+:root{
+  --ink:#0e1114; --paper:#f3f1ec;
+  --line:rgba(243,241,236,.18);
+  --muted:rgba(243,241,236,.62);
+  --accent:#3EA2FF;           /* bleu clair : l'accent du site sur fond encre */
+  --font-display:'Space Grotesk',system-ui,sans-serif;
+  --font-body:'Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--ink);color:var(--paper);font-family:var(--font-body);
+  -webkit-font-smoothing:antialiased;padding:32px clamp(20px,3vw,60px) 70px}
+
+.mq-bandeau{border:1px dashed rgba(62,162,255,.4);padding:12px 18px;margin-bottom:30px;
+  display:flex;flex-wrap:wrap;gap:6px 20px;align-items:baseline}
+.mq-bandeau strong{font-family:var(--font-display);font-weight:600;font-size:.88rem}
+.mq-bandeau span{font-size:.8rem;color:var(--muted)}
+
+.stage{max-width:1240px;margin:0 auto}
+.stage svg{width:100%;height:auto;display:block}
+
+.carte{max-width:640px;margin:34px auto 0;padding-left:30px;border-left:1px solid var(--line)}
+.carte-num{display:block;font-family:var(--font-display);font-weight:600;font-size:.8rem;
+  letter-spacing:.16em;color:var(--accent);margin-bottom:14px}
+.carte h3{font-family:var(--font-display);font-weight:600;font-size:1.12rem;line-height:1.3;
+  letter-spacing:-.01em}
+.carte-rule{display:block;width:34px;height:1px;background:var(--accent);margin:16px 0}
+.carte p{font-size:.95rem;line-height:1.7;color:var(--muted)}
+.carte-inner{transition:opacity .3s ease,transform .3s ease}
+.carte-inner.sortie{opacity:0;transform:translateY(8px)}
+
+.pilote{max-width:1240px;margin:44px auto 0;border-top:1px solid var(--line);padding-top:22px;
+  display:flex;flex-wrap:wrap;gap:16px 24px;align-items:center}
+.pilote-etapes{display:flex;gap:6px;flex-wrap:wrap}
+.pilote button{background:none;border:1px solid var(--line);color:var(--muted);cursor:pointer;
+  font-family:var(--font-display);font-size:.74rem;letter-spacing:.1em;padding:8px 13px;
+  transition:.2s ease}
+.pilote button:hover{color:var(--paper);border-color:rgba(243,241,236,.4)}
+.pilote button[aria-pressed="true"]{color:var(--accent);border-color:var(--accent)}
+.pilote input[type=range]{flex:1 1 300px;min-width:200px;accent-color:var(--accent);height:2px}
+.pilote-val{font-family:var(--font-display);font-size:.76rem;color:var(--muted);
+  font-variant-numeric:tabular-nums;min-width:48px}
+
+/* ===== le dessin =====
+   Hiérarchie des épaisseurs : éléments coupés au trait fort, vues au-delà en
+   trait fin. C'est la convention qui fait lire une coupe d'un coup d'œil. */
+.t{fill:none;stroke:var(--paper);vector-effect:non-scaling-stroke;stroke-dasharray:1;
+   stroke-linecap:square}
+.t-fort{stroke-width:1.5}
+.t-moyen{stroke-width:.9}
+.t-fin{stroke-width:.6;stroke:rgba(243,241,236,.75)}
+.poche{fill:rgba(243,241,236,.3);stroke:none}          /* la matière coupée */
+.axe{fill:none;stroke:var(--accent);stroke-width:.6;vector-effect:non-scaling-stroke;
+  stroke-dasharray:9 3 2 3;opacity:.3}
+.axe-rond{fill:none;stroke:var(--accent);stroke-width:.7;vector-effect:non-scaling-stroke;opacity:.6}
+.cote{fill:none;stroke:var(--paper);stroke-width:.55;vector-effect:non-scaling-stroke;opacity:.6}
+.cadre{fill:none;stroke:var(--paper);stroke-width:.7;vector-effect:non-scaling-stroke;opacity:.26}
+.txt{font-family:var(--font-display);font-weight:500;fill:var(--paper)}
+.txt-titre{font-size:12.5px;letter-spacing:.16em}
+.txt-cote{font-size:11px;letter-spacing:.04em;fill:rgba(243,241,236,.66);
+  font-variant-numeric:tabular-nums}
+.txt-ann{font-size:10px;letter-spacing:.12em;fill:rgba(243,241,236,.6)}
+.txt-piece{font-size:9.5px;letter-spacing:.14em;fill:rgba(243,241,236,.5);text-anchor:middle}
+.txt-cart-lab{font-size:9px;letter-spacing:.14em;fill:rgba(243,241,236,.45)}
+.txt-cart-val{font-size:10.5px;letter-spacing:.06em;fill:var(--paper)}
+.txt-cle{font-size:10px;letter-spacing:0;fill:var(--accent);text-anchor:middle;
+  dominant-baseline:middle}
+.peint-fond{fill:rgba(243,241,236,.09)}    /* le volume repeint */
+.peint-face{fill:rgba(243,241,236,.3)}     /* la face effectivement peinte */
+.arete{stroke:var(--accent);stroke-width:1.6;vector-effect:non-scaling-stroke;fill:none}
+.tampon{fill:none;stroke:var(--accent);stroke-width:1.2;vector-effect:non-scaling-stroke;
+  stroke-dasharray:1}
+</style>
+</head>
+<body>
+
+<div class="mq-bandeau">
+  <strong>Maquette — option C</strong>
+  <span>Coupe technique qui se construit étape par étape · intérieur ET façades</span>
+  <span>Le curseur remplace le scroll · <code>?p=0.53</code> ouvre un état précis</span>
+</div>
+
+<div class="stage">
+<svg id="dessin" viewBox="0 0 1200 700" role="img"
+     aria-label="Coupe d'un bâtiment tertiaire qui se construit au fil des cinq étapes de la méthode SPRO : façades, murs intérieurs et plafonds">
+
+  <defs>
+    <clipPath id="clipPeinture"><rect id="rectPeinture" x="240" y="508" width="560" height="0"/></clipPath>
+    <pattern id="hachure" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="8" stroke="#3EA2FF" stroke-width=".8" opacity=".22"/>
+    </pattern>
+    <pattern id="trame" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M20 0 V20 M0 20 H20" fill="none" stroke="#f3f1ec" stroke-width=".5" opacity=".045"/>
+    </pattern>
+  </defs>
+
+  <!-- ===== le support : trame, cadre, cartouche, échelle ===== -->
+  <g id="gFeuille" opacity="0">
+    <rect x="24" y="24" width="1152" height="652" fill="url(#trame)"/>
+    <rect class="cadre" x="24" y="24" width="1152" height="652"/>
+    <text class="txt txt-titre" x="60" y="62">COUPE AA — FAÇADES ET INTÉRIEURS</text>
+    <path class="cote" d="M60 74 H424"/>
+    <text class="txt txt-ann" x="60" y="92">BÂTIMENT TERTIAIRE R+2 · 21,60 × 12,00 M · 3 NIVEAUX</text>
+
+    <g id="gEchelle">
+      <rect x="60" y="636" width="125" height="6" fill="rgba(243,241,236,.45)" stroke="none"/>
+      <rect class="cote" x="185" y="636" width="125" height="6"/>
+      <path class="cote" d="M60 632 V648 M185 632 V648 M310 632 V648"/>
+      <text class="txt txt-cote" x="60"  y="662" text-anchor="middle">0</text>
+      <text class="txt txt-cote" x="185" y="662" text-anchor="middle">5</text>
+      <text class="txt txt-cote" x="310" y="662" text-anchor="middle">10 m</text>
+      <text class="txt txt-ann"  x="60"  y="624">ÉCHELLE GRAPHIQUE</text>
+    </g>
+
+    <!-- bandeau des phases : le tableau des indices d'un plan, qui rend les
+         cinq étapes lisibles en permanence et montre où l'on en est -->
+    <text class="txt txt-ann" x="340" y="612">PHASES DU DOSSIER</text>
+    <g id="gPhases"></g>
+
+    <!-- cartouche : phase et indice suivent l'étape en cours -->
+    <g id="gCartouche">
+      <rect class="cadre" x="880" y="556" width="280" height="104" style="opacity:.5"/>
+      <path class="cote" d="M880 582 H1160 M880 608 H1160 M880 634 H1160 M975 582 V660"/>
+      <text class="txt" x="892" y="573" style="font-size:11.5px;letter-spacing:.1em;font-weight:600">
+        SPRO — PEINTURE · REVÊTEMENT</text>
+      <text class="txt txt-cart-lab" x="892" y="600">OBJET</text>
+      <text class="txt txt-cart-lab" x="892" y="626">PHASE</text>
+      <text class="txt txt-cart-lab" x="892" y="652">INDICE</text>
+      <text class="txt txt-cart-val" x="987" y="600">RAVALEMENT + INTÉRIEURS</text>
+      <text class="txt txt-cart-val" x="987" y="626" id="cartPhase">ANALYSE</text>
+      <text class="txt txt-cart-val" x="987" y="652" id="cartIndice">A — 07/2026</text>
+    </g>
+  </g>
+
+  <!-- ===== 01 · trame, matière coupée, trait ===== -->
+  <g id="gAxes" opacity="0"></g>
+  <g id="gPoche" opacity="0"></g>
+  <g id="gTrace"></g>
+  <g id="gPieces" opacity="0"></g>
+
+  <!-- ===== 02 · niveaux, cotes, annotations ===== -->
+  <g id="gCotes" opacity="0">
+    <g id="gNiveaux"></g>
+    <g id="gChaines"></g>
+    <path class="cote" d="M790 236 L852 200 H912"/>
+    <text class="txt txt-ann" x="912" y="194">MURS · SUPPORTS RELEVÉS</text>
+    <circle class="cote" cx="790" cy="177" r="28" stroke-dasharray="4 3"/>
+    <path class="cote" d="M810 158 L856 132 H916"/>
+    <text class="txt txt-ann" x="916" y="126">DÉT. 01 · ACROTÈRE</text>
+  </g>
+
+  <!-- ===== 03 · métré : hachures, clés, nomenclature ===== -->
+  <g id="gSurfaces" opacity="0">
+    <g id="gHachures" fill="url(#hachure)" stroke="none"></g>
+    <g id="gCles"></g>
+    <g id="gNomenclature">
+      <rect class="cadre" x="880" y="296" width="280" height="212" style="opacity:.5"/>
+      <path class="cote" d="M880 322 H1160 M880 466 H1160"/>
+      <text class="txt" x="892" y="313" style="font-size:10px;letter-spacing:.14em;font-weight:600">
+        NOMENCLATURE DES OUVRAGES</text>
+      <text class="txt txt-cart-lab" x="1148" y="313" text-anchor="end">COUPE AA</text>
+    </g>
+  </g>
+
+  <!-- ===== 04 · la peinture, dedans et dehors ===== -->
+  <g id="gPeinture" clip-path="url(#clipPeinture)"></g>
+  <path id="areteHumide" class="arete" d="M244 508 H796" opacity="0"/>
+  <g id="gTraceDessus"></g>
+  <g id="noteCouches" opacity="0">
+    <path class="cote" d="M892 316 H1160"/>
+    <text class="txt txt-cart-lab" x="892" y="308">EN COURS D'EXÉCUTION</text>
+    <text class="txt txt-ann" x="892" y="340">FAÇADES · RPE D3 SUR IMPRESSION</text>
+    <text class="txt txt-ann" x="892" y="362">MURS · 2 COUCHES ACRYLIQUE VELOURS</text>
+    <text class="txt txt-ann" x="892" y="384">PLAFONDS · MAT PROFESSIONNEL</text>
+    <text class="txt txt-ann" x="892" y="406">SITE OCCUPÉ · TRAVAUX PAR ZONES</text>
+  </g>
+
+  <!-- ===== 05 · la réception ===== -->
+  <g id="gTampon" opacity="0">
+    <circle class="tampon" cx="1020" cy="392" r="52" pathLength="1"/>
+    <path class="tampon" d="M996 392 L1013 409 L1046 372" pathLength="1"
+          style="stroke-linecap:round;stroke-width:1.8"/>
+    <text class="txt" x="1020" y="472" text-anchor="middle"
+          style="font-size:11px;letter-spacing:.16em;fill:var(--accent)">CONFORME</text>
+    <text class="txt txt-ann" x="1020" y="492" text-anchor="middle">PV DE RÉCEPTION SANS RÉSERVE</text>
+  </g>
+</svg>
+</div>
+
+<div class="carte">
+  <div class="carte-inner" id="carte">
+    <span class="carte-num" id="carteNum">01</span>
+    <h3 id="carteTitre">Analyse du projet</h3>
+    <span class="carte-rule"></span>
+    <p id="carteTexte">Nous échangeons sur vos besoins, vos contraintes, le type de bâtiment
+      concerné et les objectifs attendus afin de bien cadrer l'intervention.</p>
+  </div>
+</div>
+
+<div class="pilote">
+  <div class="pilote-etapes" id="boutons"></div>
+  <input type="range" id="curseur" min="0" max="1000" value="0" aria-label="Progression du dessin">
+  <span class="pilote-val" id="valeur">0 %</span>
+  <button id="lecture" aria-pressed="false">LECTURE</button>
+</div>
+
+<script>
+const SVGNS = 'http://www.w3.org/2000/svg';
+const el  = (n,a={})=>{ const e=document.createElementNS(SVGNS,n);
+  for(const k in a) e.setAttribute(k,a[k]); return e; };
+const txt = (s,a={})=>{ const e=el('text',a); e.textContent=s; return e; };
+const rect = (x,y,w,h)=>`M${x} ${y} H${x+w} V${y+h} H${x} Z`;
+/* virgule décimale et espace de milliers, comme sur un métré */
+const fr = (v,d=1)=>{
+  const [e,dec] = v.toFixed(d).split('.');
+  return e.replace(/\B(?=(\d{3})+(?!\d))/g,' ') + (dec ? ','+dec : '');
+};
+
+/* ---------------------------------------------------------------
+   GÉOMÉTRIE — échelle 25 px = 1,00 m.
+   Coupe longitudinale d'un bâtiment tertiaire R+2 : 21,60 m de long,
+   3 niveaux de 4,20 m (3,88 m sous dalle), murs de 0,48 m,
+   dalles de 0,32 m, cloisons de 0,12 m, escalier 17,5 / 28 cm.
+--------------------------------------------------------------- */
+const GA = 250, DR = 790;            // nus extérieurs des murs de refend coupés
+const EP = 12;                       // épaisseur des murs coupés (0,48 m)
+const GI = GA+EP, DI = DR-EP;        // nus intérieurs
+const SOL = 500;                     // ±0,00
+const DALLE = 8;                     // épaisseur des dalles (0,32 m)
+const ACRO = 165;                    // arase de l'acrotère
+const AXES = [295,385,475,565,655,745];
+const TRAVEES = [250,340,430,520,610,700,790];
+
+/* niveaux : sol fini et sous-face de la dalle supérieure */
+const NIVEAUX = [
+  {sol:500, plaf:403, nom:'RDC'},
+  {sol:395, plaf:298, nom:'R+1'},
+  {sol:290, plaf:193, nom:'R+2'},
+];
+/* pièces traversées par la coupe, niveau par niveau */
+const PIECES = [
+  [{a:GI,b:432,n:'ACCUEIL'},{a:435,b:608,n:"SALLE D'EXPOSITION"},{a:611,b:DI,n:'ESCALIER'}],
+  [{a:GI,b:372,n:'BUREAU'},{a:375,b:520,n:'BUREAU'},{a:523,b:608,n:'CIRCULATION'},
+   {a:611,b:DI,n:'ESCALIER'}],
+  [{a:GI,b:470,n:'SALLE DE RÉUNION'},{a:473,b:608,n:'OPEN SPACE'},{a:611,b:DI,n:'PALIER'}],
+];
+
+const ETAPES = [
+  {n:'01', t:'Analyse du projet',   ph:'ANALYSE',         ind:'A',
+   x:"Nous échangeons sur vos besoins, vos contraintes, le type de bâtiment concerné et les objectifs attendus afin de bien cadrer l'intervention."},
+  {n:'02', t:'Étude technique',     ph:'ÉTUDE TECHNIQUE', ind:'B',
+   x:"Nos équipes analysent les supports, les accès, l'état existant et les contraintes du site afin de proposer les solutions les plus adaptées."},
+  {n:'03', t:'Chiffrage',           ph:'CHIFFRAGE',       ind:'C',
+   x:"Nous établissons une offre détaillée, cohérente avec les exigences techniques, les délais, les finitions souhaitées et les contraintes du chantier."},
+  {n:'04', t:'Réalisation',         ph:'EXÉCUTION',       ind:'D',
+   x:"Les travaux sont réalisés par nos équipes qualifiées, avec une attention particulière portée à la préparation, à la propreté et à la qualité des finitions."},
+  {n:'05', t:'Réception',           ph:'RÉCEPTION',       ind:'E',
+   x:"Un contrôle final est effectué afin de vérifier la conformité des travaux, la qualité du rendu et la bonne réception du chantier."},
+];
+
+/* ---------- le bandeau des phases ---------- */
+const gPhases = document.getElementById('gPhases');
+const cellules = [];
+ETAPES.forEach((e,i)=>{
+  const x = 340 + i*104;
+  const regle = el('path',{d:`M${x} 626 H${x+92}`, fill:'none', 'stroke-width':1.6,
+    'vector-effect':'non-scaling-stroke', stroke:'var(--paper)'});
+  const lettre = txt(e.ind,{class:'txt', x, y:646,
+    style:'font-size:10px;font-weight:600;letter-spacing:.02em'});
+  const nom = txt(e.ph.split(' ')[0],{class:'txt', x:x+15, y:646,
+    style:'font-size:9px;letter-spacing:.1em'});
+  gPhases.appendChild(regle); gPhases.appendChild(lettre); gPhases.appendChild(nom);
+  cellules.push({regle, lettre, nom});
+});
+
+/* ---------- 01 · la trame d'axes ---------- */
+const gAxes = document.getElementById('gAxes');
+AXES.forEach((x,i)=>{
+  gAxes.appendChild(el('path',{class:'axe', d:`M${x} 143 V520`}));
+  gAxes.appendChild(el('circle',{class:'axe-rond', cx:x, cy:130, r:13}));
+  gAxes.appendChild(txt(String(i+1),{class:'txt txt-cle', x, y:130}));
+});
+
+/* ---------- 01 · la matière coupée (poché) ---------- */
+const gPoche = document.getElementById('gPoche');
+const pocheD = [
+  rect(GA, ACRO, EP, SOL-ACRO),          // mur coupé gauche, acrotère compris
+  rect(DI, ACRO, EP, SOL-ACRO),          // mur coupé droit
+  rect(GA, SOL, DR-GA, DALLE),           // dallage
+  rect(GA, 185, DR-GA, DALLE),           // dalle de toiture
+  rect(236, SOL+DALLE, 40, 22),          // semelle gauche
+  rect(764, SOL+DALLE, 40, 22),          // semelle droite
+];
+NIVEAUX.slice(1).forEach(n=>pocheD.push(rect(GA, n.sol, DR-GA, DALLE)));
+/* cloisons : de la sous-face de dalle jusqu'au linteau de porte (2,10 m) */
+PIECES.forEach((niv,i)=>{
+  const {sol, plaf} = NIVEAUX[i];
+  for(let k=0;k<niv.length-1;k++)
+    pocheD.push(rect(niv[k].b, plaf, niv[k+1].a-niv[k].b, (sol-52)-plaf));
+});
+pocheD.forEach(d=>gPoche.appendChild(el('path',{class:'poche', d})));
+
+/* ---------- 01 · le trait ---------- */
+const gTrace  = document.getElementById('gTrace');
+const gDessus = document.getElementById('gTraceDessus');
+const traces = [];
+function trait(d, parent, poids){
+  const p = el('path',{class:'t '+poids, d, pathLength:1});
+  p.style.strokeDashoffset = '1';
+  parent.appendChild(p); traces.push(p); return p;
+}
+
+/* le terrain */
+let terrain = '';
+for(let x=120; x<=880; x+=14) terrain += `M${x} ${SOL+DALLE} L${x-9} ${SOL+DALLE+9} `;
+
+const STRUCTURE = [
+  [`M110 ${SOL+DALLE} H880`, 't-fort'],                      // le sol extérieur
+  [rect(GA, ACRO, EP, SOL-ACRO), 't-fort'],                  // murs coupés
+  [rect(DI, ACRO, EP, SOL-ACRO), 't-fort'],
+  [rect(GA, SOL, DR-GA, DALLE), 't-fort'],                   // dallage
+  [rect(GA, 185, DR-GA, DALLE), 't-fort'],                   // toiture
+  [terrain, 't-fin'],
+];
+NIVEAUX.slice(1).forEach(n=>STRUCTURE.push([rect(GA, n.sol, DR-GA, DALLE), 't-fort']));
+/* cloisons, linteaux, et les jambages de porte vus au-delà : sans eux la
+   cloison semble flotter au lieu de se lire comme un passage */
+PIECES.forEach((niv,i)=>{
+  const {sol, plaf} = NIVEAUX[i];
+  for(let k=0;k<niv.length-1;k++){
+    const a = niv[k].b, b = niv[k+1].a;
+    STRUCTURE.push([rect(a, plaf, b-a, (sol-52)-plaf), 't-moyen']);
+    STRUCTURE.push([`M${a} ${sol-52} V${sol} M${b} ${sol-52} V${sol}`, 't-fin']);
+  }
+});
+/* escaliers : 24 marches de 17,5 × 28 cm entre deux niveaux */
+function escalier(xa, xb, solBas, solHaut){
+  const n = 24, g = (xb-xa)/n, h = (solBas-solHaut)/n;
+  let d = `M${xa} ${solBas} `;
+  for(let i=0;i<n;i++) d += `v${-h} h${g} `;
+  let limon = `M${xa} ${solBas} L${xb} ${solHaut}`;
+  let rampe = `M${xa+6} ${solBas-22} L${xb+6} ${solHaut-22}`;
+  return [[d,'t-moyen'],[limon,'t-fin'],[rampe,'t-fin']];
+}
+escalier(611, DI, 500, 395).forEach(s=>STRUCTURE.push(s));
+escalier(611, DI, 395, 290).forEach(s=>STRUCTURE.push(s));
+STRUCTURE.forEach(([d,p])=>trait(d,gTrace,p));
+
+/* vue au-delà : la façade arrière et ses menuiseries, en trait fin */
+const OUV = [];
+PIECES.forEach((niv,i)=>{
+  const {sol} = NIVEAUX[i];
+  niv.forEach(p=>{
+    AXES.filter(x=>x>p.a+26 && x<p.b-26).forEach(x=>
+      OUV.push({d:rect(x-22, sol-70, 45, 45), plein:true, poids:'t-fin'}));
+  });
+});
+OUV.filter(o=>o.plein).forEach(o=>
+  gDessus.appendChild(el('path',{d:o.d, fill:'var(--ink)', stroke:'none'})));
+OUV.forEach(o=>trait(o.d, gDessus, o.poids));
+
+/* ---------- 01 · le nom des pièces ---------- */
+const gPieces = document.getElementById('gPieces');
+PIECES.forEach((niv,i)=>{
+  const {sol} = NIVEAUX[i];
+  niv.forEach(p=>gPieces.appendChild(
+    txt(p.n,{class:'txt txt-piece', x:(p.a+p.b)/2, y:sol-12})));
+});
+
+/* ---------- 02 · les niveaux ---------- */
+const gNiveaux = document.getElementById('gNiveaux');
+[[500,'±0,00'],[395,'+4,20'],[290,'+8,40'],[185,'+12,60']].forEach(([y,lab])=>{
+  gNiveaux.appendChild(el('path',{class:'cote', d:`M${GA} ${y} H98`}));
+  gNiveaux.appendChild(el('path',{class:'cote', d:`M92 ${y-6} L104 ${y-6} L98 ${y} Z`}));
+  gNiveaux.appendChild(txt(lab,{class:'txt txt-cote', x:84, y:y+3.5, 'text-anchor':'end'}));
+});
+
+/* ---------- 02 · les chaînes de cotes ---------- */
+const gChaines = document.getElementById('gChaines');
+function chaine(y, stops, labels, attache){
+  stops.forEach(x=>gChaines.appendChild(
+    el('path',{class:'cote', d:`M${x} ${attache} V${y+8}`, opacity:.3})));
+  stops.forEach(x=>gChaines.appendChild(
+    el('path',{class:'cote', d:`M${x-5} ${y+6} L${x+5} ${y-6}`})));
+  for(let i=0;i<stops.length-1;i++){
+    const a=stops[i], b=stops[i+1], mid=(a+b)/2;
+    gChaines.appendChild(el('path',{class:'cote', d:`M${a} ${y} H${mid-20}`}));
+    gChaines.appendChild(el('path',{class:'cote', d:`M${mid+20} ${y} H${b}`}));
+    gChaines.appendChild(txt(labels[i],{class:'txt txt-cote', x:mid, y:y+4, 'text-anchor':'middle'}));
+  }
+}
+chaine(560, TRAVEES, Array(6).fill('3,60'), 522);
+chaine(594, [GA, DR], ['21,60'], 522);
+
+/* chaîne verticale : les hauteurs d'étage, à droite du bâtiment */
+function chaineV(x, stops, labels, attache){
+  stops.forEach(y=>gChaines.appendChild(
+    el('path',{class:'cote', d:`M${attache} ${y} H${x+8}`, opacity:.3})));
+  stops.forEach(y=>gChaines.appendChild(
+    el('path',{class:'cote', d:`M${x-6} ${y+6} L${x+6} ${y-6}`})));
+  for(let i=0;i<stops.length-1;i++){
+    const a=stops[i], b=stops[i+1], mid=(a+b)/2;
+    gChaines.appendChild(el('path',{class:'cote', d:`M${x} ${a} V${mid-20}`}));
+    gChaines.appendChild(el('path',{class:'cote', d:`M${x} ${mid+20} V${b}`}));
+    gChaines.appendChild(txt(labels[i],{class:'txt txt-cote', x, y:mid,
+      'text-anchor':'middle', transform:`rotate(-90 ${x} ${mid})`}));
+  }
+}
+chaineV(838, [185,290,395,500], ['4,20','4,20','4,20'], DR);
+
+/* ---------- 03 · hachures de métré, clés, nomenclature ----------
+   On hachure ce qui est réellement peint : les faces intérieures des murs,
+   les cloisons, les plafonds de chaque pièce, et la peau extérieure. */
+const gHach = document.getElementById('gHachures');
+const zonesPeintes = [];               // servent aussi à l'étape 04
+NIVEAUX.forEach((n,i)=>{
+  PIECES[i].forEach(p=>{
+    zonesPeintes.push({t:'fond', d:rect(p.a, p.plaf ?? n.plaf, p.b-p.a, n.sol-n.plaf)});
+    zonesPeintes.push({t:'face', d:rect(p.a, n.plaf, p.b-p.a, 5)});          // plafond
+  });
+  zonesPeintes.push({t:'face', d:rect(GI, n.plaf, 5, n.sol-n.plaf)});        // face int. gauche
+  zonesPeintes.push({t:'face', d:rect(DI-5, n.plaf, 5, n.sol-n.plaf)});      // face int. droite
+});
+zonesPeintes.push({t:'face', d:rect(GA-6, ACRO, 6, SOL-ACRO)});              // ravalement gauche
+zonesPeintes.push({t:'face', d:rect(DR, ACRO, 6, SOL-ACRO)});                // ravalement droit
+zonesPeintes.forEach(z=>gHach.appendChild(el('path',{d:z.d})));
+
+const OUVRAGES = [
+  {cle:'1', x:238, y:340, lib:'FAÇADES · RPE D3',            v:207.7, u:'m²'},
+  {cle:'2', x:340, y:455, lib:'MURS INT. · 2 COUCHES',      v:742.0, u:'m²'},
+  {cle:'3', x:545, y:312, lib:'PLAFONDS · MAT PRO',          v:777.6, u:'m²'},
+  {cle:'4', x:340, y:242, lib:'MENUISERIES · LAQUE',         v:42,    u:'U'},
+];
+const TOTAL = OUVRAGES.filter(o=>o.u==='m²').reduce((s,o)=>s+o.v,0);
+
+const gCles = document.getElementById('gCles');
+OUVRAGES.forEach(o=>{
+  gCles.appendChild(el('circle',{cx:o.x, cy:o.y, r:11, fill:'var(--ink)',
+    stroke:'var(--accent)', 'stroke-width':.9, 'vector-effect':'non-scaling-stroke'}));
+  gCles.appendChild(txt(o.cle,{class:'txt txt-cle', x:o.x, y:o.y+.5}));
+});
+
+const gNom = document.getElementById('gNomenclature');
+const valeursNom = [];
+OUVRAGES.forEach((o,i)=>{
+  const y = 348 + i*34;
+  gNom.appendChild(el('circle',{cx:900, cy:y-4, r:9, fill:'none',
+    stroke:'var(--accent)', 'stroke-width':.8, 'vector-effect':'non-scaling-stroke'}));
+  gNom.appendChild(txt(o.cle,{class:'txt txt-cle', x:900, y:y-3.5, style:'font-size:9px'}));
+  gNom.appendChild(txt(o.lib,{class:'txt txt-ann', x:918, y}));
+  const v = txt('',{class:'txt txt-cote', x:1148, y, 'text-anchor':'end'});
+  gNom.appendChild(v); valeursNom.push({el:v, o});
+});
+gNom.appendChild(txt('TOTAL SURFACES TRAITÉES',{class:'txt txt-cart-lab', x:892, y:490}));
+const totalNom = txt('',{class:'txt', x:1148, y:491, 'text-anchor':'end',
+  style:'font-size:12.5px;letter-spacing:.02em;fill:var(--accent)'});
+gNom.appendChild(totalNom);
+
+/* ---------- 04 · les aplats de peinture ---------- */
+const gPeint = document.getElementById('gPeinture');
+zonesPeintes.forEach(z=>gPeint.appendChild(
+  el('path',{class: z.t==='face' ? 'peint-face' : 'peint-fond', d:z.d})));
+
+/* ---------------- pilotage ---------------- */
+const gFeuille  = document.getElementById('gFeuille');
+const gCotes    = document.getElementById('gCotes');
+const gSurfaces = document.getElementById('gSurfaces');
+const rectPeint = document.getElementById('rectPeinture');
+const arete     = document.getElementById('areteHumide');
+const gTampon   = document.getElementById('gTampon');
+const noteCouches = document.getElementById('noteCouches');
+const tamponTrac  = gTampon.querySelectorAll('.tampon');
+const cartPhase   = document.getElementById('cartPhase');
+const cartIndice  = document.getElementById('cartIndice');
+
+const seg  = (p,a,b)=>Math.max(0,Math.min(1,(p-a)/(b-a)));
+const doux = t=>t<.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2;
+
+/* Chaque étape occupe exactement un cinquième de la course. À l'intérieur d'un
+   créneau, tout se construit sur la première moitié puis RIEN ne bouge : ce
+   palier de lecture est ce qui fait qu'on voit cinq étapes distinctes et non
+   une transformation continue. `L(i)` donne l'avancement local dans l'étape i,
+   `T(i,a,b)` une transition adoucie entre deux instants de cette étape. */
+const L = (p,i)=>seg(p, i*.2, (i+1)*.2);
+const T = (p,i,a,b)=>doux(seg(L(p,i), a, b));
+
+function dessine(p){
+  gFeuille.setAttribute('opacity', String(T(p,0,0,.12)));
+
+  /* 01 — la trame, le trait, la matière coupée, les pièces */
+  gAxes.setAttribute('opacity', String(T(p,0,.08,.28) * (1 - .5*T(p,3,0,.3))));
+  const t1 = seg(L(p,0), .15, .78), n = traces.length, part = .55/(n-1);
+  traces.forEach((e,i)=>{
+    e.style.strokeDashoffset = String(1 - doux(seg(t1, i*part, i*part+.45)));
+  });
+  gPoche.setAttribute('opacity',  String(T(p,0,.6,.88)));
+  gPieces.setAttribute('opacity', String(T(p,0,.74,.96)));
+
+  /* 02 — niveaux, cotes, renvois. Ils s'atténuent à l'exécution sans
+     disparaître : l'étude reste sous les yeux, comme sur un vrai dossier. */
+  const t2 = T(p,1,.05,.5);
+  const fondu2 = 1 - .78*T(p,3,0,.25) - .22*T(p,4,0,.3);
+  gCotes.setAttribute('opacity', String(t2*Math.max(0,fondu2)));
+  gCotes.setAttribute('transform', `translate(0 ${(1-t2)*8})`);
+
+  /* 03 — le métré */
+  const t3 = T(p,2,.05,.5);
+  /* la nomenclature s'efface entièrement à l'exécution : la note de chantier
+     prend sa place dans la même marge — le devis devient l'ordre de travaux */
+  const fondu3 = 1 - T(p,3,.05,.32);
+  gSurfaces.setAttribute('opacity', String(t3*Math.max(0,fondu3)));
+  valeursNom.forEach(v=>v.el.textContent = fr(v.o.v*t3, v.o.u==='U'?0:1)+' '+v.o.u);
+  totalNom.textContent = fr(TOTAL*t3,1)+' m²';
+
+  /* 04 — la peinture monte : ravalement dehors, murs et plafonds dedans */
+  const t4 = T(p,3,.12,.72);
+  const y = (SOL+DALLE) - (SOL+DALLE-ACRO)*t4;
+  rectPeint.setAttribute('y', String(y));
+  rectPeint.setAttribute('height', String(SOL+DALLE-y));
+  arete.setAttribute('d', `M${GA-8} ${y} H${DR+8}`);
+  arete.setAttribute('opacity', String(t4>0 ? (1-T(p,3,.68,.8))*.9 : 0));
+  noteCouches.setAttribute('opacity', String(T(p,3,.35,.55)*(1-T(p,4,0,.25))));
+
+  /* 05 — la réception */
+  const t5 = T(p,4,.2,.7);
+  gTampon.setAttribute('opacity', String(t5));
+  tamponTrac.forEach((e,i)=>
+    e.style.strokeDashoffset = String(1 - doux(seg(t5, i*.35, i*.35+.65))));
+
+  /* le bandeau des phases : franchi · en cours · à venir */
+  const etape = Math.min(4, Math.floor(p/.2));
+  cellules.forEach((c,i)=>{
+    const actif = i===etape, passe = i<etape;
+    c.regle.setAttribute('stroke', actif ? 'var(--accent)' : 'var(--paper)');
+    c.regle.setAttribute('opacity', actif ? 1 : (passe ? .5 : .14));
+    c.lettre.setAttribute('fill', actif ? 'var(--accent)' : 'var(--paper)');
+    c.lettre.setAttribute('opacity', actif ? 1 : (passe ? .6 : .2));
+    c.nom.setAttribute('opacity', actif ? .95 : (passe ? .5 : .18));
+  });
+}
+
+/* la carte de texte et le cartouche suivent l'étape */
+const SEUILS = [.2,.4,.6,.8];
+let etapeVue = -1;
+const carte = document.getElementById('carte');
+function majEtape(p){
+  let i = 0; while(i<SEUILS.length && p>=SEUILS[i]) i++;
+  if(i===etapeVue) return;
+  etapeVue = i;
+  cartPhase.textContent  = ETAPES[i].ph;
+  cartIndice.textContent = ETAPES[i].ind + ' — 07/2026';
+  carte.classList.add('sortie');
+  setTimeout(()=>{
+    document.getElementById('carteNum').textContent   = ETAPES[i].n;
+    document.getElementById('carteTitre').textContent = ETAPES[i].t;
+    document.getElementById('carteTexte').textContent = ETAPES[i].x;
+    carte.classList.remove('sortie');
+  },160);
+  [...boutons.children].forEach((b,j)=>b.setAttribute('aria-pressed', String(j===i)));
+}
+
+const curseur = document.getElementById('curseur');
+const valeur  = document.getElementById('valeur');
+function applique(p){ dessine(p); majEtape(p); valeur.textContent = Math.round(p*100)+' %'; }
+curseur.addEventListener('input', ()=>{ arrete(); applique(curseur.value/1000); });
+
+const boutons = document.getElementById('boutons');
+/* on vise le palier de lecture de chaque étape, pas sa construction */
+const CIBLES = [.17,.37,.57,.77,.97];
+ETAPES.forEach((e,i)=>{
+  const b = document.createElement('button');
+  b.textContent = e.n; b.setAttribute('aria-pressed','false');
+  b.addEventListener('click', ()=>{ arrete(); curseur.value = CIBLES[i]*1000; applique(CIBLES[i]); });
+  boutons.appendChild(b);
+});
+
+let anim = null;
+const btnLecture = document.getElementById('lecture');
+function arrete(){
+  if(anim){ cancelAnimationFrame(anim); anim = null;
+    btnLecture.setAttribute('aria-pressed','false'); btnLecture.textContent = 'LECTURE'; }
+}
+btnLecture.addEventListener('click', ()=>{
+  if(anim){ arrete(); return; }
+  btnLecture.setAttribute('aria-pressed','true'); btnLecture.textContent = 'PAUSE';
+  let p = (+curseur.value >= 998) ? 0 : +curseur.value/1000;
+  const pas = 1/(20*60);
+  const boucle = ()=>{
+    p += pas;
+    if(p>=1){ applique(1); curseur.value = 1000; arrete(); return; }
+    curseur.value = p*1000; applique(p);
+    anim = requestAnimationFrame(boucle);
+  };
+  anim = requestAnimationFrame(boucle);
+});
+
+const depart = Math.max(0, Math.min(1,
+  parseFloat(new URLSearchParams(location.search).get('p')) || 0));
+curseur.value = depart*1000;
+applique(depart);
+</script>
+</body>
+</html>

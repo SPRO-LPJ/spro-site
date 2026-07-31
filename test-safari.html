@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SPRO — sonde hero Safari</title>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;background:#0e1114;color:#e8e8e8;font:14px/1.5 -apple-system,system-ui,sans-serif}
+  #track{position:relative;height:400vh}
+  #stage{position:sticky;top:0;height:100vh;width:100%;overflow:hidden;background:#0e1114}
+  #stage.fixe{position:fixed;inset:0}
+  video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+  video.couche{transform:translateZ(0);backface-visibility:hidden}
+  /* La sonde : ce que `drawImage` extrait vraiment du décodeur, hors de tout
+     effet de composition — c'est la pièce à conviction. */
+  #sonde{position:fixed;top:12px;right:12px;width:256px;height:144px;z-index:10;
+    border:2px solid #7CFF9B;border-radius:4px;background:#000}
+  #hud{position:fixed;left:12px;top:12px;z-index:10;margin:0;padding:10px 12px;
+    background:rgba(0,0,0,.82);color:#7CFF9B;font:12px/1.5 ui-monospace,monospace;
+    border-radius:6px;white-space:pre;pointer-events:none}
+  #cmd{position:fixed;left:12px;bottom:12px;z-index:10;display:flex;flex-wrap:wrap;gap:6px;max-width:60vw}
+  button{font:12px/1 ui-monospace,monospace;padding:7px 9px;border-radius:5px;
+    border:1px solid #444;background:#1b1f24;color:#ddd;cursor:pointer}
+  button.on{background:#7CFF9B;color:#0e1114;border-color:#7CFF9B}
+  #fin{padding:60px 24px;font-size:16px}
+</style>
+</head>
+<body>
+
+<section id="track">
+  <div id="stage">
+    <video id="v" muted playsinline preload="auto"></video>
+  </div>
+</section>
+<div id="fin">Fin de la piste. Si tu lis ceci, tu as traversé les 400vh de test.</div>
+
+<canvas id="sonde" width="256" height="144"></canvas>
+<pre id="hud">chargement…</pre>
+<div id="cmd"></div>
+
+<script>
+(() => {
+  const v = document.getElementById('v');
+  const stage = document.getElementById('stage');
+  const track = document.getElementById('track');
+  const hud = document.getElementById('hud');
+  const sonde = document.getElementById('sonde');
+  const ctx = sonde.getContext('2d', { willReadFrequently: true });
+
+  // Réglages basculables à chaud : chacun isole une hypothèse.
+  const etat = {
+    fichier: '/media/hero-1080.mp4',  // le poids/débit du master en cause
+    fixe: false,                      // sticky (comme le site) vs fixed
+    couche: true,                     // promotion de couche translateZ
+    amorce: true,                     // play/pause après chaque seek (réveil Safari)
+  };
+
+  const boutons = [
+    ['1080 (468 Mo)', () => charger('/media/hero-1080.mp4'), () => etat.fichier.includes('1080.')],
+    ['1080 léger (149 Mo)', () => charger('/media/hero-1080-leger.mp4'), () => etat.fichier.includes('leger')],
+    ['720 (210 Mo)', () => charger('/media/hero-720.mp4'), () => etat.fichier.includes('720')],
+    ['stage: fixed', () => { etat.fixe = !etat.fixe; stage.classList.toggle('fixe', etat.fixe); }, () => etat.fixe],
+    ['couche translateZ', () => { etat.couche = !etat.couche; v.classList.toggle('couche', etat.couche); }, () => etat.couche],
+    ['amorce play/pause', () => { etat.amorce = !etat.amorce; }, () => etat.amorce],
+  ];
+  const cmd = document.getElementById('cmd');
+  const elems = boutons.map(([libelle, action]) => {
+    const b = document.createElement('button');
+    b.textContent = libelle;
+    b.onclick = () => { action(); peindreBoutons(); };
+    cmd.appendChild(b);
+    return b;
+  });
+  const peindreBoutons = () => elems.forEach((b, i) => b.classList.toggle('on', boutons[i][2]()));
+
+  let dur = 0, latence = 0, t0 = 0;
+  function charger(src) {
+    etat.fichier = src;
+    dur = 0;
+    v.src = src;
+    v.load();
+  }
+  v.addEventListener('loadedmetadata', () => { dur = v.duration || 0; });
+  v.addEventListener('seeking', () => { t0 = performance.now(); });
+  v.addEventListener('seeked', () => {
+    latence = Math.round(performance.now() - t0);
+    // Réveil du décodeur : une lecture immédiatement mise en pause. Safari peut
+    // refuser de peindre une image atteinte par simple déplacement de la tête.
+    if (etat.amorce) { const p = v.play(); if (p && p.then) p.then(() => v.pause()).catch(() => {}); }
+  });
+
+  // Le scrub, calqué sur celui du site : le scroll pose une cible, un suiveur la
+  // rattrape une fois par image, jamais pendant un déplacement en cours.
+  const IMAGE = 1 / 24;
+  let cible = 0, suivi = 0, images = 0, dernier = performance.now(), ips = 0;
+
+  function boucle() {
+    const max = track.offsetHeight - innerHeight;
+    const p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+    if (dur) cible = p * (dur - 0.05);
+    const ecart = cible - suivi;
+    suivi = Math.abs(ecart) > 0.5 ? cible : suivi + ecart * 0.55;
+    if (dur && !v.seeking) {
+      const image = Math.round(suivi / IMAGE) * IMAGE;
+      if (Math.abs(v.currentTime - image) >= IMAGE) { try { v.currentTime = image; } catch (e) {} }
+    }
+
+    // La sonde. `drawImage` lit l'image décodée sans passer par la composition
+    // de la page : elle dit ce que le décodeur a réellement livré.
+    let clair = -1;
+    if (v.readyState >= 2) {
+      try {
+        ctx.drawImage(v, 0, 0, sonde.width, sonde.height);
+        const d = ctx.getImageData(0, 0, sonde.width, sonde.height).data;
+        let somme = 0;
+        for (let i = 0; i < d.length; i += 4 * 37) somme += d[i] + d[i + 1] + d[i + 2];
+        clair = Math.round(somme / (3 * Math.ceil(d.length / (4 * 37))));
+      } catch (e) { clair = -2; }
+    }
+
+    images++;
+    const t = performance.now();
+    if (t - dernier >= 400) { ips = Math.round(images * 1000 / (t - dernier)); images = 0; dernier = t; }
+
+    hud.textContent = [
+      'fichier    ' + etat.fichier.split('/').pop(),
+      'stage      ' + (etat.fixe ? 'fixed' : 'sticky') + '   couche ' + (etat.couche ? 'oui' : 'non') + '   amorce ' + (etat.amorce ? 'oui' : 'non'),
+      'durée      ' + dur.toFixed(2) + '   readyState ' + v.readyState + '   erreur ' + (v.error ? v.error.code : '-'),
+      'scroll     ' + (p * 100).toFixed(1) + ' %   cible ' + cible.toFixed(2) + '   image ' + v.currentTime.toFixed(2) + (v.seeking ? ' (seek…)' : ''),
+      'seek       ' + latence + ' ms   rAF ' + ips + ' i/s',
+      'PEINT      ' + (clair < 0 ? 'illisible' : clair + ' / 255') + (clair >= 0 && clair < 8 ? '   ← image noire' : ''),
+    ].join('\n');
+    requestAnimationFrame(boucle);
+  }
+
+  charger(etat.fichier);
+  v.classList.toggle('couche', etat.couche);
+  peindreBoutons();
+  requestAnimationFrame(boucle);
+})();
+</script>
+</body>
+</html>

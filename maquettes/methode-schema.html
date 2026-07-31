@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Maquette — Méthode · schéma simple</title>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<style>
+:root{
+  --ink:#0e1114; --paper:#f3f1ec;
+  --line:rgba(243,241,236,.18);
+  --muted:rgba(243,241,236,.62);
+  --accent:#3EA2FF;
+  --font-display:'Space Grotesk',system-ui,sans-serif;
+  --font-body:'Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--ink);color:var(--paper);font-family:var(--font-body);
+  -webkit-font-smoothing:antialiased;padding:32px clamp(20px,4vw,84px) 70px}
+
+.mq-bandeau{border:1px dashed rgba(62,162,255,.4);padding:12px 18px;margin-bottom:40px;
+  display:flex;flex-wrap:wrap;gap:6px 20px;align-items:baseline}
+.mq-bandeau strong{font-family:var(--font-display);font-weight:600;font-size:.88rem}
+.mq-bandeau span{font-size:.8rem;color:var(--muted)}
+.mq-bandeau a{color:var(--accent);font-size:.8rem}
+
+/* le schéma accompagne le texte de l'étape : il est à côté, pas au centre */
+.scene{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,360px);
+  gap:clamp(30px,5vw,80px);align-items:center;max-width:1240px;margin:0 auto}
+.stage svg{width:100%;height:auto;display:block}
+
+.carte{padding-left:30px;border-left:1px solid var(--line)}
+.carte-num{display:block;font-family:var(--font-display);font-weight:600;font-size:.8rem;
+  letter-spacing:.16em;color:var(--accent);margin-bottom:14px}
+.carte h3{font-family:var(--font-display);font-weight:600;font-size:1.12rem;line-height:1.3;
+  letter-spacing:-.01em}
+.carte-rule{display:block;width:34px;height:1px;background:var(--accent);margin:16px 0}
+.carte p{font-size:.95rem;line-height:1.7;color:var(--muted)}
+.carte-inner{transition:opacity .3s ease,transform .3s ease}
+.carte-inner.sortie{opacity:0;transform:translateY(8px)}
+
+.pilote{max-width:1240px;margin:48px auto 0;border-top:1px solid var(--line);padding-top:22px;
+  display:flex;flex-wrap:wrap;gap:16px 24px;align-items:center}
+.pilote-etapes{display:flex;gap:6px;flex-wrap:wrap}
+.pilote button{background:none;border:1px solid var(--line);color:var(--muted);cursor:pointer;
+  font-family:var(--font-display);font-size:.74rem;letter-spacing:.1em;padding:8px 13px;
+  transition:.2s ease}
+.pilote button:hover{color:var(--paper);border-color:rgba(243,241,236,.4)}
+.pilote button[aria-pressed="true"]{color:var(--accent);border-color:var(--accent)}
+.pilote input[type=range]{flex:1 1 300px;min-width:200px;accent-color:var(--accent);height:2px}
+.pilote-val{font-family:var(--font-display);font-size:.76rem;color:var(--muted);
+  font-variant-numeric:tabular-nums;min-width:48px}
+
+@media (max-width:900px){ .scene{grid-template-columns:1fr}
+  .carte{border-left:none;border-top:1px solid var(--line);padding:26px 0 0} }
+
+/* ---- le schéma : deux épaisseurs de trait, rien de plus ---- */
+.t{fill:none;stroke:var(--paper);vector-effect:non-scaling-stroke;stroke-dasharray:1;
+   stroke-linecap:square;stroke-width:1.4}
+.t-fin{stroke-width:.8;stroke:rgba(243,241,236,.7)}
+.cote{fill:none;stroke:var(--paper);stroke-width:.7;vector-effect:non-scaling-stroke;opacity:.55}
+.txt{font-family:var(--font-display);font-weight:500;fill:rgba(243,241,236,.7);
+  font-size:12px;letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.peint-fond{fill:rgba(243,241,236,.14)}
+.peint-face{fill:rgba(243,241,236,.44)}
+.arete{stroke:var(--accent);stroke-width:1.8;vector-effect:non-scaling-stroke;fill:none}
+/* l'outil, en accent : c'est lui qui dit « peinture » et rien d'autre */
+.outil{fill:var(--ink);stroke:var(--accent);stroke-width:1.7;
+  vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+.tampon{fill:none;stroke:var(--accent);stroke-width:1.5;vector-effect:non-scaling-stroke;
+  stroke-dasharray:1}
+</style>
+</head>
+<body>
+
+<div class="mq-bandeau">
+  <strong>Maquette — schéma simple</strong>
+  <span>Magasin de plain-pied · le dessin accompagne le texte, il ne le remplace pas</span>
+  <a href="/maquettes/methode-dessin-magasin.html">↔ version détaillée</a>
+</div>
+
+<div class="scene">
+  <div class="stage">
+  <svg id="dessin" viewBox="0 58 720 358" role="img"
+       aria-label="Schéma d'un magasin de plain-pied qui se construit au fil des cinq étapes de la méthode SPRO">
+
+    <defs>
+      <clipPath id="clipPeinture"><rect id="rectPeinture" x="108" y="360" width="530" height="0"/></clipPath>
+      <pattern id="hachure" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+        <line x1="0" y1="0" x2="0" y2="9" stroke="#3EA2FF" stroke-width=".9" opacity=".2"/>
+      </pattern>
+    </defs>
+
+    <!-- 01 · le trait -->
+    <rect id="enseigneFond" x="120" y="88" width="180" height="28" opacity="0"
+          fill="rgba(62,162,255,.18)" stroke="none"/>
+    <g id="gTrace"></g>
+
+    <!-- 02 · deux cotes, pas plus -->
+    <g id="gCotes" opacity="0">
+      <path class="cote" d="M120 366 V404 M620 366 V404"/>
+      <path class="cote" d="M120 396 H330 M410 396 H620"/>
+      <path class="cote" d="M114 402 L126 390 M614 402 L626 390"/>
+      <text class="txt" x="370" y="400" text-anchor="middle">12,00 m</text>
+
+      <path class="cote" d="M626 180 H666 M626 360 H666"/>
+      <path class="cote" d="M656 180 V240 M656 300 V360"/>
+      <path class="cote" d="M650 186 L662 174 M650 366 L662 354"/>
+      <text class="txt" x="656" y="270" text-anchor="middle"
+            transform="rotate(-90 656 270)">3,00 m</text>
+    </g>
+
+    <!-- 03 · la surface à traiter -->
+    <g id="gSurface" opacity="0">
+      <path fill="url(#hachure)" stroke="none" d="M120 180 H620 V360 H120 Z"/>
+      <text id="txtSurface" class="txt" x="370" y="268" text-anchor="middle"
+            style="font-size:19px;letter-spacing:.02em;fill:var(--accent)">690 m²</text>
+      <text class="txt" x="370" y="290" text-anchor="middle"
+            style="font-size:10px;letter-spacing:.14em">SURFACES À TRAITER</text>
+    </g>
+
+    <!-- 04 · la peinture -->
+    <g id="gPeinture" clip-path="url(#clipPeinture)">
+      <path class="peint-fond" d="M120 180 H620 V360 H120 Z"/>
+      <path class="peint-face" d="M120 180 H620 V186 H120 Z"/>
+      <path class="peint-face" d="M120 354 H620 V360 H120 Z"/>
+      <path class="peint-face" d="M114 120 H120 V360 H114 Z"/>
+      <path class="peint-face" d="M620 120 H626 V360 H620 Z"/>
+    </g>
+    <path id="areteHumide" class="arete" d="M112 360 H628" opacity="0"/>
+
+    <g id="gTraceDessus"></g>
+
+    <!-- Le rouleau monte avec la peinture. Il passe après le mobilier : c'est
+         le premier plan, il ne doit jamais disparaître derrière une gondole.
+         Sa monture reste courte, sinon elle traverse le sol au démarrage. -->
+    <g id="gRouleau" opacity="0">
+      <path class="outil" d="M232 -7 H262 A7 7 0 0 1 262 7 H232 A7 7 0 0 1 232 -7 Z"/>
+      <path class="outil" style="fill:none" d="M247 7 V17 L261 27"/>
+      <path class="outil" style="fill:none;stroke-width:2.4" d="M261 27 L275 38"/>
+      <text class="txt" x="278" y="-13" style="font-size:10px;letter-spacing:.14em;
+        fill:var(--accent)">2 COUCHES</text>
+    </g>
+
+    <!-- 05 · la réception -->
+    <g id="gTampon" opacity="0">
+      <circle class="tampon" cx="662" cy="96" r="30" pathLength="1"/>
+      <path class="tampon" d="M648 96 L658 106 L678 84" pathLength="1"
+            style="stroke-linecap:round"/>
+    </g>
+  </svg>
+  </div>
+
+  <div class="carte">
+    <div class="carte-inner" id="carte">
+      <span class="carte-num" id="carteNum">01</span>
+      <h3 id="carteTitre">Analyse du projet</h3>
+      <span class="carte-rule"></span>
+      <p id="carteTexte">Nous échangeons sur vos besoins, vos contraintes, le type de bâtiment
+        concerné et les objectifs attendus afin de bien cadrer l'intervention.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pilote">
+  <div class="pilote-etapes" id="boutons"></div>
+  <input type="range" id="curseur" min="0" max="1000" value="0" aria-label="Progression du schéma">
+  <span class="pilote-val" id="valeur">0 %</span>
+  <button id="lecture" aria-pressed="false">LECTURE</button>
+</div>
+
+<script>
+const SVGNS = 'http://www.w3.org/2000/svg';
+const el  = (n,a={})=>{ const e=document.createElementNS(SVGNS,n);
+  for(const k in a) e.setAttribute(k,a[k]); return e; };
+
+const ETAPES = [
+  {n:'01', t:'Analyse du projet',
+   x:"Nous échangeons sur vos besoins, vos contraintes, le type de bâtiment concerné et les objectifs attendus afin de bien cadrer l'intervention."},
+  {n:'02', t:'Étude technique',
+   x:"Nos équipes analysent les supports, les accès, l'état existant et les contraintes du site afin de proposer les solutions les plus adaptées."},
+  {n:'03', t:'Chiffrage',
+   x:"Nous établissons une offre détaillée, cohérente avec les exigences techniques, les délais, les finitions souhaitées et les contraintes du chantier."},
+  {n:'04', t:'Réalisation',
+   x:"Les travaux sont réalisés par nos équipes qualifiées, avec une attention particulière portée à la préparation, à la propreté et à la qualité des finitions."},
+  {n:'05', t:'Réception',
+   x:"Un contrôle final est effectué afin de vérifier la conformité des travaux, la qualité du rendu et la bonne réception du chantier."},
+];
+
+/* le magasin : le bâti d'abord */
+const SCHEMA = [
+  ['M40 360 H680', ''],                       // le sol
+  ['M120 120 V200 M620 120 V360', ''],        // les deux murs
+  ['M105 120 H635', ''],                      // la couverture
+  ['M120 88 H300 V116 H120 Z', ''],           // l'enseigne, sur la couverture
+  ['M120 180 H620', 't-fin'],                 // le plafond suspendu
+  ['M490 180 V290', 't-fin'],                 // la cloison de la réserve
+  /* la devanture : le mur s'arrête au linteau, le vitrage se poursuit en trait
+     fin — la différence d'épaisseur suffit à dire « ouverture vitrée » */
+  ['M112 200 H128 M120 200 V360', 't-fin'],
+  ['M120 198 L58 226 M58 226 V240', 't-fin'], // le store de devanture
+  ['M540 290 V360 M580 290 V360', 't-fin'],   // la porte de service
+];
+
+/* puis ce qui en fait un magasin et non un local : la caisse, les gondoles,
+   les spots. Dessiné par-dessus les hachures et la peinture, jamais peint —
+   c'est le mobilier du client, pas notre ouvrage. */
+const MOBILIER = [
+  {d:'M176 316 H224 V360 H176 Z', plein:true},                        // la caisse
+  {d:'M170 316 H230', plein:false},                                   // son plateau
+  {d:'M280 296 H320 V360 H280 Z', plein:true},                        // les gondoles
+  {d:'M350 296 H390 V360 H350 Z', plein:true},
+  {d:'M420 296 H460 V360 H420 Z', plein:true},
+  {d:'M280 326 H320 M350 326 H390 M420 326 H460', plein:false},       // leurs étagères
+];
+const SPOTS = [205, 265, 325, 385, 445];
+
+const gTrace  = document.getElementById('gTrace');
+const gDessus = document.getElementById('gTraceDessus');
+const traces = [];
+function trait(d, classe, parent){
+  const p = el('path',{class:'t '+classe, d, pathLength:1});
+  p.style.strokeDashoffset = '1';
+  parent.appendChild(p); traces.push(p);
+}
+SCHEMA.forEach(([d,fin])=>trait(d, fin, gTrace));
+/* les fonds encre d'abord : sans eux les hachures du métré traversent le
+   mobilier et la caisse devient transparente */
+MOBILIER.filter(m=>m.plein).forEach(m=>
+  gDessus.appendChild(el('path',{d:m.d, fill:'var(--ink)', stroke:'none'})));
+MOBILIER.forEach(m=>trait(m.d, 't-fin', gDessus));
+SPOTS.forEach(x=>{
+  const c = el('circle',{class:'t t-fin', cx:x, cy:191, r:4, pathLength:1});
+  c.style.strokeDashoffset = '1';
+  gDessus.appendChild(c); traces.push(c);
+});
+
+/* ---------------- pilotage ---------------- */
+const gCotes    = document.getElementById('gCotes');
+const gSurface  = document.getElementById('gSurface');
+const rectPeint = document.getElementById('rectPeinture');
+const arete     = document.getElementById('areteHumide');
+const gTampon   = document.getElementById('gTampon');
+const txtSurface = document.getElementById('txtSurface');
+const enseigneFond = document.getElementById('enseigneFond');
+const gRouleau = document.getElementById('gRouleau');
+const tamponTrac = gTampon.querySelectorAll('.tampon');
+
+const seg  = (p,a,b)=>Math.max(0,Math.min(1,(p-a)/(b-a)));
+const doux = t=>t<.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2;
+/* cinq créneaux égaux : on construit sur la première moitié, on ne bouge plus
+   sur la seconde. C'est ce palier qui sépare nettement les étapes. */
+const L = (p,i)=>seg(p, i*.2, (i+1)*.2);
+const T = (p,i,a,b)=>doux(seg(L(p,i), a, b));
+
+const HAUT = 120, BAS = 360;
+
+function dessine(p){
+  /* 01 — le trait se pose */
+  const t1 = seg(L(p,0), .1, .85), n = traces.length, part = .5/(n-1);
+  traces.forEach((e,i)=>
+    e.style.strokeDashoffset = String(1 - doux(seg(t1, i*part, i*part+.5))));
+  enseigneFond.setAttribute('opacity', String(doux(seg(t1,.45,.8))));
+
+  /* 02 — les cotes */
+  const t2 = T(p,1,.1,.55);
+  gCotes.setAttribute('opacity', String(t2 * (1 - .75*T(p,3,0,.25) - .25*T(p,4,0,.3))));
+
+  /* 03 — la surface à traiter */
+  const t3 = T(p,2,.1,.55);
+  gSurface.setAttribute('opacity', String(t3 * (1 - T(p,3,.05,.3))));
+  txtSurface.textContent = Math.round(690*t3) + ' m²';
+
+  /* 04 — la peinture monte */
+  const t4 = T(p,3,.15,.75);
+  const y = BAS - (BAS-HAUT)*t4;
+  rectPeint.setAttribute('y', String(y));
+  rectPeint.setAttribute('height', String(BAS-y));
+  /* l'arête n'est pas une droite mais une suite de bosses : c'est la trace que
+     laisse un rouleau, et elle se voit même au petit format */
+  let d = `M112 ${y}`;
+  for(let x=112; x<628; x+=10) d += ' q5 -3 10 0';
+  arete.setAttribute('d', d);
+  const vif = t4>0 ? (1-T(p,3,.72,.84))*.95 : 0;
+  arete.setAttribute('opacity', String(vif));
+  /* le rouleau n'apparaît qu'une fois l'arête décollée du sol */
+  gRouleau.setAttribute('opacity', String(vif * seg(t4,.1,.25)));
+  gRouleau.setAttribute('transform', `translate(0 ${y})`);
+
+  /* 05 — la réception */
+  const t5 = T(p,4,.2,.7);
+  gTampon.setAttribute('opacity', String(t5));
+  tamponTrac.forEach((e,i)=>
+    e.style.strokeDashoffset = String(1 - doux(seg(t5, i*.35, i*.35+.65))));
+}
+
+const SEUILS = [.2,.4,.6,.8];
+let etapeVue = -1;
+const carte = document.getElementById('carte');
+function majEtape(p){
+  let i = 0; while(i<SEUILS.length && p>=SEUILS[i]) i++;
+  if(i===etapeVue) return;
+  etapeVue = i;
+  carte.classList.add('sortie');
+  setTimeout(()=>{
+    document.getElementById('carteNum').textContent   = ETAPES[i].n;
+    document.getElementById('carteTitre').textContent = ETAPES[i].t;
+    document.getElementById('carteTexte').textContent = ETAPES[i].x;
+    carte.classList.remove('sortie');
+  },160);
+  [...boutons.children].forEach((b,j)=>b.setAttribute('aria-pressed', String(j===i)));
+}
+
+const curseur = document.getElementById('curseur');
+const valeur  = document.getElementById('valeur');
+function applique(p){ dessine(p); majEtape(p); valeur.textContent = Math.round(p*100)+' %'; }
+curseur.addEventListener('input', ()=>{ arrete(); applique(curseur.value/1000); });
+
+const boutons = document.getElementById('boutons');
+const CIBLES = [.17,.37,.57,.77,.97];
+ETAPES.forEach((e,i)=>{
+  const b = document.createElement('button');
+  b.textContent = e.n; b.setAttribute('aria-pressed','false');
+  b.addEventListener('click', ()=>{ arrete(); curseur.value = CIBLES[i]*1000; applique(CIBLES[i]); });
+  boutons.appendChild(b);
+});
+
+let anim = null;
+const btnLecture = document.getElementById('lecture');
+function arrete(){
+  if(anim){ cancelAnimationFrame(anim); anim = null;
+    btnLecture.setAttribute('aria-pressed','false'); btnLecture.textContent = 'LECTURE'; }
+}
+btnLecture.addEventListener('click', ()=>{
+  if(anim){ arrete(); return; }
+  btnLecture.setAttribute('aria-pressed','true'); btnLecture.textContent = 'PAUSE';
+  let p = (+curseur.value >= 998) ? 0 : +curseur.value/1000;
+  const pas = 1/(16*60);
+  const boucle = ()=>{
+    p += pas;
+    if(p>=1){ applique(1); curseur.value = 1000; arrete(); return; }
+    curseur.value = p*1000; applique(p);
+    anim = requestAnimationFrame(boucle);
+  };
+  anim = requestAnimationFrame(boucle);
+});
+
+const depart = Math.max(0, Math.min(1,
+  parseFloat(new URLSearchParams(location.search).get('p')) || 0));
+curseur.value = depart*1000;
+applique(depart);
+</script>
+</body>
+</html>

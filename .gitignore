@@ -1,0 +1,22 @@
+# Dépendances et build — régénérés par `npm install` puis `npm run build`.
+node_modules/
+dist/
+
+# Secrets. `.env` contient les clés Places et du formulaire : elles se
+# renseignent dans l'interface Vercel, jamais dans le dépôt.
+.env
+.env.*
+!.env.example
+
+# Sources de travail : rushes vidéo, originaux photo, sauvegardes.
+# ~3 Go, sans aucune utilité pour le site déployé — seuls les fichiers
+# optimisés de public/ sont servis.
+masters/
+_media-backup/
+
+# Sorties d'outils
+.playwright-mcp/
+*.log
+
+# macOS
+.DS_Store

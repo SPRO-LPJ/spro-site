@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SPRO — HQE, piste B : la roue</title>
+<link rel="stylesheet" href="/fonts/fonts.css" />
+<style>
+:root{
+  --ink:#0e1114; --paper:#f3f1ec; --paper-2:#eceae3;
+  --line-ink:rgba(14,17,20,.12); --ink-muted:#5a6169;
+  --vert:#3d6b4f;
+  --font-display:'Space Grotesk', system-ui, sans-serif;
+  --font-body:'Inter', system-ui, sans-serif;
+  --marge:clamp(20px,4vw,84px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--font-body);-webkit-font-smoothing:antialiased}
+.section{padding:120px var(--marge)}
+.tete{max-width:900px;margin:0 auto 84px;text-align:center}
+.kicker{font-family:var(--font-display);font-weight:600;font-size:.76rem;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--vert);display:inline-flex;align-items:center;gap:14px;margin-bottom:22px}
+.kicker::before{content:"";width:38px;height:1px;background:var(--vert)}
+h2{font-family:var(--font-display);font-weight:600;font-size:clamp(2.1rem,4.4vw,3.4rem);
+  line-height:1.04;letter-spacing:-.02em;margin-bottom:26px}
+.lead{font-size:1.05rem;line-height:1.75;color:var(--ink-muted)}
+
+/* ---------- La roue ---------- */
+.plateau{display:grid;grid-template-columns:minmax(0,560px) minmax(0,1fr);
+  gap:clamp(40px,6vw,110px);align-items:center;max-width:1500px;margin:0 auto}
+.roue{position:relative;width:100%;max-width:560px;aspect-ratio:1}
+.roue svg{width:100%;height:100%;display:block;overflow:visible}
+.secteur{cursor:pointer;transition:opacity .4s, transform .4s}
+.secteur:hover{opacity:.86}
+.secteur:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+/* La couronne tourne ; le disque central, lui, ne bouge jamais. */
+#couronne{transition:transform .78s cubic-bezier(.22,1,.36,1)}
+.repere{fill:var(--ink)}
+.num-secteur{font-family:var(--font-display);font-weight:600;font-size:15px;letter-spacing:.12em;
+  fill:#fff;opacity:.8;pointer-events:none}
+.centre-nom{font-family:var(--font-display);font-weight:600;font-size:23px;letter-spacing:-.01em;
+  fill:var(--ink);text-anchor:middle}
+.centre-num{font-family:var(--font-display);font-weight:500;font-size:12.5px;letter-spacing:.22em;
+  text-anchor:middle}
+
+.aide{margin-top:26px;text-align:center;font-size:.84rem;color:var(--ink-muted);letter-spacing:.04em}
+
+/* ---------- Le volet de lecture ---------- */
+.volet{position:relative;min-height:400px}
+.volet-num{font-family:var(--font-display);font-weight:600;font-size:.76rem;letter-spacing:.22em;
+  text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:14px}
+.volet-num::before{content:"";width:38px;height:2px;background:currentColor}
+.volet h3{font-family:var(--font-display);font-weight:600;font-size:clamp(1.6rem,2.6vw,2.3rem);
+  line-height:1.12;letter-spacing:-.015em;margin-bottom:22px;color:var(--ink)}
+.volet p{font-size:1.02rem;line-height:1.78;color:var(--ink-muted);max-width:56ch}
+.volet ul{list-style:none;margin-top:28px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:11px 34px;max-width:56ch;color:var(--ink)}
+.volet li{position:relative;padding-left:24px;font-size:.95rem;line-height:1.5}
+.volet li::before{content:"";position:absolute;left:0;top:.6em;width:11px;height:2px;background:currentColor;opacity:.75}
+.corps{animation:entree .5s cubic-bezier(.22,1,.36,1) both}
+@keyframes entree{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+@media(max-width:1080px){ .plateau{grid-template-columns:1fr;gap:48px} .roue{margin:0 auto} }
+@media(prefers-reduced-motion:reduce){ #couronne,.corps{transition:none;animation:none} }
+</style>
+</head>
+<body>
+
+<section class="section">
+  <div class="tete">
+    <div class="kicker">Démarche HQE</div>
+    <h2>Notre démarche HQE</h2>
+    <p class="lead">Chez SPRO, chaque décision est guidée par le respect de l'environnement et la volonté de proposer des solutions plus durables. Notre démarche HQE s'appuie sur des actions concrètes mises en œuvre au quotidien, dans nos méthodes de travail, nos équipements et le choix de nos produits.</p>
+  </div>
+
+  <div class="plateau">
+    <div>
+      <div class="roue">
+        <svg viewBox="0 0 420 420" role="group" aria-label="Nos six engagements">
+          <defs>
+            <clipPath id="disque"><circle cx="210" cy="210" r="118"/></clipPath>
+          </defs>
+          <g id="couronne"></g>
+          <!-- Le repère fixe : le secteur choisi vient toujours se placer dessous. -->
+          <path class="repere" d="M210 4 l11 19 h-22 z"/>
+          <circle cx="210" cy="210" r="118" fill="#eceae3"/>
+          <image id="photo" clip-path="url(#disque)" x="92" y="92" width="236" height="236"
+                 preserveAspectRatio="xMidYMid slice" opacity="0"/>
+          <circle id="teinte" cx="210" cy="210" r="118" fill="#6E7B5B"/>
+          <!-- Voile sombre : sans lui, le libellé se perd dans la photo. -->
+          <circle id="voile" cx="210" cy="210" r="118" fill="rgba(14,17,20,.46)" opacity="0"/>
+          <!-- Le titre est porté par le volet de droite : le répéter ici le rendait
+               illisible sur la photo pour rien. Le disque ne garde que le repère. -->
+          <text id="centreNum" class="centre-num" x="210" y="216">01 — ECODDS</text>
+        </svg>
+      </div>
+      <p class="aide">Tournez la roue : cliquez un secteur pour l'amener sous le repère.</p>
+    </div>
+
+    <div class="volet" id="volet"></div>
+  </div>
+</section>
+
+<script>
+const ENGAGEMENTS = [
+  { num:'01 — ECODDS', teinte:'#6E7B5B', nom:'ECODDS',
+    titre:'Collecte et recyclage ECODDS',
+    texte:"SPRO participe au dispositif ECODDS afin d'assurer la collecte, le tri et le recyclage des déchets issus de ses chantiers. Cette organisation permet de limiter l'impact environnemental de nos activités tout en garantissant une gestion responsable des déchets professionnels.",
+    liste:['Pots de peinture et vernis','Bidons et emballages souillés','Aérosols et solvants','Bâches et films plastiques','Outillage de peinture','Déchets diffus spécifiques DDS'] },
+  { num:'02 — Mobilité', teinte:'#3F6B63', nom:'Parc électrique',
+    titre:'Parc automobile électrique',
+    texte:"Afin de réduire nos émissions de CO₂, notre parc automobile de bureau est composé de véhicules électriques. Cette démarche participe à une mobilité plus propre et limite l'empreinte carbone liée aux déplacements quotidiens de l'entreprise." },
+  { num:'03 — Énergie', teinte:'#C08A3E', nom:'Panneaux solaires',
+    titre:'Panneaux solaires',
+    texte:"Nos locaux sont équipés de panneaux solaires produisant une énergie renouvelable utilisée au quotidien pour alimenter nos bureaux, contribuer au chauffage des locaux et assurer la recharge de nos véhicules électriques.",
+    liste:['Recharge des véhicules électriques','Alimentation des bureaux','Participation au chauffage des locaux'],
+    image:'/img/hqe-panneaux-poster.webp' },
+  { num:'04 — Naé', teinte:'#7D8F55', nom:'Peintures biosourcées',
+    titre:'Peintures biosourcées Naé',
+    texte:"Nous privilégions l'utilisation de peintures biosourcées telles que la gamme Naé by Unikalo. Formulées à partir de composants naturels et renouvelables, elles s'inscrivent pleinement dans une démarche HQE tout en garantissant des performances techniques élevées et un meilleur confort pour les occupants." },
+  { num:'05 — Aqualine', teinte:'#4A7C8C', nom:'Bas carbone',
+    titre:'Peintures bas carbone Aqualine',
+    texte:"La gamme Aqualine by Unikalo s'intègre dans notre démarche de réduction de l'empreinte carbone grâce à une formulation éco-conçue associant performance, durabilité et respect de l'environnement.",
+    liste:['Haut rendement',"Confort d'application",'Faibles émissions de COV',"Réduction de l'empreinte carbone"] },
+  { num:'06 — Nerpel', teinte:'#8A7355', nom:'Protections',
+    titre:'Protections Nerpel',
+    texte:"Pour limiter l'impact environnemental de nos chantiers, nous utilisons des protections Nerpel conçues à partir de matériaux responsables et recyclables.",
+    liste:['Certification PEFC',"Jusqu'à 7 recyclages possibles",'Faibles émissions','Biodégradable','Issu de la nature'] },
+];
+
+const NS = 'http://www.w3.org/2000/svg';
+const CX = 210, CY = 210, R_EXT = 204, R_INT = 130, N = ENGAGEMENTS.length;
+const PAS = 360 / N, JEU = 1.1; // jeu = le filet blanc entre deux secteurs
+
+const couronne = document.getElementById('couronne');
+const volet = document.getElementById('volet');
+const etiquettes = [];
+let actif = 0, rotation = 0;
+
+const pt = (a, r) => [CX + r * Math.cos((a - 90) * Math.PI / 180), CY + r * Math.sin((a - 90) * Math.PI / 180)];
+
+ENGAGEMENTS.forEach((e, i) => {
+  const a1 = i * PAS + JEU, a2 = (i + 1) * PAS - JEU;
+  const [x1, y1] = pt(a1, R_EXT), [x2, y2] = pt(a2, R_EXT);
+  const [x3, y3] = pt(a2, R_INT), [x4, y4] = pt(a1, R_INT);
+
+  const p = document.createElementNS(NS, 'path');
+  p.setAttribute('d', `M${x1} ${y1} A${R_EXT} ${R_EXT} 0 0 1 ${x2} ${y2} L${x3} ${y3} A${R_INT} ${R_INT} 0 0 0 ${x4} ${y4} Z`);
+  p.setAttribute('fill', e.teinte);
+  p.setAttribute('class', 'secteur');
+  p.setAttribute('tabindex', '0');
+  p.setAttribute('role', 'button');
+  p.setAttribute('aria-label', e.titre);
+  p.addEventListener('click', () => choisir(i));
+  p.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); choisir(i); } });
+  couronne.appendChild(p);
+
+  // Le numéro est contre-tourné à chaque rotation pour rester lisible.
+  const [mx, my] = pt(i * PAS + PAS / 2, (R_EXT + R_INT) / 2);
+  const g = document.createElementNS(NS, 'g');
+  g.setAttribute('transform', `translate(${mx} ${my})`);
+  const t = document.createElementNS(NS, 'text');
+  t.setAttribute('class', 'num-secteur');
+  t.setAttribute('text-anchor', 'middle');
+  t.setAttribute('dy', '.35em');
+  t.textContent = String(i + 1).padStart(2, '0');
+  g.appendChild(t);
+  couronne.appendChild(g);
+  etiquettes.push({ g, mx, my });
+});
+
+function choisir(i){
+  // On amène le milieu du secteur sous le repère, par le plus court chemin.
+  const cible = -(i * PAS + PAS / 2);
+  let delta = ((cible - rotation) % 360 + 540) % 360 - 180;
+  rotation += delta;
+  actif = i;
+
+  couronne.setAttribute('transform', `rotate(${rotation} ${CX} ${CY})`);
+  etiquettes.forEach(({ g, mx, my }) => g.setAttribute('transform', `translate(${mx} ${my}) rotate(${-rotation})`));
+  couronne.querySelectorAll('.secteur').forEach((s, j) => s.setAttribute('opacity', j === i ? 1 : .42));
+
+  const e = ENGAGEMENTS[i];
+  const photo = document.getElementById('photo');
+  const teinte = document.getElementById('teinte');
+  const voile = document.getElementById('voile');
+  if (e.image) { photo.setAttribute('href', e.image); photo.setAttribute('opacity', 1); teinte.setAttribute('opacity', 0); voile.setAttribute('opacity', 1); }
+  else { photo.setAttribute('opacity', 0); teinte.setAttribute('opacity', 1); teinte.setAttribute('fill', e.teinte); voile.setAttribute('opacity', 0); }
+
+  const num = document.getElementById('centreNum');
+  num.textContent = e.num.toUpperCase();
+  num.setAttribute('fill', 'rgba(255,255,255,.92)');
+
+  volet.innerHTML = `
+    <div class="corps">
+      <div class="volet-num" style="color:${e.teinte}">${e.num}</div>
+      <h3>${e.titre}</h3>
+      <p>${e.texte}</p>
+      ${e.liste ? `<ul>${e.liste.map(x => `<li>${x}</li>`).join('')}</ul>` : ''}
+    </div>`;
+}
+
+choisir(0);
+</script>
+</body>
+</html>

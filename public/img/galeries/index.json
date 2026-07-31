@@ -1,0 +1,115 @@
+{
+ "accueil": [
+  "/img/galeries/accueil-00.webp",
+  "/img/galeries/accueil-01.webp",
+  "/img/galeries/accueil-02.webp",
+  "/img/galeries/accueil-03.webp",
+  "/img/galeries/accueil-04.webp",
+  "/img/galeries/accueil-05.webp",
+  "/img/galeries/accueil-06.webp",
+  "/img/galeries/accueil-07.webp",
+  "/img/galeries/accueil-08.webp",
+  "/img/galeries/accueil-09.webp",
+  "/img/galeries/accueil-10.webp"
+ ],
+ "airless": [
+  "/img/galeries/airless-01.webp",
+  "/img/galeries/airless-02.webp",
+  "/img/galeries/airless-03.webp",
+  "/img/galeries/airless-04.webp",
+  "/img/galeries/airless-05.webp",
+  "/img/galeries/airless-06.webp",
+  "/img/galeries/airless-07.webp"
+ ],
+ "coiffure": [
+  "/img/galeries/coiffure-01.webp"
+ ],
+ "concessionnaire": [
+  "/img/galeries/concessionnaire-01.webp",
+  "/img/galeries/concessionnaire-02.webp",
+  "/img/galeries/concessionnaire-03.webp",
+  "/img/galeries/concessionnaire-04.webp",
+  "/img/galeries/concessionnaire-05.webp"
+ ],
+ "ecole": [
+  "/img/galeries/ecole-01.webp",
+  "/img/galeries/ecole-04.webp"
+ ],
+ "espaces": [
+  "/img/galeries/espaces-01.webp",
+  "/img/galeries/espaces-03.webp",
+  "/img/galeries/espaces-04.webp"
+ ],
+ "hopitaux": [
+  "/img/galeries/hopitaux-01.webp",
+  "/img/galeries/hopitaux-02.webp",
+  "/img/galeries/hopitaux-03.webp"
+ ],
+ "magasin": [
+  "/img/galeries/magasin-01.webp",
+  "/img/galeries/magasin-02.webp",
+  "/img/galeries/magasin-03.webp",
+  "/img/galeries/magasin-04.webp",
+  "/img/galeries/magasin-05.webp",
+  "/img/galeries/magasin-06.webp",
+  "/img/galeries/magasin-07.webp",
+  "/img/galeries/magasin-08.webp"
+ ],
+ "ravalement": [
+  "/img/galeries/ravalement-01.webp",
+  "/img/galeries/ravalement-02.webp",
+  "/img/galeries/ravalement-03.webp",
+  "/img/galeries/ravalement-04.webp",
+  "/img/galeries/ravalement-05.webp",
+  "/img/galeries/ravalement-06.webp",
+  "/img/galeries/ravalement-07.webp",
+  "/img/galeries/ravalement-08.webp",
+  "/img/galeries/ravalement-09.webp",
+  "/img/galeries/ravalement-095.webp",
+  "/img/galeries/ravalement-10.webp",
+  "/img/galeries/ravalement-11.webp",
+  "/img/galeries/ravalement-12.webp",
+  "/img/galeries/ravalement-13.webp",
+  "/img/galeries/ravalement-14.webp",
+  "/img/galeries/ravalement-15.webp",
+  "/img/galeries/ravalement-16.webp",
+  "/img/galeries/ravalement-17.webp",
+  "/img/galeries/ravalement-18.webp",
+  "/img/galeries/ravalement-19.webp",
+  "/img/galeries/ravalement-20.webp",
+  "/img/galeries/ravalement-21.webp",
+  "/img/galeries/ravalement-22.webp",
+  "/img/galeries/ravalement-23.webp",
+  "/img/galeries/ravalement-24.webp"
+ ],
+ "restaurant": [
+  "/img/galeries/restaurant-01.webp"
+ ],
+ "retraite": [
+  "/img/galeries/retraite-01.webp",
+  "/img/galeries/retraite-02.webp",
+  "/img/galeries/retraite-03.webp",
+  "/img/galeries/retraite-04.webp",
+  "/img/galeries/retraite-05.webp"
+ ],
+ "supermarche": [
+  "/img/galeries/supermarche-01.webp",
+  "/img/galeries/supermarche-02.webp"
+ ],
+ "thalasso": [
+  "/img/galeries/thalasso-01.webp",
+  "/img/galeries/thalasso-02.webp",
+  "/img/galeries/thalasso-03.webp",
+  "/img/galeries/thalasso-04.webp",
+  "/img/galeries/thalasso-05.webp",
+  "/img/galeries/thalasso-06.webp",
+  "/img/galeries/thalasso-07.webp",
+  "/img/galeries/thalasso-08.webp",
+  "/img/galeries/thalasso-09.webp",
+  "/img/galeries/thalasso-10.webp",
+  "/img/galeries/thalasso-11.webp",
+  "/img/galeries/thalasso-12.webp",
+  "/img/galeries/thalasso-13.webp",
+  "/img/galeries/thalasso-14.webp"
+ ]
+}

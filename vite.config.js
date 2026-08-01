@@ -36,6 +36,14 @@ export default defineConfig({
         mentions: resolve(__dirname, 'mentions-legales.html'),
         confidentialite: resolve(__dirname, 'confidentialite.html'),
         faq: resolve(__dirname, 'faq.html'),
+        // Pages de service. Elles existent pour le référencement : l'accueil
+        // étant un one-page, il ne pouvait se positionner que sur une requête
+        // à la fois. Chaque métier a désormais son URL, et les anciennes URL
+        // du site PHP y sont redirigées (voir vercel.json).
+        ravalement: resolve(__dirname, 'ravalement-facade-vannes.html'),
+        peintureInterieure: resolve(__dirname, 'peinture-interieure-vannes.html'),
+        airless: resolve(__dirname, 'peinture-airless.html'),
+        ventePeinture: resolve(__dirname, 'vente-peinture-vannes.html'),
       },
     },
     // Les vidéos du hero dépassent largement la limite d'inlining, mais on la

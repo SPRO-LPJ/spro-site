@@ -119,10 +119,34 @@ npx vite preview --port 4180        # contrôle du build avant envoi
 - **Formulaire.** Il affichait « Merci » sans rien envoyer. Il envoie pour de vrai,
   avec piège à robots et mention RGPD.
 
-## Ce qui reste ouvert
+## Les redirections de l'ancien site (`vercel.json`)
 
-- **Le domaine.** Tout est écrit pour `https://spro.fr` (canonical, OG, sitemap).
-  À changer partout si l'adresse diffère.
+L'ancien spro.fr était en PHP et ses URL sont toujours indexées par Google. Sur
+Vercel elles renvoyaient 403 : la protection automatique de la plateforme bloque
+l'extension `.php` sur n'importe quel chemin (`.aspx` ou `.php5` passent, eux, en
+404 normal). Les `redirects` de `vercel.json` sont évalués **avant** cette
+protection — c'est ce qui rend la récupération possible sans toucher au pare-feu.
+
+Le JSON n'accepte pas de commentaires, d'où la carte ici. Les règles vont du plus
+précis au plus général ; Vercel s'arrête à la première correspondance.
+
+| Ancienne URL | Redirigée vers |
+| --- | --- |
+| `/vente-peinture-vannes/*`, `/magasin-peinture-vannes/*`, `/catalogue-page1.php` | `/#boutique` |
+| `/renovation-deco-vannes/*`, `/peintre-chantier-{pro,particulier}.php` | `/#domaines` |
+| `/peintre-decorateur-morbihan/*`, `/galerie_photo.php`, `/actualites.php` | `/#realisations` |
+| `/travaux-peinture-morbihan/*`, `/devis-peinture-revetement.php`, `/merci.php` | `/#contact` |
+| `…/conseils-suivis-chantiers.php` | `/#methode` |
+| `…/recrutement-peintre-batiment.php` | `/#histoire` |
+| `/entreprise-peinture-vannes/*` (reste) | `/#expertise` |
+| `…/mentions-legales.php` | `/mentions-legales.html` |
+| `/administration/*`, `/public/*`, captchas | `/` |
+| tout autre `*.php` | `/` (filet de sécurité) |
+
+Toute modification doit être validée par `vercel build --yes` avant d'être poussée :
+une erreur de schéma dans `vercel.json` fait échouer le déploiement entier.
+
+## Ce qui reste ouvert
 - **Les avis Google.** `VITE_GOOGLE_PLACES_KEY` est vide : le site affiche les
   7 témoignages statiques. C'est un repli volontaire, pas une panne.
 - **Bandeau cookies.** La politique de confidentialité en mentionne un. Tant

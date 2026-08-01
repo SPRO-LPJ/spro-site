@@ -1,8 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
 
-  "//": "Redirections 301 depuis l'ancien site PHP de spro.fr (en ligne jusqu'en 2026). Ces URL sont encore indexées par Google et pointées par des liens externes accumulés depuis des années : les renvoyer en 301 vers la section équivalente du nouveau site transfère leur ancienneté et leur autorité au lieu de les perdre. Ordre = du plus précis au plus général, Vercel s'arrête à la première correspondance.",
-
   "redirects": [
     { "source": "/mentions-legales.php", "destination": "/mentions-legales.html", "statusCode": 301 },
     { "source": "/artisan-peintre-vannes/mentions-legales.php", "destination": "/mentions-legales.html", "statusCode": 301 },
@@ -30,19 +28,16 @@
     { "source": "/entreprise-peinture-vannes/recrutement-peintre-batiment.php", "destination": "/#histoire", "statusCode": 301 },
     { "source": "/entreprise-peinture-vannes/:chemin*", "destination": "/#expertise", "statusCode": 301 },
 
-    { "//": "Pages techniques de l'ancien CMS : aucune valeur, mais elles traînent dans l'index.",
-      "source": "/administration/:chemin*", "destination": "/", "statusCode": 301 },
+    { "source": "/administration/:chemin*", "destination": "/", "statusCode": 301 },
     { "source": "/public/:chemin*", "destination": "/", "statusCode": 301 },
     { "source": "/captcha_code_file.php", "destination": "/", "statusCode": 301 },
     { "source": "/show-captcha.php", "destination": "/", "statusCode": 301 },
 
-    { "//": "Filet de sécurité : toute autre URL de l'ancien site retombe sur l'accueil plutôt que sur une erreur.",
-      "source": "/(.*)\\.php", "destination": "/", "statusCode": 301 }
+    { "source": "/(.*)\\.php", "destination": "/", "statusCode": 301 }
   ],
 
   "headers": [
     {
-      "//": "Le sitemap change à chaque mise à jour de contenu : on évite qu'un CDN le serve périmé à Googlebot.",
       "source": "/sitemap.xml",
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }]
     },

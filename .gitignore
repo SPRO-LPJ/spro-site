@@ -23,3 +23,6 @@ _media-backup/
 
 # macOS
 .DS_Store
+
+# Liaison locale au projet Vercel (créée par `vercel link`), propre à ta machine.
+.vercel

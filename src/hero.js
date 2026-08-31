@@ -64,7 +64,15 @@
   // Safari ne peint pas toujours une vidéo jamais lue). On réessaie au premier
   // geste, une seule fois, sans jamais empiler d'écouteurs.
   const demarrer = () => video.play().catch(() => {});
-  demarrer();
+
+  // La balise porte `preload="none"` : rien n'est téléchargé avec la page, le
+  // poster tient l'écran. On ne demande la vidéo (73-76 Mo) qu'une fois le
+  // reste de la page rendu, pour que le LCP mesuré par Google soit le poster
+  // et non le film. `load()` est nécessaire ici : sans lui, `preload="none"`
+  // laisse l'élément sans source chargée et `play()` resterait sans effet.
+  const chargerPuisJouer = () => { video.load(); demarrer(); };
+  if (document.readyState === 'complete') chargerPuisJouer();
+  else window.addEventListener('load', chargerPuisJouer, { once: true });
   const relance = () => { demarrer(); retirerRelance(); };
   const GESTES = ['pointerdown', 'keydown', 'touchstart'];
   const retirerRelance = () => GESTES.forEach((g) => window.removeEventListener(g, relance));

@@ -67,8 +67,7 @@
     { "@type": "Place", "name": "Presqu'île de Rhuys" },
     { "@type": "Place", "name": "Presqu'île de Quiberon" },
     { "@type": "AdministrativeArea", "name": "Morbihan Sud" }
-  ],
-  "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "71" }
+  ]
 }
 </script>
 </head>
@@ -136,12 +135,21 @@
   <section class="hero-track" id="heroTrack">
     <div class="hero-stage" id="heroStage">
       <!-- Deux encodages, lus automatiquement en boucle (hero.js). Desktop
-           1080p, mobile 720p. `preload="auto"` : la vidéo doit être prête à
-           jouer dès l'arrivée, contrairement à l'ancien scrub au scroll qui ne
-           chargeait qu'à la demande. -->
+           1080p, mobile 720p — qualité inchangée.
+           `preload="none"` : les fichiers pèsent 73 à 76 Mo. En `auto`, le
+           navigateur les téléchargeait dès l'arrivée, ce qui faisait du hero le
+           LCP le plus lent possible et pénalisait le référencement de la page
+           (qui est, à elle seule, tout le site). Désormais le poster (278 Ko)
+           s'affiche immédiatement et hero.js déclenche le téléchargement de la
+           vidéo une fois le reste de la page rendu. Rien n'est compressé : seul
+           le MOMENT du chargement change.
+           `autoplay` est volontairement absent : l'attribut force le navigateur
+           à précharger malgré `preload="none"` (mesuré : requête à 45 ms au
+           lieu d'après le rendu). C'est hero.js qui lance la lecture. Si le JS
+           ne s'exécute pas, le poster reste affiché — dégradation acceptable. -->
       <video class="hero-video" id="heroVideo" data-base="%VITE_MEDIA_BASE%"
              poster="%VITE_MEDIA_BASE%/media/hero-poster.jpg"
-             muted playsinline loop autoplay preload="auto">
+             muted playsinline loop preload="none">
         <source src="%VITE_MEDIA_BASE%/media/hero-mobile.mp4" type="video/mp4" media="(max-width: 820px)" />
         <source src="%VITE_MEDIA_BASE%/media/hero-desktop.mp4" type="video/mp4" />
       </video>
@@ -205,7 +213,7 @@
         <div class="real-head section-centre" style="justify-content:center">
           <div>
             <div class="kicker" data-reveal>Treize secteurs, une même exigence</div>
-            <h2 class="h2" data-reveal>Nos réalisations</h2>
+            <h2 class="h2" data-reveal>Nos réalisations de peinture et de ravalement</h2>
           </div>
         </div>
         <div class="real-grid">
@@ -455,7 +463,7 @@
       <div class="section-inner">
         <div class="exp-head section-centre">
           <div class="kicker" data-reveal>Notre expertise</div>
-          <h2 class="h2" data-reveal>L'exigence au cœur de chaque réalisation</h2>
+          <h2 class="h2" data-reveal>Peinture intérieure &amp; ravalement de façades : l'exigence à chaque chantier</h2>
           <p class="lead lead-strong" data-reveal>500 chantiers menés chaque année par nos conducteurs de travaux, avec des équipes expérimentées de plus de 30 ans de métier.</p>
           <p class="lead" data-reveal>Un chantier de peinture se prépare bien avant le premier coup de rouleau : diagnostic du support, choix du système, organisation du site. C'est là qu'intervient notre bureau d'études, fort de 45 ans de savoir-faire, en lien constant avec les équipes sur le terrain, pour un suivi sans rupture, du diagnostic à la réception.</p>
         </div>
@@ -476,7 +484,7 @@
             </figure>
             <div class="exp-body">
               <span class="exp-num">01</span>
-              <h3 class="exp-title">Peinture intérieure</h3>
+              <h3 class="exp-title">Peinture intérieure à Vannes</h3>
               <p class="exp-claim">Des finitions soignées pour des espaces durables et valorisés.</p>
               <p>SPRO réalise des travaux de peinture intérieure pour les bureaux, commerces, hôtels, établissements de santé, résidences collectives et bâtiments tertiaires. Chaque projet fait l'objet d'une étude préalable afin de sélectionner les systèmes les plus adaptés aux contraintes du support, à la fréquentation des locaux et aux exigences esthétiques du maître d'ouvrage.</p>
               <p>Nos équipes assurent la préparation des supports, le traitement des imperfections, l'application des systèmes de peinture et les finitions avec un niveau d'exigence constant. Grâce à notre expérience et à l'utilisation de produits performants, nous garantissons des réalisations durables, soignées et adaptées aux usages de chaque espace.</p>
@@ -489,10 +497,10 @@
             </figure>
             <div class="exp-body">
               <span class="exp-num">02</span>
-              <h3 class="exp-title">Ravalement de façade</h3>
+              <h3 class="exp-title">Ravalement de façade à Vannes et dans le Morbihan</h3>
               <p class="exp-claim">Rénover, protéger et embellir les façades dans la durée.</p>
-              <p>Le ravalement de façade constitue un enjeu essentiel pour la pérennité et l'image d'un bâtiment. SPRO intervient sur des projets de rénovation, d'entretien et de protection des façades en mettant en œuvre des solutions adaptées à chaque typologie de support.</p>
-              <p>Nos prestations comprennent le diagnostic des façades, le nettoyage, le traitement des fissures, les réparations localisées, l'application de systèmes décoratifs et d'imperméabilité. Grâce à une parfaite maîtrise des techniques de ravalement, nous contribuons à améliorer la durabilité des ouvrages tout en valorisant leur aspect esthétique.</p>
+              <p>Le ravalement de façade constitue un enjeu essentiel pour la pérennité et l'image d'un bâtiment. SPRO intervient sur des projets de rénovation, d'entretien et de protection des façades — bâtiments tertiaires, hôtels, commerces et résidences — en mettant en œuvre des solutions adaptées à chaque typologie de support.</p>
+              <p>Nos prestations comprennent le <strong>diagnostic de façade</strong>, le <strong>nettoyage de façade</strong>, le <strong>traitement des fissures</strong>, les réparations localisées, ainsi que l'application de <strong>systèmes décoratifs et d'imperméabilité</strong>. Grâce à une parfaite maîtrise des techniques de ravalement, nous contribuons à améliorer la durabilité des ouvrages tout en valorisant leur aspect esthétique.</p>
             </div>
           </article>
 
@@ -517,7 +525,7 @@
             </figure>
             <div class="exp-body">
               <span class="exp-num">04</span>
-              <h3 class="exp-title">Revêtements décoratifs &amp; protections</h3>
+              <h3 class="exp-title">Revêtements décoratifs &amp; décoration intérieure</h3>
               <p class="exp-claim">Des matériaux qui habillent et protègent les espaces.</p>
               <p>Au-delà des travaux de peinture, SPRO propose des solutions décoratives et techniques permettant de personnaliser les espaces tout en améliorant leur durabilité. Nous travaillons avec les produits Orac et StoneLeaf, notamment en tant que revendeur, pour la réalisation d'aménagements muraux à forte valeur esthétique.</p>
               <p>Les éléments décoratifs Orac permettent d'apporter du relief, du caractère et une finition haut de gamme aux espaces intérieurs. Les revêtements StoneLeaf, composés de pierre naturelle, offrent quant à eux un rendu unique alliant élégance, authenticité et légèreté. Ces matériaux sont visibles dans notre magasin d'exposition.</p>
@@ -596,7 +604,7 @@
       <div class="section-inner boutique-inner">
         <header class="boutique-head">
           <div class="boutique-kicker" data-reveal>Notre boutique · Les Peintures de Jules</div>
-          <h2 class="h2 boutique-titre" data-reveal>La couleur, à emporter</h2>
+          <h2 class="h2 boutique-titre" data-reveal>Magasin de peinture à Vannes : la couleur, à emporter</h2>
           <p class="boutique-lead" data-reveal><strong>Peintures de Jules Store</strong> est notre boutique de vente de peinture et de décoration, une entité animée par l'équipe SPRO — distincte de SPRO (professionnels) et de Les Peintures de Jules (particuliers). Vous y achetez des produits haute qualité au prix professionnel : sur place au showroom (Z.I. du Prat, 6 rue Alain Gerbault, 56000 Vannes), en click and collect ou en livraison.</p>
           <ul class="boutique-tags" data-reveal>
             <li>Peintures intérieures &amp; extérieures</li>
@@ -647,7 +655,7 @@
       <div class="section-inner">
         <div class="hist-head section-centre">
           <div class="kicker" data-reveal>Notre histoire</div>
-          <h2 class="h2" data-reveal>45 ans d'histoire et de savoir-faire</h2>
+          <h2 class="h2" data-reveal>Entreprise de peinture à Vannes depuis 1982</h2>
           <p class="lead lead-strong" data-reveal>Une histoire de famille depuis 1982</p>
         </div>
 
@@ -852,8 +860,8 @@
       <div class="section-inner">
         <div class="domaines-head">
           <div class="kicker" data-reveal style="justify-content:center">Nos marchés</div>
-          <h2 class="h2" data-reveal>Nos domaines d'intervention</h2>
-          <p class="lead" data-reveal>Hôtels, commerces, concessions, bureaux, résidences collectives d'un côté ; collectivités, écoles et résidences privées.</p>
+          <h2 class="h2" data-reveal>Nos domaines d'intervention à Vannes et dans le Morbihan</h2>
+          <p class="lead" data-reveal>Hôtels, commerces, concessions, bureaux et résidences collectives d'un côté ; collectivités, écoles et résidences privées.</p>
         </div>
 
         <div class="split from-left">
@@ -1094,7 +1102,7 @@
         <div class="contact-wrap">
           <div class="contact-copy">
             <div class="kicker" data-reveal>Contact</div>
-            <h2 class="h2" data-reveal>Une question sur votre projet ?</h2>
+            <h2 class="h2" data-reveal>Demandez votre devis de peinture ou de ravalement</h2>
             <p data-reveal>Notre équipe est à votre écoute pour répondre à vos questions et vous accompagner dans votre projet de peinture, ravalement, rénovation ou recrutement.</p>
             <!-- Le numéro n'apparaît plus qu'une fois, dans le bouton d'appel :
                  c'est le seul endroit où il est cliquable. Pas de « ci-contre »

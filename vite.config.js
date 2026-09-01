@@ -44,6 +44,7 @@ export default defineConfig({
         peintureInterieure: resolve(__dirname, 'peinture-interieure-vannes.html'),
         airless: resolve(__dirname, 'peinture-airless-vannes.html'),
         professionnels: resolve(__dirname, 'peinture-professionnels-vannes.html'),
+        realisations: resolve(__dirname, 'realisations.html'),
       },
     },
     // Les vidéos du hero dépassent largement la limite d'inlining, mais on la

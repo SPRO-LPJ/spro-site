@@ -2,6 +2,11 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     {
+      "source": "/realisations.html",
+      "destination": "/realisations",
+      "statusCode": 308
+    },
+    {
       "source": "/peinture-professionnels-vannes.html",
       "destination": "/peinture-professionnels-vannes",
       "statusCode": 308
@@ -53,22 +58,22 @@
     },
     {
       "source": "/galerie_photo.php",
-      "destination": "/#realisations",
+      "destination": "/realisations",
       "statusCode": 301
     },
     {
       "source": "/photo-peinture-decoration.php",
-      "destination": "/#realisations",
+      "destination": "/realisations",
       "statusCode": 301
     },
     {
       "source": "/actualites.php",
-      "destination": "/#realisations",
+      "destination": "/realisations",
       "statusCode": 301
     },
     {
       "source": "/peintre-decorateur-morbihan/:chemin*",
-      "destination": "/#realisations",
+      "destination": "/realisations",
       "statusCode": 301
     },
     {
@@ -198,6 +203,10 @@
     {
       "source": "/peinture-professionnels-vannes",
       "destination": "/peinture-professionnels-vannes.html"
+    },
+    {
+      "source": "/realisations",
+      "destination": "/realisations.html"
     }
   ]
 }

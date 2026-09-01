@@ -2303,3 +2303,23 @@ body.legal-page .exp-lien:hover{color:var(--ink)}
   .service-chiffres{gap:20px}
   .service-chiffres b{font-size:1.6rem}
 }
+
+/* Grille des réalisations (page /realisations). Les photos étaient jusqu'ici
+   injectées en JavaScript par galerie.js : Google n'en voyait que deux sur
+   quatre-vingt-seize. Elles sont désormais dans le HTML, donc indexables, avec
+   un `alt` décrivant le secteur et le client. `content-visibility` évite que
+   quatre-vingts images pèsent sur le rendu initial : le navigateur ne calcule
+   la mise en page d'une grille qu'à son approche. */
+.real-grille{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+  gap:10px;margin:18px 0 40px;
+  content-visibility:auto;contain-intrinsic-size:auto 320px;
+}
+.real-grille img{
+  width:100%;height:100%;aspect-ratio:3/2;object-fit:cover;
+  display:block;border-radius:4px;background:var(--sunk,#eee);
+}
+.real-refs{font-size:.92rem;color:var(--ink-doux,#5c6469)}
+@media(max-width:560px){
+  .real-grille{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:7px}
+}

@@ -2417,3 +2417,115 @@ main#content{counter-reset:secteur}
   .ro-grand{grid-row:auto;aspect-ratio:16/10}
   .ro-petit{aspect-ratio:16/10}
 }
+
+/* Grille de chantiers sur les pages de service. Ces pages n'avaient aucune
+   photo de réalisation alors que les galeries en comptent quatre-vingt-seize :
+   un visiteur qui cherche un ravalement veut d'abord voir des façades. Même
+   principe que sur /realisations, à la largeur du conteneur de texte. */
+.service-grille{
+  grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+  gap:10px;margin:26px 0 44px;
+}
+.service-grille img{aspect-ratio:4/3;border-radius:4px}
+.service-grille img:first-child{grid-column:span 2;grid-row:span 2;aspect-ratio:1/1}
+@media(max-width:640px){
+  .service-grille{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:7px}
+}
+
+/* ---- Pages de service : rythme visuel ----------------------------------
+   Ces pages héritaient du gabarit des mentions légales — conteneur à 900 px
+   et titres à 1,8 rem, contre 3,4 rem sur l'accueil. Résultat : un contenu
+   correct mais sans relief. On élargit la page, on remonte l'échelle des
+   titres et on aère, sans toucher à la largeur de lecture du texte lui-même. */
+.service-inner{max-width:1180px}
+.service-inner > p,
+.service-inner > ul,
+.service-inner > ol,
+.service-head .lead{max-width:68ch}
+
+.service h2{
+  font-size:clamp(1.75rem,3.2vw,2.6rem);
+  margin-top:76px;margin-bottom:18px;
+  padding-top:22px;border-top:1px solid var(--line-ink);
+  position:relative;
+}
+.service h2::before{
+  content:"";position:absolute;top:-1px;left:0;width:64px;height:3px;background:var(--accent);
+}
+.service h2:first-of-type{margin-top:48px}
+.service h3{margin-top:34px}
+
+/* La grille de chantiers sort de la colonne de lecture : les photos méritent
+   toute la largeur disponible. */
+.service-grille{max-width:none}
+
+@media(max-width:640px){
+  .service h2{margin-top:52px;padding-top:18px}
+}
+
+/* Photo d'en-tête des pages de service. Ces pages ouvraient sur un bloc de
+   texte : sur une page « ravalement », un visiteur veut voir une façade avant
+   de lire. Pleine largeur, en débordement du conteneur centré. */
+.service-photo{
+  margin:44px 0 8px;
+  margin-left:calc(50% - 50vw);width:100vw;
+  overflow:hidden;
+}
+.service-photo img{
+  width:100%;height:clamp(280px,42vw,560px);object-fit:cover;display:block;
+}
+
+/* L'en-tête gagne en présence : filet d'accent, titre à la même échelle que
+   sur l'accueil, et une respiration franche avant la photo. */
+.service-head{margin-bottom:0;padding-bottom:8px}
+.service h1{
+  font-size:clamp(2.1rem,4.4vw,3.5rem);line-height:1.04;letter-spacing:-.02em;
+}
+.service-head .lead{margin-top:20px}
+
+@media(max-width:640px){
+  .service-photo{margin:32px 0 4px}
+  .service-photo img{height:clamp(200px,52vw,300px)}
+}
+
+/* ---- Sous-menu Prestations ---------------------------------------------
+   Les pages de métier n'étaient atteignables que par le pied de page : un
+   visiteur arrivé de Google sur le ravalement ne pouvait pas passer à la
+   peinture intérieure sans descendre en bas. En CSS pur, sans JavaScript —
+   les pages de service ne chargent pas header.js. */
+.nav-groupe{position:relative;display:flex;align-items:center}
+.nav-declencheur{
+  font-family:var(--font-display);font-weight:500;font-size:13px;
+  letter-spacing:.08em;text-transform:uppercase;color:inherit;
+  background:none;border:0;padding:0;cursor:pointer;
+  display:inline-flex;align-items:center;gap:7px;
+}
+.nav .nav-declencheur{color:#fff}
+body.legal-page .nav .nav-declencheur{color:var(--ink)}
+.nav-fleche{
+  width:7px;height:7px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;
+  transform:rotate(45deg) translate(-2px,-2px);transition:transform .25s ease;
+}
+.nav-groupe:hover .nav-fleche,
+.nav-groupe:focus-within .nav-fleche{transform:rotate(225deg) translate(-3px,-3px)}
+
+.nav-sous{
+  position:absolute;top:100%;left:-18px;margin:0;padding:10px 0;
+  list-style:none;min-width:250px;
+  background:var(--paper);border-radius:5px;
+  box-shadow:0 18px 44px -14px rgba(14,17,20,.42);
+  opacity:0;visibility:hidden;transform:translateY(-6px);
+  transition:opacity .2s ease,transform .2s ease,visibility .2s;
+  z-index:80;
+}
+.nav-groupe:hover .nav-sous,
+.nav-groupe:focus-within .nav-sous{opacity:1;visibility:visible;transform:translateY(4px)}
+.nav-sous a{
+  display:block;padding:9px 20px;
+  font-size:13px;letter-spacing:.04em;text-transform:none;
+  color:var(--ink);text-decoration:none;white-space:nowrap;
+}
+.nav-sous a:hover,.nav-sous a:focus-visible{background:var(--paper-2);color:var(--accent)}
+@media(prefers-reduced-motion:reduce){
+  .nav-sous,.nav-fleche{transition:none}
+}

@@ -140,7 +140,15 @@
     <!-- Sous 1100 px, `.nav` passe en display:none (styles.css) : pas de burger
          ici, la page ne charge pas header.js. Les CTA restent accessibles. -->
     <nav class="nav" aria-label="Navigation principale">
-      <a href="/#realisations">Réalisations</a>
+      <div class="nav-groupe">
+        <button type="button" class="nav-declencheur" aria-haspopup="true" aria-expanded="false">Prestations<span class="nav-fleche" aria-hidden="true"></span></button>
+        <ul class="nav-sous">
+          <li><a href="/ravalement-facade-vannes">Ravalement de façade</a></li>
+          <li><a href="/peinture-interieure-vannes">Peinture intérieure</a></li>
+          <li><a href="/peinture-airless-vannes">Peinture au pistolet Airless</a></li>
+        </ul>
+      </div>
+      <a href="/realisations">Réalisations</a>
       <a href="/#expertise">Expertise</a>
       <a href="/#histoire">Histoire</a>
       <a href="/#domaines">Domaines</a>
@@ -168,13 +176,10 @@
         <p class="lead">Réalisez vous-même les préparatifs et réduisez le coût de vos travaux. Nos peintres se chargent de la projection au pistolet Airless — la technique la plus rapide pour couvrir de grandes surfaces avec une finition parfaitement uniforme.</p>
       </div>
 
-      <div class="service-chiffres">
-        <div><b>1982</b><span>Entreprise familiale, trois générations</span></div>
-        <div><b>30</b><span>Salariés, dont des équipes de plus de 30 ans de métier</span></div>
-        <div><b>500</b><span>Chantiers menés chaque année</span></div>
-        <div><b>4,9/5</b><span>Note moyenne sur 71 avis Google</span></div>
-      </div>
 
+      <figure class="service-photo">
+        <img src="/img/galeries/airless-01.webp" alt="Mur et plafond blancs projetés au pistolet Airless, surface uniforme sans trace de reprise" width="1500" height="1000" fetchpriority="high" decoding="async" />
+      </figure>
       <h2>Le principe&nbsp;: vous préparez, nous projetons</h2>
       <p>Vous souhaitez réaliser votre intérieur à moindre coût sans renoncer à une finition professionnelle&nbsp;? Cette formule répartit le chantier différemment&nbsp;: <strong>vous prenez en charge les travaux de préparation</strong>, qui sont longs mais ne demandent pas de savoir-faire particulier, et <strong>nous prenons en charge l'application</strong>, qui en demande.</p>
       <p>La préparation représente l'essentiel du temps passé sur un chantier de peinture — donc l'essentiel de son coût de main-d'œuvre. En la réalisant vous-même, vous supprimez ce poste tout en confiant à des peintres professionnels la seule étape où le résultat se joue.</p>
@@ -216,6 +221,18 @@
       <h3>La projection Airless salit-elle plus qu'un rouleau&nbsp;?</h3>
       <p>Elle produit un brouillard de peinture plus important, ce qui explique l'exigence sur la protection et le masquage. Correctement préparée, la pièce ressort propre — c'est précisément la raison pour laquelle ces deux étapes figurent en tête de la liste.</p>
       <p><a href="/faq.html">Voir les 130 autres questions&nbsp;→</a></p>
+
+      <h2>Exemples de finitions au pistolet Airless</h2>
+      <p>Le rendu obtenu par projection&nbsp;: une surface uniforme, sans trace de rouleau ni reprise visible, sur des murs et des plafonds de grande dimension.</p>
+      <div class="real-grille service-grille">
+          <img src="/img/galeries/airless-01.webp" alt="Finition obtenue au pistolet Airless : mur et plafond blancs, surface uniforme sans trace de reprise" loading="lazy" decoding="async" width="1200" height="800" />
+          <img src="/img/galeries/airless-02.webp" alt="Finition obtenue au pistolet Airless : mur et plafond blancs, surface uniforme sans trace de reprise" loading="lazy" decoding="async" width="1200" height="800" />
+          <img src="/img/galeries/airless-03.webp" alt="Finition obtenue au pistolet Airless : mur et plafond blancs, surface uniforme sans trace de reprise" loading="lazy" decoding="async" width="1200" height="800" />
+          <img src="/img/galeries/airless-04.webp" alt="Finition obtenue au pistolet Airless : mur et plafond blancs, surface uniforme sans trace de reprise" loading="lazy" decoding="async" width="1200" height="800" />
+          <img src="/img/galeries/airless-05.webp" alt="Finition obtenue au pistolet Airless : mur et plafond blancs, surface uniforme sans trace de reprise" loading="lazy" decoding="async" width="1200" height="800" />
+          <img src="/img/galeries/airless-06.webp" alt="Finition obtenue au pistolet Airless : mur et plafond blancs, surface uniforme sans trace de reprise" loading="lazy" decoding="async" width="1200" height="800" />
+          <img src="/img/galeries/airless-07.webp" alt="Finition obtenue au pistolet Airless : mur et plafond blancs, surface uniforme sans trace de reprise" loading="lazy" decoding="async" width="1200" height="800" />
+      </div>
 
       <h2>À voir également</h2>
       <ul class="service-liens">

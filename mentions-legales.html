@@ -29,7 +29,15 @@
     <!-- Sous 1100 px, `.nav` passe en display:none (styles.css) : pas de burger
          ici, la page ne charge pas header.js. Les CTA restent accessibles. -->
     <nav class="nav" aria-label="Navigation principale">
-      <a href="/#realisations">Réalisations</a>
+      <div class="nav-groupe">
+        <button type="button" class="nav-declencheur" aria-haspopup="true" aria-expanded="false">Prestations<span class="nav-fleche" aria-hidden="true"></span></button>
+        <ul class="nav-sous">
+          <li><a href="/ravalement-facade-vannes">Ravalement de façade</a></li>
+          <li><a href="/peinture-interieure-vannes">Peinture intérieure</a></li>
+          <li><a href="/peinture-airless-vannes">Peinture au pistolet Airless</a></li>
+        </ul>
+      </div>
+      <a href="/realisations">Réalisations</a>
       <a href="/#expertise">Expertise</a>
       <a href="/#histoire">Histoire</a>
       <a href="/#domaines">Domaines</a>

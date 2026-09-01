@@ -43,6 +43,7 @@ export default defineConfig({
         ravalement: resolve(__dirname, 'ravalement-facade-vannes.html'),
         peintureInterieure: resolve(__dirname, 'peinture-interieure-vannes.html'),
         airless: resolve(__dirname, 'peinture-airless-vannes.html'),
+        professionnels: resolve(__dirname, 'peinture-professionnels-vannes.html'),
       },
     },
     // Les vidéos du hero dépassent largement la limite d'inlining, mais on la

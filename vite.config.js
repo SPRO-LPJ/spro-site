@@ -36,6 +36,13 @@ export default defineConfig({
         mentions: resolve(__dirname, 'mentions-legales.html'),
         confidentialite: resolve(__dirname, 'confidentialite.html'),
         faq: resolve(__dirname, 'faq.html'),
+        // Pages de service. L'accueil est un one-page : il ne peut se positionner
+        // que sur une intention à la fois, alors que chaque métier a sa propre
+        // requête. Ces pages traitent le sujet en profondeur, l'accueil les
+        // résume et y renvoie. Sans ces entrées, Vite ne les copie pas au build.
+        ravalement: resolve(__dirname, 'ravalement-facade-vannes.html'),
+        peintureInterieure: resolve(__dirname, 'peinture-interieure-vannes.html'),
+        airless: resolve(__dirname, 'peinture-airless-vannes.html'),
       },
     },
     // Les vidéos du hero dépassent largement la limite d'inlining, mais on la

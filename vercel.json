@@ -7,11 +7,6 @@
       "statusCode": 308
     },
     {
-      "source": "/peinture-professionnels-vannes.html",
-      "destination": "/peinture-professionnels-vannes",
-      "statusCode": 308
-    },
-    {
       "source": "/peinture-airless-vannes.html",
       "destination": "/peinture-airless-vannes",
       "statusCode": 308
@@ -74,11 +69,6 @@
     {
       "source": "/peintre-decorateur-morbihan/:chemin*",
       "destination": "/realisations",
-      "statusCode": 301
-    },
-    {
-      "source": "/peintre-chantier-pro.php",
-      "destination": "/peinture-professionnels-vannes",
       "statusCode": 301
     },
     {
@@ -199,10 +189,6 @@
     {
       "source": "/peinture-airless-vannes",
       "destination": "/peinture-airless-vannes.html"
-    },
-    {
-      "source": "/peinture-professionnels-vannes",
-      "destination": "/peinture-professionnels-vannes.html"
     },
     {
       "source": "/realisations",

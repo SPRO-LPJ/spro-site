@@ -2304,22 +2304,116 @@ body.legal-page .exp-lien:hover{color:var(--ink)}
   .service-chiffres b{font-size:1.6rem}
 }
 
-/* Grille des réalisations (page /realisations). Les photos étaient jusqu'ici
-   injectées en JavaScript par galerie.js : Google n'en voyait que deux sur
-   quatre-vingt-seize. Elles sont désormais dans le HTML, donc indexables, avec
-   un `alt` décrivant le secteur et le client. `content-visibility` évite que
-   quatre-vingts images pèsent sur le rendu initial : le navigateur ne calcule
-   la mise en page d'une grille qu'à son approche. */
+/* ====================================================================
+   Page Réalisations
+   Les photos n'existaient qu'en JavaScript : Google n'en voyait que deux
+   sur quatre-vingt-seize. Elles sont maintenant dans le HTML, réparties
+   par secteur, avec le rythme de l'accueil — alternance encre / papier,
+   kicker à filet, grands titres, pleine largeur.
+   ==================================================================== */
+
+main#content{counter-reset:secteur}
+.real-hero{padding-top:170px}
+.real-hero .fil{margin-bottom:26px}
+
+/* En-tête de secteur en deux colonnes : le titre tient la gauche, le texte
+   et les références la droite. Sur une seule colonne l'ensemble retombait
+   en liste et la page paraissait vide à droite. */
+.real-tete{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:20px 56px;align-items:end;
+}
+.real-tete .lead{margin-top:0;max-width:52ch}
+.real-secteur{counter-increment:secteur;position:relative;padding-top:96px;padding-bottom:96px}
+
+/* Numéro du secteur, en très grand et en retrait : le repère visuel qui
+   manquait pour distinguer douze blocs successifs. */
+.real-secteur .section-inner::before{
+  content:counter(secteur,decimal-leading-zero);
+  position:absolute;top:-46px;right:0;
+  font-family:var(--font-display);font-weight:600;font-size:clamp(4rem,9vw,8.5rem);
+  line-height:1;letter-spacing:-.04em;color:var(--accent);opacity:.13;pointer-events:none;
+}
+.real-secteur .section-inner{position:relative}
+.on-ink .real-secteur .section-inner::before,
+.real-secteur.on-ink .section-inner::before{color:var(--bleu-clair);opacity:.16}
+
+/* Fiche de secteur : même schéma de lecture partout — ce qu'on y fait,
+   puis pour qui. Sans cette régularité, douze paragraphes libres se
+   ressemblaient sans se comparer. */
+.real-presta,.real-refs{
+  margin-top:14px;font-size:.9rem;line-height:1.6;
+  padding-left:14px;border-left:2px solid var(--accent);
+}
+.real-presta strong,.real-refs strong{
+  display:block;font-family:var(--font-display);font-weight:600;
+  font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:3px;
+}
+.real-secteur.on-ink .real-presta{border-left-color:var(--bleu-clair);color:rgba(243,241,236,.8)}
+.real-secteur.on-ink .real-presta strong{color:var(--bleu-clair)}
+.real-secteur.on-ink .real-refs{border-left-color:var(--bleu-clair);color:rgba(243,241,236,.8)}
+.real-secteur.on-ink .real-refs strong{color:var(--paper)}
+
+/* Grille pleine largeur. La première photo occupe quatre cases : sans elle
+   c'est une matrice uniforme, avec elle chaque secteur a un point d'entrée.
+   `content-visibility` évite que quatre-vingts images pèsent au chargement. */
 .real-grille{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
-  gap:10px;margin:18px 0 40px;
-  content-visibility:auto;contain-intrinsic-size:auto 320px;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:14px;margin-top:44px;
+  content-visibility:auto;contain-intrinsic-size:auto 460px;
 }
 .real-grille img{
-  width:100%;height:100%;aspect-ratio:3/2;object-fit:cover;
-  display:block;border-radius:4px;background:var(--sunk,#eee);
+  width:100%;height:100%;aspect-ratio:4/3;object-fit:cover;display:block;
+  border-radius:5px;background:var(--paper-2);
+  transition:transform .5s cubic-bezier(.2,.75,.25,1);
 }
-.real-refs{font-size:.92rem;color:var(--ink-doux,#5c6469)}
-@media(max-width:560px){
-  .real-grille{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:7px}
+.real-secteur.on-ink .real-grille img{background:var(--ink-2)}
+.real-grille img:first-child{grid-column:span 2;grid-row:span 2;aspect-ratio:1/1}
+.real-grille img:hover{transform:scale(1.03)}
+@media(prefers-reduced-motion:reduce){.real-grille img{transition:none}}
+
+@media(max-width:900px){
+  .real-tete{grid-template-columns:1fr;gap:16px;align-items:start}
+  .real-secteur{padding-top:72px;padding-bottom:72px}
+}
+@media(max-width:640px){
+  .real-grille{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:9px;margin-top:28px}
+  .real-secteur .section-inner::before{top:-30px;font-size:4rem}
+}
+
+/* ---- Ouverture de la page Réalisations ----------------------------------
+   Le texte et les chiffres se répartissent en deux colonnes : seul, le
+   paragraphe laissait un grand vide à droite. Puis trois chantiers en pleine
+   largeur, avant toute explication — sur une page de réalisations, on montre
+   d'abord. */
+.real-hero{padding-top:170px;padding-bottom:0}
+.real-hero .fil{margin-bottom:26px}
+
+/* Introduction sur deux colonnes de texte. Le paragraphe unique laissait un
+   grand vide à droite ; deux colonnes remplissent la largeur sans allonger
+   les lignes au-delà du confort de lecture. */
+.real-intro{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:0 64px;align-items:start;margin-top:34px;
+}
+.real-intro .lead{margin-top:0}
+.real-intro p{max-width:56ch}
+.real-intro p + p{margin-top:18px}
+
+.real-ouverture{
+  display:grid;grid-template-columns:1.62fr 1fr;grid-template-rows:1fr 1fr;
+  gap:14px;margin-top:64px;padding:0 var(--marge-laterale) 0;
+}
+.real-ouverture figure{margin:0;overflow:hidden;border-radius:6px;background:var(--paper-2)}
+.real-ouverture img{width:100%;height:100%;object-fit:cover;display:block}
+.ro-grand{grid-row:span 2;aspect-ratio:3/2}
+.ro-petit{aspect-ratio:16/11}
+
+@media(max-width:900px){
+  .real-intro{grid-template-columns:1fr;gap:22px}
+  .real-intro .service-chiffres{grid-template-columns:1fr 1fr;padding-top:22px}
+  .real-ouverture{grid-template-columns:1fr;grid-template-rows:none;margin-top:40px;gap:10px}
+  .ro-grand{grid-row:auto;aspect-ratio:16/10}
+  .ro-petit{aspect-ratio:16/10}
 }

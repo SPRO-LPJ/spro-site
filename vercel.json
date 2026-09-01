@@ -38,17 +38,17 @@
     },
     {
       "source": "/devis-peinture-revetement.php",
-      "destination": "/#contact",
+      "destination": "/",
       "statusCode": 301
     },
     {
       "source": "/merci.php",
-      "destination": "/#contact",
+      "destination": "/",
       "statusCode": 301
     },
     {
       "source": "/travaux-peinture-morbihan/:chemin*",
-      "destination": "/#contact",
+      "destination": "/peinture-interieure-vannes",
       "statusCode": 301
     },
     {
@@ -73,7 +73,7 @@
     },
     {
       "source": "/peintre-chantier-particulier.php",
-      "destination": "/#domaines",
+      "destination": "/peinture-airless-vannes",
       "statusCode": 301
     },
     {
@@ -98,37 +98,37 @@
     },
     {
       "source": "/catalogue-page1.php",
-      "destination": "/#boutique",
+      "destination": "https://lespeinturesdejules.fr/showroom/",
       "statusCode": 301
     },
     {
       "source": "/vente-peinture-vannes/:chemin*",
-      "destination": "/#boutique",
+      "destination": "https://lespeinturesdejules.fr/showroom/",
       "statusCode": 301
     },
     {
       "source": "/magasin-peinture-vannes/:chemin*",
-      "destination": "/#boutique",
+      "destination": "https://lespeinturesdejules.fr/showroom/",
       "statusCode": 301
     },
     {
       "source": "/entreprise-peinture-vannes/magasin-showroom-morbihan.php",
-      "destination": "/#boutique",
+      "destination": "https://lespeinturesdejules.fr/showroom/",
       "statusCode": 301
     },
     {
       "source": "/entreprise-peinture-vannes/conseils-suivis-chantiers.php",
-      "destination": "/#methode",
+      "destination": "/",
       "statusCode": 301
     },
     {
       "source": "/entreprise-peinture-vannes/recrutement-peintre-batiment.php",
-      "destination": "/#histoire",
+      "destination": "/",
       "statusCode": 301
     },
     {
       "source": "/entreprise-peinture-vannes/:chemin*",
-      "destination": "/#expertise",
+      "destination": "/",
       "statusCode": 301
     },
     {

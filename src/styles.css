@@ -2463,31 +2463,6 @@ main#content{counter-reset:secteur}
   .service h2{margin-top:52px;padding-top:18px}
 }
 
-/* Photo d'en-tête des pages de service. Ces pages ouvraient sur un bloc de
-   texte : sur une page « ravalement », un visiteur veut voir une façade avant
-   de lire. Pleine largeur, en débordement du conteneur centré. */
-.service-photo{
-  margin:44px 0 8px;
-  margin-left:calc(50% - 50vw);width:100vw;
-  overflow:hidden;
-}
-.service-photo img{
-  width:100%;height:clamp(280px,42vw,560px);object-fit:cover;display:block;
-}
-
-/* L'en-tête gagne en présence : filet d'accent, titre à la même échelle que
-   sur l'accueil, et une respiration franche avant la photo. */
-.service-head{margin-bottom:0;padding-bottom:8px}
-.service h1{
-  font-size:clamp(2.1rem,4.4vw,3.5rem);line-height:1.04;letter-spacing:-.02em;
-}
-.service-head .lead{margin-top:20px}
-
-@media(max-width:640px){
-  .service-photo{margin:32px 0 4px}
-  .service-photo img{height:clamp(200px,52vw,300px)}
-}
-
 /* ---- Sous-menu Prestations ---------------------------------------------
    Les pages de métier n'étaient atteignables que par le pied de page : un
    visiteur arrivé de Google sur le ravalement ne pouvait pas passer à la

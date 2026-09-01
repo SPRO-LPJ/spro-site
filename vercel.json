@@ -1,54 +1,194 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-
   "redirects": [
-    { "source": "/mentions-legales.php", "destination": "/mentions-legales.html", "statusCode": 301 },
-    { "source": "/artisan-peintre-vannes/mentions-legales.php", "destination": "/mentions-legales.html", "statusCode": 301 },
-    { "source": "/artisan-peintre-vannes/plan-du-site.php", "destination": "/", "statusCode": 301 },
-
-    { "source": "/devis-peinture-revetement.php", "destination": "/#contact", "statusCode": 301 },
-    { "source": "/merci.php", "destination": "/#contact", "statusCode": 301 },
-    { "source": "/travaux-peinture-morbihan/:chemin*", "destination": "/#contact", "statusCode": 301 },
-
-    { "source": "/galerie_photo.php", "destination": "/#realisations", "statusCode": 301 },
-    { "source": "/photo-peinture-decoration.php", "destination": "/#realisations", "statusCode": 301 },
-    { "source": "/actualites.php", "destination": "/#realisations", "statusCode": 301 },
-    { "source": "/peintre-decorateur-morbihan/:chemin*", "destination": "/#realisations", "statusCode": 301 },
-
-    { "source": "/peintre-chantier-pro.php", "destination": "/#domaines", "statusCode": 301 },
-    { "source": "/peintre-chantier-particulier.php", "destination": "/#domaines", "statusCode": 301 },
-
-    { "source": "/renovation-deco-vannes/pour-ravalement-et-peinture-exterieure-3.php", "destination": "/ravalement-facade-vannes.html", "statusCode": 301 },
-    { "source": "/renovation-deco-vannes/decoration-interieure-morbihan.php", "destination": "/peinture-interieure-vannes.html", "statusCode": 301 },
-    { "source": "/renovation-deco-vannes/:chemin*", "destination": "/peinture-interieure-vannes.html", "statusCode": 301 },
-
-    { "source": "/vente-peinture-vannes/les-peintures-interieures-1.php", "destination": "/peinture-interieure-vannes.html", "statusCode": 301 },
-
-    { "source": "/catalogue-page1.php", "destination": "/#boutique", "statusCode": 301 },
-    { "source": "/vente-peinture-vannes/:chemin*", "destination": "/#boutique", "statusCode": 301 },
-    { "source": "/magasin-peinture-vannes/:chemin*", "destination": "/#boutique", "statusCode": 301 },
-    { "source": "/entreprise-peinture-vannes/magasin-showroom-morbihan.php", "destination": "/#boutique", "statusCode": 301 },
-
-    { "source": "/entreprise-peinture-vannes/conseils-suivis-chantiers.php", "destination": "/#methode", "statusCode": 301 },
-    { "source": "/entreprise-peinture-vannes/recrutement-peintre-batiment.php", "destination": "/#histoire", "statusCode": 301 },
-    { "source": "/entreprise-peinture-vannes/:chemin*", "destination": "/#expertise", "statusCode": 301 },
-
-    { "source": "/administration/:chemin*", "destination": "/", "statusCode": 301 },
-    { "source": "/public/:chemin*", "destination": "/", "statusCode": 301 },
-    { "source": "/captcha_code_file.php", "destination": "/", "statusCode": 301 },
-    { "source": "/show-captcha.php", "destination": "/", "statusCode": 301 },
-
-    { "source": "/(.*)\\.php", "destination": "/", "statusCode": 301 }
+    {
+      "source": "/peinture-airless-vannes.html",
+      "destination": "/peinture-airless-vannes",
+      "statusCode": 308
+    },
+    {
+      "source": "/peinture-interieure-vannes.html",
+      "destination": "/peinture-interieure-vannes",
+      "statusCode": 308
+    },
+    {
+      "source": "/ravalement-facade-vannes.html",
+      "destination": "/ravalement-facade-vannes",
+      "statusCode": 308
+    },
+    {
+      "source": "/mentions-legales.php",
+      "destination": "/mentions-legales.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/artisan-peintre-vannes/mentions-legales.php",
+      "destination": "/mentions-legales.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/artisan-peintre-vannes/plan-du-site.php",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/devis-peinture-revetement.php",
+      "destination": "/#contact",
+      "statusCode": 301
+    },
+    {
+      "source": "/merci.php",
+      "destination": "/#contact",
+      "statusCode": 301
+    },
+    {
+      "source": "/travaux-peinture-morbihan/:chemin*",
+      "destination": "/#contact",
+      "statusCode": 301
+    },
+    {
+      "source": "/galerie_photo.php",
+      "destination": "/#realisations",
+      "statusCode": 301
+    },
+    {
+      "source": "/photo-peinture-decoration.php",
+      "destination": "/#realisations",
+      "statusCode": 301
+    },
+    {
+      "source": "/actualites.php",
+      "destination": "/#realisations",
+      "statusCode": 301
+    },
+    {
+      "source": "/peintre-decorateur-morbihan/:chemin*",
+      "destination": "/#realisations",
+      "statusCode": 301
+    },
+    {
+      "source": "/peintre-chantier-pro.php",
+      "destination": "/#domaines",
+      "statusCode": 301
+    },
+    {
+      "source": "/peintre-chantier-particulier.php",
+      "destination": "/#domaines",
+      "statusCode": 301
+    },
+    {
+      "source": "/renovation-deco-vannes/pour-ravalement-et-peinture-exterieure-3.php",
+      "destination": "/ravalement-facade-vannes",
+      "statusCode": 301
+    },
+    {
+      "source": "/renovation-deco-vannes/decoration-interieure-morbihan.php",
+      "destination": "/peinture-interieure-vannes",
+      "statusCode": 301
+    },
+    {
+      "source": "/renovation-deco-vannes/:chemin*",
+      "destination": "/peinture-interieure-vannes",
+      "statusCode": 301
+    },
+    {
+      "source": "/vente-peinture-vannes/les-peintures-interieures-1.php",
+      "destination": "/peinture-interieure-vannes",
+      "statusCode": 301
+    },
+    {
+      "source": "/catalogue-page1.php",
+      "destination": "/#boutique",
+      "statusCode": 301
+    },
+    {
+      "source": "/vente-peinture-vannes/:chemin*",
+      "destination": "/#boutique",
+      "statusCode": 301
+    },
+    {
+      "source": "/magasin-peinture-vannes/:chemin*",
+      "destination": "/#boutique",
+      "statusCode": 301
+    },
+    {
+      "source": "/entreprise-peinture-vannes/magasin-showroom-morbihan.php",
+      "destination": "/#boutique",
+      "statusCode": 301
+    },
+    {
+      "source": "/entreprise-peinture-vannes/conseils-suivis-chantiers.php",
+      "destination": "/#methode",
+      "statusCode": 301
+    },
+    {
+      "source": "/entreprise-peinture-vannes/recrutement-peintre-batiment.php",
+      "destination": "/#histoire",
+      "statusCode": 301
+    },
+    {
+      "source": "/entreprise-peinture-vannes/:chemin*",
+      "destination": "/#expertise",
+      "statusCode": 301
+    },
+    {
+      "source": "/administration/:chemin*",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/public/:chemin*",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/captcha_code_file.php",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/show-captcha.php",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/(.*)\\.php",
+      "destination": "/",
+      "statusCode": 301
+    }
   ],
-
   "headers": [
     {
       "source": "/sitemap.xml",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
     },
     {
       "source": "/robots.txt",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/ravalement-facade-vannes",
+      "destination": "/ravalement-facade-vannes.html"
+    },
+    {
+      "source": "/peinture-interieure-vannes",
+      "destination": "/peinture-interieure-vannes.html"
+    },
+    {
+      "source": "/peinture-airless-vannes",
+      "destination": "/peinture-airless-vannes.html"
     }
   ]
 }

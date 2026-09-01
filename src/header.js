@@ -26,7 +26,12 @@ if (burger && menu) {
       const cible = document.querySelector(lien.getAttribute('href'));
       if (cible && window.lenis) {
         // Le panneau vient de se fermer : on laisse Lenis reprendre la main.
-        requestAnimationFrame(() => window.lenis.scrollTo(cible, { offset: -70 }));
+        // Décalage aligné sur `scroll-margin-top` (styles.css), pour que le clic
+        // de menu et l'arrivée directe par ancre posent la section au même
+        // endroit. Le -70 précédent était plus court que le header lui-même
+        // (93 px en desktop, 77 px en mobile) : le titre passait dessous.
+        const decalage = window.matchMedia('(max-width:640px)').matches ? 92 : 108;
+        requestAnimationFrame(() => window.lenis.scrollTo(cible, { offset: -decalage }));
       }
     });
   });

@@ -2137,3 +2137,35 @@ body.legal-page .topbar .brand{opacity:1;pointer-events:auto}
   .js [data-reveal]{opacity:1;transform:none}
   .js [data-reveal-promo]{opacity:1;transform:none}
 }
+
+/* Arrivée directe sur une ancre (2026-08-31). Les anciennes URL du site PHP
+   redirigent vers `/#boutique`, `/#domaines`, etc. Un clic dans le menu passe
+   par header.js, qui applique `lenis.scrollTo(cible, { offset: -70 })` ; une
+   arrivée par URL, elle, déclenche le saut natif du navigateur, sans aucun
+   décalage — le titre de la section se retrouvait alors masqué sous le header
+   fixe. `scroll-margin-top` réserve la même hauteur pour le saut natif, ce qui
+   aligne les deux comportements.
+   Valeurs mesurées sur le site : header de 93 px en desktop (logo 64 + padding)
+   et 77 px en mobile. On réserve un peu plus pour que le titre respire au lieu
+   d'être collé sous la barre. Header.js utilise les mêmes valeurs. */
+#realisations,
+#expertise,
+#boutique,
+#histoire,
+#methode,
+#domaines,
+#hqe,
+#avis,
+#contact{scroll-margin-top:108px}
+
+@media(max-width:640px){
+  #realisations,
+  #expertise,
+  #boutique,
+  #histoire,
+  #methode,
+  #domaines,
+  #hqe,
+  #avis,
+  #contact{scroll-margin-top:92px}
+}

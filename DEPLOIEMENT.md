@@ -147,6 +147,27 @@ précis au plus général ; Vercel s'arrête à la première correspondance.
 Toute modification doit être validée par `vercel build --yes` avant d'être poussée :
 une erreur de schéma dans `vercel.json` fait échouer le déploiement entier.
 
+⚠️ Cette table décrit l'intention d'origine et a divergé de `vercel.json` quand les
+pages de métier ont été créées le 01/09 : plusieurs cibles `/#ancre` ont été
+remplacées par les nouvelles pages, et `/entreprise-peinture-vannes/*` a perdu la
+sienne au passage. La source de vérité est `vercel.json`.
+
+## Le cache HTTP (`vercel.json`, section `headers`)
+
+Sans règle explicite, Vercel sert **tout** en `max-age=0, must-revalidate` — mesuré
+le 02/09 sur la production : la vidéo de 73 Mo, les 218 images, les polices et
+jusqu'aux bundles JS dont le nom porte déjà une empreinte de contenu. Chaque visite
+revalidait l'intégralité du site.
+
+| Chemin | Durée | Pourquoi |
+| --- | --- | --- |
+| `/assets/*`, `/fonts/*` | 1 an, `immutable` | Noms versionnés par Vite ou fichiers figés : un changement produit un nouveau nom, le cache ne peut pas servir de version périmée. |
+| `/media/*`, `/img/*`, `/brand/*` | 30 jours + `stale-while-revalidate` | Noms **stables** : on ne peut pas les figer un an sans risquer qu'un média remplacé reste invisible. Pour forcer une mise à jour immédiate, ajouter `?v=N` à l'appel — c'est déjà ce qui a été fait sur `domaines-bg.webp`. |
+| `/sitemap.xml`, `/robots.txt` | aucune | Doivent être relus à chaque passage des robots. |
+
+Les pages HTML gardent volontairement le défaut sans cache : leur contenu change, et
+elles sont légères.
+
 ## Ce qui reste ouvert
 - **Les avis Google.** `VITE_GOOGLE_PLACES_KEY` est vide : le site affiche les
   7 témoignages statiques. C'est un repli volontaire, pas une panne.

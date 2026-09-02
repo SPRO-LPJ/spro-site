@@ -2,6 +2,11 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     {
+      "source": "/peinture-bureaux-vannes.html",
+      "destination": "/peinture-bureaux-vannes",
+      "statusCode": 308
+    },
+    {
       "source": "/realisations.html",
       "destination": "/realisations",
       "statusCode": 308
@@ -20,6 +25,51 @@
       "source": "/ravalement-facade-vannes.html",
       "destination": "/ravalement-facade-vannes",
       "statusCode": 308
+    },
+    {
+      "source": "/ravalement-peinture-exterieure.php",
+      "destination": "/ravalement-facade-vannes",
+      "statusCode": 301
+    },
+    {
+      "source": "/peinture-exterieure.php",
+      "destination": "/ravalement-facade-vannes",
+      "statusCode": 301
+    },
+    {
+      "source": "/ravalement-facade.php",
+      "destination": "/ravalement-facade-vannes",
+      "statusCode": 301
+    },
+    {
+      "source": "/peinture-interieure.php",
+      "destination": "/peinture-interieure-vannes",
+      "statusCode": 301
+    },
+    {
+      "source": "/contact.php",
+      "destination": "/#contact",
+      "statusCode": 301
+    },
+    {
+      "source": "/devis.php",
+      "destination": "/#contact",
+      "statusCode": 301
+    },
+    {
+      "source": "/avis.php",
+      "destination": "/#avis",
+      "statusCode": 301
+    },
+    {
+      "source": "/showroom.php",
+      "destination": "https://lespeinturesdejules.fr/showroom/",
+      "statusCode": 301
+    },
+    {
+      "source": "/magasin.php",
+      "destination": "https://lespeinturesdejules.fr/showroom/",
+      "statusCode": 301
     },
     {
       "source": "/mentions-legales.php",
@@ -253,6 +303,10 @@
     {
       "source": "/realisations",
       "destination": "/realisations.html"
+    },
+    {
+      "source": "/peinture-bureaux-vannes",
+      "destination": "/peinture-bureaux-vannes.html"
     },
     {
       "source": "/(.*)\\.php",

@@ -29,19 +29,29 @@
   // séparé pour celui-ci. Seule la façade Specialized, elle, précède son
   // intérieur (Magasin) sous « Ravalement extérieur » — recalculer TOUTES ces
   // fractions si le montage rebouge.
+  // (2026-09-02) Troisième montage : 148,065 s, contre 153,987 s. L'ordre des
+  // douze secteurs est inchangé, seul l'enchaînement a bougé — la séquence
+  // d'ouverture sur la concession a été remplacée, ce qui décale tout le reste.
+  // Les fractions ne pouvaient donc pas être simplement mises à l'échelle : le
+  // premier secteur passe de 33,0 s à 24,8 s alors que la durée totale ne perd
+  // que 5,9 s. Elles ont été relevées à l'image, en secondes puis converties.
+  // Rappel de la convention conservée depuis le premier montage : le plan de
+  // façade seule d'un chantier est étiqueté « Ravalements extérieurs », le plan
+  // d'intérieur porte le nom du métier — d'où la façade Specialized (66-72 s)
+  // suivie de son magasin de vélos.
   const SECTORS = [
-    { name: 'Concessions automobile', until: 0.2143 },
-    { name: 'Hyper/Supermarchés', until: 0.2727 },
-    { name: 'Hôtellerie & Thalasso', until: 0.4156 },
-    { name: 'Ravalements extérieurs', until: 0.5065 },
-    { name: 'Magasins', until: 0.6039 },
-    { name: 'Accueils', until: 0.6429 },
-    { name: 'Restaurants & Bars', until: 0.6949 },
-    { name: 'Bureaux', until: 0.7338, fadeAt: 0.62 },
-    { name: 'Salons de coiffure', until: 0.7857, fadeAt: 0.62 },
-    { name: 'Maisons de retraite', until: 0.8117 },
-    { name: 'Écoles', until: 0.8637 },
-    { name: 'Espaces communs résidentiels', until: 1.00 },
+    { name: 'Concessions automobile', until: 0.1676 },       //  →  24,8 s
+    { name: 'Hyper/Supermarchés', until: 0.2377 },           //  →  35,2 s
+    { name: 'Hôtellerie & Thalasso', until: 0.4424 },        //  →  65,5 s
+    { name: 'Ravalements extérieurs', until: 0.4893 },       //  →  72,5 s
+    { name: 'Magasins', until: 0.5808 },                     //  →  86,0 s
+    { name: 'Accueils', until: 0.6236 },                     //  →  92,3 s
+    { name: 'Restaurants & Bars', until: 0.6817 },           //  → 100,9 s
+    { name: 'Bureaux', until: 0.7159, fadeAt: 0.62 },        //  → 106,0 s
+    { name: 'Salons de coiffure', until: 0.7465, fadeAt: 0.62 }, // → 110,5 s
+    { name: 'Maisons de retraite', until: 0.8281 },          //  → 122,6 s
+    { name: 'Écoles', until: 0.9050 },                       //  → 134,0 s
+    { name: 'Espaces communs résidentiels', until: 1.00 },   //  → 148,1 s
   ];
 
   const secIdx = document.getElementById('secIdx');

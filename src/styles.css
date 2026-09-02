@@ -2001,17 +2001,24 @@ body.legal-page .topbar .brand{opacity:1;pointer-events:auto}
    sur la majorité des machines. On sacrifie donc d'abord le secondaire (les
    liens Peintures de Jules et Boutique, qui restent dans le menu déroulant), ce
    qui libère assez de place pour garder les sept entrées jusqu'à 1100 px. */
-/* Les deux liens partenaires réapparaissaient à 1431 px, alors qu'il faut
-   1464 px pour que la barre tienne : entre les deux, le bouton « Demande de
-   devis » débordait de 24 px hors de l'en-tête, et comme rien ne défile
-   horizontalement, il était simplement coupé. Le seuil passe donc à 1500 px,
-   ce qui laisse 36 px de marge.
+/* Seuil d'escamotage des deux liens partenaires.
+   Il valait 1431 px alors qu'il fallait 1464 px pour que la barre tienne :
+   dans cette bande, le bouton « Demande de devis » débordait de 24 px et,
+   faute de défilement horizontal, se retrouvait coupé.
 
-   Cette règle est sortie du bloc 1430 px, qui porte une dizaine d'autres
-   réglages de grille — les déplacer aussi aurait changé des mises en page qui
-   n'ont rien à voir. Les liens restent atteignables dans le corps de page et
-   en pied de page à ces largeurs. */
-@media(max-width:1500px){
+   Depuis que « Domaines » et « HQE » ont quitté la barre, celle-ci est plus
+   courte d'une centaine de pixels : les liens tiennent désormais jusqu'à
+   1300 px. Le seuil est donc fixé à 1330 px, ce qui laisse une quarantaine de
+   pixels de marge — et les rend visibles sur les écrans 1366 px, la largeur
+   de portable la plus répandue, où ils étaient masqués auparavant.
+
+   Mesure de référence : écart entre le bord droit de `.nav` et le bord gauche
+   de `.header-cta`, liens forcés visibles. À 1300 px il vaut -26 px, à 1360 px
+   -56 px, à 1440 px -94 px.
+
+   Cette règle est volontairement hors du bloc 1430 px, qui porte une dizaine
+   d'autres réglages de grille sans rapport avec l'en-tête. */
+@media(max-width:1330px){
   .lpdj,.boutique{display:none}
 }
 

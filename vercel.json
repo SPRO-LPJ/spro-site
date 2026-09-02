@@ -152,6 +152,61 @@
       "statusCode": 301
     },
     {
+      "source": "/histoire",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/histoire/(.*)",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/notre-expertise",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/notre-expertise/(.*)",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/a-propos",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/a-propos/(.*)",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/politique-de-confidentialite",
+      "destination": "/confidentialite.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/politique-de-confidentialite/(.*)",
+      "destination": "/confidentialite.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/secteur",
+      "destination": "/realisations",
+      "statusCode": 301
+    },
+    {
+      "source": "/secteur/(.*)",
+      "destination": "/realisations",
+      "statusCode": 301
+    },
+    {
+      "source": "/realisations/(.*)",
+      "destination": "/realisations",
+      "statusCode": 301
+    },
+    {
       "source": "/(.*)\\.php",
       "destination": "/",
       "statusCode": 301

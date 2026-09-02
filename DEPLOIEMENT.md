@@ -84,9 +84,10 @@ entier. 1 000 visiteurs ≈ 150 Go/mois.
 
 ### 3. Le nom de l'hébergeur dans les mentions légales
 
-`mentions-legales.html` reprend le texte de l'ancien site et annonce **IONOS**.
-Si le nouveau site part ailleurs, cette mention devient fausse et doit être
-corrigée — c'est une obligation légale, pas un détail.
+~~`mentions-legales.html` annonce **IONOS**~~ — **corrigé le 2026-09-02** :
+la page déclare désormais Vercel Inc., l'hébergeur réel depuis le 2026-07-31.
+À refaire si le site change encore d'hébergeur : c'est une obligation légale
+(LCEN, article 6-III), pas un détail.
 
 ## Les commandes
 

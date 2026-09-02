@@ -38,7 +38,7 @@
     },
     {
       "source": "/devis-peinture-revetement.php",
-      "destination": "/",
+      "destination": "/#contact",
       "statusCode": 301
     },
     {
@@ -118,7 +118,7 @@
     },
     {
       "source": "/entreprise-peinture-vannes/conseils-suivis-chantiers.php",
-      "destination": "/",
+      "destination": "/#methode",
       "statusCode": 301
     },
     {
@@ -153,32 +153,32 @@
     },
     {
       "source": "/histoire",
-      "destination": "/",
+      "destination": "/#histoire",
       "statusCode": 301
     },
     {
       "source": "/histoire/(.*)",
-      "destination": "/",
+      "destination": "/#histoire",
       "statusCode": 301
     },
     {
       "source": "/notre-expertise",
-      "destination": "/",
+      "destination": "/#expertise",
       "statusCode": 301
     },
     {
       "source": "/notre-expertise/(.*)",
-      "destination": "/",
+      "destination": "/#expertise",
       "statusCode": 301
     },
     {
       "source": "/a-propos",
-      "destination": "/",
+      "destination": "/#histoire",
       "statusCode": 301
     },
     {
       "source": "/a-propos/(.*)",
-      "destination": "/",
+      "destination": "/#histoire",
       "statusCode": 301
     },
     {

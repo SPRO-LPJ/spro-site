@@ -1,4 +1,4 @@
-import { appendFileSync } from 'node:fs';
+import { appendFileSync, readFileSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 
@@ -25,10 +25,50 @@ const mouchard = () => ({
   },
 });
 
+
+// Injecte l'entité WebPage, porteuse de la date de dernière modification.
+//
+// La date vient de `dates-maj.json`, calculé depuis l'historique Git par
+// `scripts/dates-maj.mjs`. Elle n'est donc jamais inventée : une page non
+// modifiée garde sa date, et une page absente du fichier n'émet aucune date
+// plutôt qu'une fausse.
+const datesMaj = () => ({
+  name: 'spro-dates-maj',
+  apply: 'build',
+  transformIndexHtml: {
+    order: 'post',
+    handler(html, ctx) {
+      const fichier = ctx.path.replace(/^\//, '');
+      const dossier = resolve(__dirname, 'dates-maj.json');
+      if (!existsSync(dossier)) return html;
+      const date = JSON.parse(readFileSync(dossier, 'utf8'))[fichier];
+      if (!date) return html;
+
+      const url = (html.match(/<link rel="canonical" href="([^"]+)"/) || [])[1];
+      const titre = (html.match(/<title>([^<]*)<\/title>/) || [])[1];
+      if (!url) return html;
+
+      const bloc = {
+        '@context': 'https://schema.org',
+        '@type': 'WebPage',
+        '@id': `${url}#page`,
+        url,
+        ...(titre ? { name: titre } : {}),
+        inLanguage: 'fr-FR',
+        isPartOf: { '@id': 'https://www.spro.fr/#site' },
+        about: { '@id': 'https://www.spro.fr/#entreprise' },
+        dateModified: date,
+      };
+      return html.replace('</head>',
+        `<script type="application/ld+json">\n${JSON.stringify(bloc, null, 2)}\n</script>\n</head>`);
+    },
+  },
+});
+
 // Sans cette liste, `vite build` ne construit que index.html : les pages légales
 // seraient absentes du dossier dist/ et les liens du footer tomberaient en 404.
 export default defineConfig({
-  plugins: [mouchard()],
+  plugins: [mouchard(), datesMaj()],
   build: {
     rollupOptions: {
       input: {

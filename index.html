@@ -67,7 +67,39 @@
     { "@type": "Place", "name": "Presqu'île de Rhuys" },
     { "@type": "Place", "name": "Presqu'île de Quiberon" },
     { "@type": "AdministrativeArea", "name": "Morbihan Sud" }
-  ]
+  ],
+  "knowsLanguage": "fr-FR",
+  "subOrganization": {
+    "@type": "Organization",
+    "@id": "https://lespeinturesdejules.fr/#marque",
+    "name": "Les Peintures de Jules",
+    "url": "https://lespeinturesdejules.fr/",
+    "description": "Marque du groupe dédiée à la peinture et à la décoration intérieure des particuliers."
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Prestations SPRO",
+    "itemListElement": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Ravalement de façade", "url": "https://www.spro.fr/ravalement-facade-vannes" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Peinture intérieure professionnelle", "url": "https://www.spro.fr/peinture-interieure-vannes" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Peinture au pistolet Airless", "url": "https://www.spro.fr/peinture-airless-vannes" } }
+    ]
+  }
+}
+</script>
+<!-- Le site comme entité distincte de l'entreprise : c'est ce qui permet à
+     Google de rattacher les pages entre elles et d'afficher le nom du site
+     dans les résultats, plutôt que le nom de domaine brut. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://www.spro.fr/#site",
+  "url": "https://www.spro.fr/",
+  "name": "SPRO",
+  "alternateName": "Société Peinture Revêtement de l'Ouest",
+  "inLanguage": "fr-FR",
+  "publisher": { "@id": "https://www.spro.fr/#entreprise" }
 }
 </script>
 </head>
@@ -279,6 +311,8 @@
       </div>
     </section>
 
+
+
     <!-- ===== Promo secteur — Peinture au pistolet airless =====
          13e mise en avant, pas encore dans la grille "Nos réalisations"
          (pas de photo pour l'instant — background uni en attendant, à remplacer
@@ -290,191 +324,6 @@
     <!-- data-lenis-prevent : sans ça, Lenis intercepte la molette même
          quand la souris est sur cet overlay et fait défiler la page
          d'accueil en dessous au lieu du contenu de l'annonce. -->
-    <section class="promo-secteur" id="promoAirless" data-lenis-prevent>
-      <button class="promo-close" type="button" aria-label="Fermer cette mise en avant">✕</button>
-      <div class="promo-scrollhint" id="promoScrollHint" aria-hidden="true">Continuez à lire <span>↓</span></div>
-      <div class="promo-scroll" id="promoScroll">
-      <div class="promo-inner">
-        <div class="kicker" data-reveal-promo style="justify-content:center">Notre nouveau secteur</div>
-        <h2 class="h2 promo-titre" data-reveal-promo><span class="promo-titre-accent">Peinture au pistolet Airless</span> : la solution la plus rapide et économique pour vos murs et plafonds</h2>
-        <p class="lead-strong" data-reveal-promo>Réalisez vous-même les préparatifs et réduisez le coût de vos travaux</p>
-        <ul class="promo-badges" data-reveal-promo>
-          <li>Rapide</li>
-          <li>Économique</li>
-          <li>Finition professionnelle</li>
-        </ul>
-        <p class="lead" data-reveal-promo>Vous souhaitez réaliser votre intérieur à moindre coût sans renoncer à une finition professionnelle ? Notre formule est faite pour vous.</p>
-        <p class="lead" data-reveal-promo>Vous réalisez vous-même les travaux de préparation selon le niveau de finition souhaité :</p>
-
-        <!-- ===== Déroulé en étapes =====
-             Remplace l'ancienne liste à puces + les trois paragraphes qui
-             suivaient : le partage des rôles (5 étapes chez vous, la
-             projection chez nous, la remise en état chez vous) était la
-             chose la plus importante de l'annonce et se lisait en texte
-             courant, sans relief.
-
-             Les pictos sont des SVG au trait, inline, PAS des images : ils
-             héritent de `currentColor`, se redimensionnent sans flou et ne
-             coûtent aucune requête. Le jour où SPRO a de vraies photos de
-             chantier, on remplace `.etape-picto` par un `<img>` sans toucher
-             à la grille — c'est pour ça que le picto est un bloc à part et
-             non un `background-image` du <li>. -->
-        <div class="etapes" data-reveal-promo>
-          <p class="etapes-groupe"><span>Vous préparez</span></p>
-          <ol class="etapes-grille">
-            <li class="etape">
-              <span class="etape-picto" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M3 11c0-3.3 4-5.5 9-5.5s9 2.2 9 5.5v3.5H3z" />
-                  <path d="M3 14.5c1.5 1.3 3 1.3 4.5 0s3-1.3 4.5 0 3 1.3 4.5 0 3-1.3 4.5 0" />
-                  <path d="M5.5 16.6V19M18.5 16.6V19" />
-                </svg>
-              </span>
-              <span class="etape-num">01</span>
-              <h3 class="etape-titre">Protection</h3>
-              <p class="etape-texte">Sols, fenêtres, portes, cuisines, escaliers et meubles.</p>
-            </li>
-            <li class="etape">
-              <span class="etape-picto" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="9" cy="12" r="5.2" />
-                  <circle cx="9" cy="12" r="1.8" />
-                  <path d="M13.6 9.5 21 6.2v4.1l-7.4 3.3" />
-                </svg>
-              </span>
-              <span class="etape-num">02</span>
-              <h3 class="etape-titre">Masquage</h3>
-              <p class="etape-texte">Tous les éléments qui ne doivent pas être peints.</p>
-            </li>
-            <li class="etape">
-              <span class="etape-picto" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <!-- Couteau à enduire : lame en losange + manche. Doit rester
-                       nettement distinct du balai de l'étape 07. -->
-                  <path d="M2.8 15.2 11 7l6 6-8.2 8.2z" />
-                  <path d="M13.2 8.8 17 5" />
-                  <circle cx="18.6" cy="3.4" r="1.6" />
-                </svg>
-              </span>
-              <span class="etape-num">03</span>
-              <h3 class="etape-titre">Rebouchage</h3>
-              <p class="etape-texte">Trous et fissures.</p>
-            </li>
-            <li class="etape">
-              <span class="etape-picto" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="3.5" y="12" width="13" height="5" rx="1.4" />
-                  <path d="M8 12V9.5a2 2 0 0 1 2-2h2.5" />
-                  <path d="M18.5 6.5c1.2 1 1.2 2.2 0 3.2M21 5c2 1.8 2 4.4 0 6.2" />
-                </svg>
-              </span>
-              <span class="etape-num">04</span>
-              <h3 class="etape-titre">Ponçage</h3>
-              <p class="etape-texte">Les supports.</p>
-            </li>
-            <li class="etape">
-              <span class="etape-picto" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M3.5 4.5h17v15h-17z" />
-                  <path d="M3.5 9.5h17M3.5 14.5h17M9 4.5v5M15 9.5v5M9 14.5v5" />
-                </svg>
-              </span>
-              <span class="etape-num">05</span>
-              <h3 class="etape-titre">Préparation</h3>
-              <p class="etape-texte">Murs et plafonds.</p>
-            </li>
-          </ol>
-
-          <!-- L'étape SPRO en bandeau bleu plein largeur, pas une 6e carte :
-               c'est le seul moment où l'entreprise intervient, il doit se
-               détacher des cinq étapes qui sont à la charge du client. -->
-          <p class="etapes-groupe etapes-groupe-spro"><span>Nous peignons</span></p>
-          <div class="etape-spro">
-            <span class="etape-picto" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <!-- Pistolet + jet en éventail : les trois traits qui s'ouvrent
-                     vers la droite sont ce qui rend l'icône lisible à 36 px. -->
-                <path d="M3 8h7.5v4H3z" />
-                <path d="M6.5 12v3.2L4.4 19" />
-                <path d="M10.5 10h2.6" />
-                <path d="M15.2 7.6v4.8M18.1 6v8M21 4.4v11.2" />
-              </svg>
-            </span>
-            <div class="etape-spro-texte">
-              <span class="etape-num">06</span>
-              <h3 class="etape-titre">Projection au pistolet Airless</h3>
-              <p class="etape-texte">Nos peintres appliquent une peinture blanche de haute qualité sur les murs et les plafonds. Cette technique permet de peindre très rapidement de grandes surfaces tout en obtenant une finition parfaitement uniforme, sans traces de rouleau ni reprises.</p>
-            </div>
-          </div>
-
-          <p class="etapes-groupe"><span>Vous terminez</span></p>
-          <div class="etape etape-large">
-            <span class="etape-picto" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <!-- Balai : manche en diagonale, tête évasée, brins. Silhouette
-                     franchement différente du couteau à enduire de l'étape 03. -->
-                <path d="M19 3.5 12.5 10" />
-                <path d="M12.5 10v1.6" />
-                <path d="M9.4 11.6h6.2l1.7 8.4H7.7z" />
-                <path d="M11.6 11.6v8.4M14.4 11.6v8.4" />
-              </svg>
-            </span>
-            <div class="etape-spro-texte">
-              <span class="etape-num">07</span>
-              <h3 class="etape-titre">Retrait des protections</h3>
-              <p class="etape-texte">Après notre intervention, il ne vous reste plus qu'à retirer les protections et effectuer le nettoyage final.</p>
-            </div>
-          </div>
-        </div>
-        <h3 class="h3" data-reveal-promo>Pourquoi choisir cette formule ?</h3>
-        <ul class="promo-list" data-reveal-promo>
-          <li>Jusqu'à plusieurs jours de chantier économisés.</li>
-          <li>Une réduction importante du coût de la main-d'œuvre.</li>
-          <li>Une peinture blanche intemporelle, lumineuse et facile à personnaliser ensuite.</li>
-          <li>Une finition homogène réalisée par des peintres professionnels.</li>
-          <li>Une solution idéale pour les maisons neuves, les appartements et les investissements locatifs.</li>
-        </ul>
-        <h3 class="h3" data-reveal-promo>Un excellent compromis entre qualité et budget</h3>
-        <p class="lead" data-reveal-promo>Cette formule est particulièrement appréciée par les particuliers qui souhaitent participer à leur chantier afin de réduire son coût, tout en confiant l'application de la peinture à une entreprise spécialisée.</p>
-        <p class="lead" data-reveal-promo>Vous profitez ainsi de la rapidité de la projection Airless, d'un résultat professionnel et d'un budget parfaitement maîtrisé.</p>
-        <!-- La phrase qui résume toute l'offre : elle passait en simple
-             .lead-strong, noyée entre deux paragraphes. Traitée en signature
-             typographique, cadrée par deux filets. Le segment central est en
-             bleu parce que c'est la part SPRO — même code couleur que le
-             bandeau « Nous peignons » du déroulé en étapes. Trois <span>
-             plutôt qu'une seule ligne : ça garantit que la césure tombe
-             ENTRE les propositions et jamais au milieu de l'une d'elles. -->
-        <p class="promo-signature" data-reveal-promo>
-          <span>Vous préparez.</span>
-          <span class="promo-signature-accent">Nous peignons.</span>
-          <span>Vous économisez.</span>
-        </p>
-        <!-- Renvoi vers la page dédiée : celle-ci détaille les supports, les
-             limites de la formule et l'organisation avec le client, ce que
-             l'annonce ne fait qu'effleurer. -->
-        <p data-reveal-promo style="text-align:center">
-          <a class="exp-lien" href="/peinture-airless-vannes">La peinture au pistolet Airless en détail</a>
-        </p>
-        <!-- Renvoi boutique sorti du fil de texte : c'est la seconde porte de
-             sortie de l'annonce (avec « Parler de votre projet »), elle était
-             noyée entre deux .lead centrés. Encadré + photo du showroom pour
-             qu'elle s'accroche au scroll. Le lien ne vit plus que sur le
-             bouton : en garder un second dans la phrase ferait deux liens
-             identiques vers la même page. -->
-        <aside class="promo-boutique" data-reveal-promo>
-          <figure class="promo-boutique-visuel">
-            <img src="/media/boutique-showroom-poster.jpg" alt="Le showroom Les Peintures de Jules à Vannes : peintures, teintes et matériel de chantier" loading="lazy" decoding="async" width="960" height="540" />
-          </figure>
-          <div class="promo-boutique-texte">
-            <span class="promo-boutique-label">Vous faites tout vous-même</span>
-            <p>Si vous êtes déjà équipé et que vous souhaitez tout réaliser vous-même, nous avons toute la gamme de produits haute qualité à un prix professionnel sur <strong>peinturesdejules.store</strong>.</p>
-            <a class="btn-pro promo-boutique-cta" href="https://peinturesdejules.store" target="_blank" rel="noopener">Voir la boutique <span aria-hidden="true">↗</span></a>
-          </div>
-        </aside>
-        <a class="btn btn-primary" href="#contact" data-reveal-promo>Nous contacter</a>
-      </div>
-      </div>
-    </section>
 
     <!-- ===== Notre expertise ===== -->
     <section class="section on-ink" id="expertise">
@@ -483,7 +332,7 @@
           <div class="kicker" data-reveal>Notre expertise</div>
           <h2 class="h2" data-reveal>Peinture intérieure &amp; ravalement de façades : l'exigence à chaque chantier</h2>
           <p class="lead lead-strong" data-reveal>500 chantiers menés chaque année par nos conducteurs de travaux, avec des équipes expérimentées de plus de 30 ans de métier.</p>
-          <p class="lead" data-reveal>Un chantier de peinture se prépare bien avant le premier coup de rouleau : diagnostic du support, choix du système, organisation du site. C'est là qu'intervient notre bureau d'études, fort de 45 ans de savoir-faire, en lien constant avec les équipes sur le terrain, pour un suivi sans rupture, du diagnostic à la réception.</p>
+          <p class="lead" data-reveal>Un chantier de peinture se prépare bien avant le premier coup de rouleau : diagnostic du support, choix du système, organisation du site. C'est là qu'intervient notre bureau d'études, fort de plus de 40 ans de savoir-faire, en lien constant avec les équipes sur le terrain, pour un suivi sans rupture, du diagnostic à la réception.</p>
         </div>
 
         <!-- (2026-07-29) Photo déplacée ici depuis la section Domaines, sur
@@ -518,8 +367,8 @@
               <span class="exp-num">02</span>
               <h3 class="exp-title">Ravalement de façade à Vannes et dans le Morbihan</h3>
               <p class="exp-claim">Rénover, protéger et embellir les façades dans la durée.</p>
-              <p>Le ravalement de façade constitue un enjeu essentiel pour la pérennité et l'image d'un bâtiment. SPRO intervient sur des projets de rénovation, d'entretien et de protection des façades — bâtiments tertiaires, hôtels, commerces et résidences — en mettant en œuvre des solutions adaptées à chaque typologie de support.</p>
-              <p>Nos prestations comprennent le <strong>diagnostic de façade</strong>, le <strong>nettoyage de façade</strong>, le <strong>traitement des fissures</strong>, les réparations localisées, ainsi que l'application de <strong>systèmes décoratifs et d'imperméabilité</strong>. Grâce à une parfaite maîtrise des techniques de ravalement, nous contribuons à améliorer la durabilité des ouvrages tout en valorisant leur aspect esthétique.</p>
+              <p>Le ravalement de façade engage la pérennité d'un bâtiment autant que son image. SPRO intervient sur des projets de rénovation, d'entretien et de protection des façades — bâtiments tertiaires, hôtels, commerces, <strong>copropriétés</strong>, résidences collectives et bâtiments publics — en adaptant le système à chaque typologie de support. C'est aussi la seule prestation que nous réalisons sur <strong>maisons individuelles</strong> — la précision vaut d'être faite, le reste de notre activité s'adressant aux professionnels.</p>
+              <p>Nos prestations comprennent le <strong>diagnostic de façade</strong>, le <strong>nettoyage de façade</strong>, la <strong>préparation des supports</strong>, le <strong>traitement des fissures</strong>, les réparations localisées, puis l'application des <strong>systèmes de peinture, de finition et d'imperméabilisation</strong> retenus. Grâce à une parfaite maîtrise des techniques de ravalement, nous contribuons à améliorer la durabilité des ouvrages tout en valorisant leur aspect esthétique.</p>
               <a class="exp-lien" href="/ravalement-facade-vannes">Le ravalement de façade en détail</a>
             </div>
           </article>
@@ -541,15 +390,15 @@
             <figure class="exp-media">
               <!-- `entier` : ce visuel est un montage panoramique, il doit être
                    vu sur toute sa largeur — voir styles.css. -->
-              <img class="entier" src="/img/exp-revetements-decoratifs.webp" alt="Revêtements décoratifs et protections mis en œuvre par SPRO" loading="lazy" />
+              <img class="entier" src="/img/exp-revetements-decoratifs.webp" alt="Revêtements techniques et protections d'ouvrages mis en œuvre par SPRO" loading="lazy" />
             </figure>
             <div class="exp-body">
               <span class="exp-num">04</span>
-              <h3 class="exp-title">Revêtements décoratifs &amp; décoration intérieure</h3>
-              <p class="exp-claim">Des matériaux qui habillent et protègent les espaces.</p>
-              <p>Au-delà des travaux de peinture, SPRO propose des solutions décoratives et techniques permettant de personnaliser les espaces tout en améliorant leur durabilité. Nous travaillons avec les produits Orac et StoneLeaf, notamment en tant que revendeur, pour la réalisation d'aménagements muraux à forte valeur esthétique.</p>
-              <p>Les éléments décoratifs Orac permettent d'apporter du relief, du caractère et une finition haut de gamme aux espaces intérieurs. Les revêtements StoneLeaf, composés de pierre naturelle, offrent quant à eux un rendu unique alliant élégance, authenticité et légèreté. Ces matériaux sont visibles dans notre magasin d'exposition.</p>
-              <p>Afin de garantir la protection des ouvrages durant les phases de travaux, nous utilisons également les solutions Nerpel, reconnues pour leur efficacité et leur engagement environnemental. Cette sélection de partenaires nous permet d'apporter à nos clients des solutions complètes associant esthétique, performance technique et durabilité.</p>
+              <h3 class="exp-title">Revêtements techniques &amp; finitions spécifiques</h3>
+              <p class="exp-claim">Des matériaux qui protègent les ouvrages et tiennent dans la durée.</p>
+              <p>Au-delà de la mise en peinture, certains locaux professionnels demandent des revêtements muraux plus résistants : zones de passage intense, halls d'accueil, circulations, espaces recevant du public. SPRO met en œuvre des solutions techniques adaptées à ces contraintes, en complément des systèmes de peinture.</p>
+              <p>Les revêtements StoneLeaf, en pierre naturelle, habillent les murs avec une tenue mécanique supérieure à celle d'une peinture, pour un poids très faible — utile en rénovation de bâtiment existant. Les profilés Orac permettent de traiter les jonctions, les angles et les reprises d'ouvrage là où la finition doit rester nette dans le temps.</p>
+              <p>Pendant les travaux, la protection des ouvrages existants est traitée avec les solutions Nerpel — un point déterminant en site occupé, où les sols, les menuiseries et les équipements doivent être restitués intacts. Cette sélection de fournisseurs nous permet de tenir un même niveau d'exigence de la préparation jusqu'à la réception.</p>
             </div>
           </article>
         </div>
@@ -620,11 +469,16 @@
          sections encre et papier de SPRO pour qu'on comprenne qu'on change
          d'univers. Met en avant à égalité les deux façons d'acheter : au showroom
          de Vannes et en ligne sur peinturesdejules.store. -->
+    <!-- Le titre ne vise plus « magasin de peinture à Vannes » : cette requête
+         est celle du showroom des Peintures de Jules, pas celle de SPRO, qui
+         conduit des chantiers professionnels. Le bloc, lui, reste le bloc
+         d'origine — c'est son contraste visuel qui fait comprendre au visiteur
+         qu'il change d'entité, ce qu'une liste sur fond blanc ne faisait pas. -->
     <section class="section boutique-bloc" id="boutique">
       <div class="section-inner boutique-inner">
         <header class="boutique-head">
           <div class="boutique-kicker" data-reveal>Notre boutique · Les Peintures de Jules</div>
-          <h2 class="h2 boutique-titre" data-reveal>Magasin de peinture à Vannes : la couleur, à emporter</h2>
+          <h2 class="h2 boutique-titre" data-reveal>Peintures de Jules Store : la couleur, à emporter</h2>
           <p class="boutique-lead" data-reveal><strong>Peintures de Jules Store</strong> est notre boutique de vente de peinture et de décoration, une entité animée par l'équipe SPRO — distincte de SPRO (professionnels) et de Les Peintures de Jules (particuliers). Vous y achetez des produits haute qualité au prix professionnel : sur place au showroom (Z.I. du Prat, 6 rue Alain Gerbault, 56000 Vannes), en click and collect ou en livraison.</p>
           <ul class="boutique-tags" data-reveal>
             <li>Peintures intérieures &amp; extérieures</li>
@@ -881,7 +735,8 @@
         <div class="domaines-head">
           <div class="kicker" data-reveal style="justify-content:center">Nos marchés</div>
           <h2 class="h2" data-reveal>Nos domaines d'intervention à Vannes et dans le Morbihan</h2>
-          <p class="lead" data-reveal>Hôtels, commerces, concessions, bureaux, copropriétés et résidences collectives d'un côté ; collectivités, écoles et résidences privées.</p>
+          <p class="lead" data-reveal>Hôtels, commerces, concessions, bureaux, copropriétés et résidences collectives d'un côté ; collectivités, établissements publics et bailleurs sociaux de l'autre.</p>
+          <p class="lead" data-reveal>Nous travaillons aussi bien en direct qu'aux côtés des entreprises générales, des architectes et maîtres d'œuvre, des syndics et gestionnaires immobiliers, des collectivités et des établissements publics — de l'étude technique jusqu'à la réception de chantier.</p>
         </div>
 
         <div class="split from-left">
@@ -938,13 +793,12 @@
             </div>
           </div>
           <div class="exp-cta-texte">
-            <p>Chaque chantier professionnel s'accompagne de ses propres exigences : continuité de l'activité, respect des délais, intervention en site occupé. Depuis 45 ans, SPRO met son savoir-faire et sa rigueur d'organisation au service de projets menés dans le strict respect de ces contraintes.</p>
+            <p>Chaque chantier professionnel s'accompagne de ses propres exigences : continuité de l'activité, respect des délais, intervention en site occupé. Depuis plus de 40 ans, SPRO met son savoir-faire et sa rigueur d'organisation au service de projets menés dans le strict respect de ces contraintes.</p>
             <p>Présentez-nous votre bâtiment, vos échéances et vos impératifs d'exploitation : nos équipes procèdent à une visite technique, puis vous adressent une proposition chiffrée et détaillée.</p>
           </div>
         </div>
       </div>
     </section>
-
 
     <!-- ===== Démarche HQE ===== -->
     <section class="section on-paper" id="hqe">
@@ -1201,6 +1055,199 @@
       </div>
     </section>
 
+  <!-- ===== Panneau Airless =====
+       Déplacé ici le 2026-09-01. Ce panneau est en position:fixed et masqué
+       tant qu'on ne clique pas la carte Airless des réalisations : sa place
+       dans le DOM n'a aucun effet visuel. En revanche il occupait le 2e rang
+       des titres de niveau 2, si bien que Google lisait 335 mots d'offre destinée
+       aux particuliers juste après les réalisations, avant l'expertise et les
+       domaines d'intervention. Le contenu est inchangé. -->
+<section class="promo-secteur" id="promoAirless" data-lenis-prevent>
+      <button class="promo-close" type="button" aria-label="Fermer cette mise en avant">✕</button>
+      <div class="promo-scrollhint" id="promoScrollHint" aria-hidden="true">Continuez à lire <span>↓</span></div>
+      <div class="promo-scroll" id="promoScroll">
+      <div class="promo-inner">
+        <div class="kicker" data-reveal-promo style="justify-content:center">Notre nouveau secteur</div>
+        <h2 class="h2 promo-titre" data-reveal-promo><span class="promo-titre-accent">Peinture au pistolet Airless</span> : la solution la plus rapide et économique pour vos murs et plafonds</h2>
+        <p class="lead-strong" data-reveal-promo>Réalisez vous-même les préparatifs et réduisez le coût de vos travaux</p>
+        <ul class="promo-badges" data-reveal-promo>
+          <li>Rapide</li>
+          <li>Économique</li>
+          <li>Finition professionnelle</li>
+        </ul>
+        <p class="lead" data-reveal-promo>Vous souhaitez réaliser votre intérieur à moindre coût sans renoncer à une finition professionnelle ? Notre formule est faite pour vous.</p>
+        <p class="lead" data-reveal-promo>Vous réalisez vous-même les travaux de préparation selon le niveau de finition souhaité :</p>
+
+        <!-- ===== Déroulé en étapes =====
+             Remplace l'ancienne liste à puces + les trois paragraphes qui
+             suivaient : le partage des rôles (5 étapes chez vous, la
+             projection chez nous, la remise en état chez vous) était la
+             chose la plus importante de l'annonce et se lisait en texte
+             courant, sans relief.
+
+             Les pictos sont des SVG au trait, inline, PAS des images : ils
+             héritent de `currentColor`, se redimensionnent sans flou et ne
+             coûtent aucune requête. Le jour où SPRO a de vraies photos de
+             chantier, on remplace `.etape-picto` par un `<img>` sans toucher
+             à la grille — c'est pour ça que le picto est un bloc à part et
+             non un `background-image` du <li>. -->
+        <div class="etapes" data-reveal-promo>
+          <p class="etapes-groupe"><span>Vous préparez</span></p>
+          <ol class="etapes-grille">
+            <li class="etape">
+              <span class="etape-picto" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 11c0-3.3 4-5.5 9-5.5s9 2.2 9 5.5v3.5H3z" />
+                  <path d="M3 14.5c1.5 1.3 3 1.3 4.5 0s3-1.3 4.5 0 3 1.3 4.5 0 3-1.3 4.5 0" />
+                  <path d="M5.5 16.6V19M18.5 16.6V19" />
+                </svg>
+              </span>
+              <span class="etape-num">01</span>
+              <h3 class="etape-titre">Protection</h3>
+              <p class="etape-texte">Sols, fenêtres, portes, cuisines, escaliers et meubles.</p>
+            </li>
+            <li class="etape">
+              <span class="etape-picto" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="9" cy="12" r="5.2" />
+                  <circle cx="9" cy="12" r="1.8" />
+                  <path d="M13.6 9.5 21 6.2v4.1l-7.4 3.3" />
+                </svg>
+              </span>
+              <span class="etape-num">02</span>
+              <h3 class="etape-titre">Masquage</h3>
+              <p class="etape-texte">Tous les éléments qui ne doivent pas être peints.</p>
+            </li>
+            <li class="etape">
+              <span class="etape-picto" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <!-- Couteau à enduire : lame en losange + manche. Doit rester
+                       nettement distinct du balai de l'étape 07. -->
+                  <path d="M2.8 15.2 11 7l6 6-8.2 8.2z" />
+                  <path d="M13.2 8.8 17 5" />
+                  <circle cx="18.6" cy="3.4" r="1.6" />
+                </svg>
+              </span>
+              <span class="etape-num">03</span>
+              <h3 class="etape-titre">Rebouchage</h3>
+              <p class="etape-texte">Trous et fissures.</p>
+            </li>
+            <li class="etape">
+              <span class="etape-picto" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3.5" y="12" width="13" height="5" rx="1.4" />
+                  <path d="M8 12V9.5a2 2 0 0 1 2-2h2.5" />
+                  <path d="M18.5 6.5c1.2 1 1.2 2.2 0 3.2M21 5c2 1.8 2 4.4 0 6.2" />
+                </svg>
+              </span>
+              <span class="etape-num">04</span>
+              <h3 class="etape-titre">Ponçage</h3>
+              <p class="etape-texte">Les supports.</p>
+            </li>
+            <li class="etape">
+              <span class="etape-picto" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3.5 4.5h17v15h-17z" />
+                  <path d="M3.5 9.5h17M3.5 14.5h17M9 4.5v5M15 9.5v5M9 14.5v5" />
+                </svg>
+              </span>
+              <span class="etape-num">05</span>
+              <h3 class="etape-titre">Préparation</h3>
+              <p class="etape-texte">Murs et plafonds.</p>
+            </li>
+          </ol>
+
+          <!-- L'étape SPRO en bandeau bleu plein largeur, pas une 6e carte :
+               c'est le seul moment où l'entreprise intervient, il doit se
+               détacher des cinq étapes qui sont à la charge du client. -->
+          <p class="etapes-groupe etapes-groupe-spro"><span>Nous peignons</span></p>
+          <div class="etape-spro">
+            <span class="etape-picto" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <!-- Pistolet + jet en éventail : les trois traits qui s'ouvrent
+                     vers la droite sont ce qui rend l'icône lisible à 36 px. -->
+                <path d="M3 8h7.5v4H3z" />
+                <path d="M6.5 12v3.2L4.4 19" />
+                <path d="M10.5 10h2.6" />
+                <path d="M15.2 7.6v4.8M18.1 6v8M21 4.4v11.2" />
+              </svg>
+            </span>
+            <div class="etape-spro-texte">
+              <span class="etape-num">06</span>
+              <h3 class="etape-titre">Projection au pistolet Airless</h3>
+              <p class="etape-texte">Nos peintres appliquent une peinture blanche de haute qualité sur les murs et les plafonds. Cette technique permet de peindre très rapidement de grandes surfaces tout en obtenant une finition parfaitement uniforme, sans traces de rouleau ni reprises.</p>
+            </div>
+          </div>
+
+          <p class="etapes-groupe"><span>Vous terminez</span></p>
+          <div class="etape etape-large">
+            <span class="etape-picto" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <!-- Balai : manche en diagonale, tête évasée, brins. Silhouette
+                     franchement différente du couteau à enduire de l'étape 03. -->
+                <path d="M19 3.5 12.5 10" />
+                <path d="M12.5 10v1.6" />
+                <path d="M9.4 11.6h6.2l1.7 8.4H7.7z" />
+                <path d="M11.6 11.6v8.4M14.4 11.6v8.4" />
+              </svg>
+            </span>
+            <div class="etape-spro-texte">
+              <span class="etape-num">07</span>
+              <h3 class="etape-titre">Retrait des protections</h3>
+              <p class="etape-texte">Après notre intervention, il ne vous reste plus qu'à retirer les protections et effectuer le nettoyage final.</p>
+            </div>
+          </div>
+        </div>
+        <h3 class="h3" data-reveal-promo>Pourquoi choisir cette formule ?</h3>
+        <ul class="promo-list" data-reveal-promo>
+          <li>Jusqu'à plusieurs jours de chantier économisés.</li>
+          <li>Une réduction importante du coût de la main-d'œuvre.</li>
+          <li>Une peinture blanche intemporelle, lumineuse et facile à personnaliser ensuite.</li>
+          <li>Une finition homogène réalisée par des peintres professionnels.</li>
+          <li>Une solution idéale pour les maisons neuves, les appartements et les investissements locatifs.</li>
+        </ul>
+        <h3 class="h3" data-reveal-promo>Un excellent compromis entre qualité et budget</h3>
+        <p class="lead" data-reveal-promo>Cette formule est particulièrement appréciée par les particuliers qui souhaitent participer à leur chantier afin de réduire son coût, tout en confiant l'application de la peinture à une entreprise spécialisée.</p>
+        <p class="lead" data-reveal-promo>Vous profitez ainsi de la rapidité de la projection Airless, d'un résultat professionnel et d'un budget parfaitement maîtrisé.</p>
+        <!-- La phrase qui résume toute l'offre : elle passait en simple
+             .lead-strong, noyée entre deux paragraphes. Traitée en signature
+             typographique, cadrée par deux filets. Le segment central est en
+             bleu parce que c'est la part SPRO — même code couleur que le
+             bandeau « Nous peignons » du déroulé en étapes. Trois <span>
+             plutôt qu'une seule ligne : ça garantit que la césure tombe
+             ENTRE les propositions et jamais au milieu de l'une d'elles. -->
+        <p class="promo-signature" data-reveal-promo>
+          <span>Vous préparez.</span>
+          <span class="promo-signature-accent">Nous peignons.</span>
+          <span>Vous économisez.</span>
+        </p>
+        <!-- Renvoi vers la page dédiée : celle-ci détaille les supports, les
+             limites de la formule et l'organisation avec le client, ce que
+             l'annonce ne fait qu'effleurer. -->
+        <p data-reveal-promo style="text-align:center">
+          <a class="exp-lien" href="/peinture-airless-vannes">La peinture au pistolet Airless en détail</a>
+        </p>
+        <!-- Renvoi boutique sorti du fil de texte : c'est la seconde porte de
+             sortie de l'annonce (avec « Parler de votre projet »), elle était
+             noyée entre deux .lead centrés. Encadré + photo du showroom pour
+             qu'elle s'accroche au scroll. Le lien ne vit plus que sur le
+             bouton : en garder un second dans la phrase ferait deux liens
+             identiques vers la même page. -->
+        <aside class="promo-boutique" data-reveal-promo>
+          <figure class="promo-boutique-visuel">
+            <img src="/media/boutique-showroom-poster.jpg" alt="Le showroom Les Peintures de Jules à Vannes : peintures, teintes et matériel de chantier" loading="lazy" decoding="async" width="960" height="540" />
+          </figure>
+          <div class="promo-boutique-texte">
+            <span class="promo-boutique-label">Vous faites tout vous-même</span>
+            <p>Si vous êtes déjà équipé et que vous souhaitez tout réaliser vous-même, nous avons toute la gamme de produits haute qualité à un prix professionnel sur <strong>peinturesdejules.store</strong>.</p>
+            <a class="btn-pro promo-boutique-cta" href="https://peinturesdejules.store" target="_blank" rel="noopener">Voir la boutique <span aria-hidden="true">↗</span></a>
+          </div>
+        </aside>
+        <a class="btn btn-primary" href="#contact" data-reveal-promo>Nous contacter</a>
+      </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- Footer repris de l'ancien spro.fr : coordonnées, horaires, mention
@@ -1283,7 +1330,7 @@
       <div class="fnavs">
         <nav class="fnav-sections" aria-label="Sections du site">
           <a href="/realisations">Réalisations</a>
-          <a href="#expertise">Expertise</a>
+      <a href="#expertise">Expertise</a>
           <a href="#histoire">Histoire</a>
           <a href="#domaines">Domaines</a>
           <a href="#hqe">HQE</a>

@@ -2405,6 +2405,32 @@ main#content{counter-reset:secteur}
 .real-intro p{max-width:56ch}
 .real-intro p + p{margin-top:18px}
 
+/* ---- Filtre par environnement (2026-09-02) -------------------------------
+   Reprend la forme des étiquettes du bloc boutique (.boutique-tags) pour que
+   le site garde un seul vocabulaire de pastilles, mais en boutons cliquables
+   et sur fond clair. Le filtre est un outil, pas un titre : il reste discret
+   tant qu'on ne s'en sert pas, et seul le secteur actif s'affirme. */
+.real-filtres{
+  display:flex;flex-wrap:wrap;gap:10px;margin-top:44px;
+  padding-top:30px;border-top:1px solid var(--line-ink);
+}
+.real-filtre{
+  font-family:var(--font-display);font-weight:500;font-size:.82rem;letter-spacing:.02em;
+  padding:8px 15px;border:1px solid var(--line-ink);border-radius:100px;
+  background:transparent;color:var(--ink-muted);cursor:pointer;
+  transition:border-color .18s ease,color .18s ease,background-color .18s ease;
+}
+.real-filtre:hover{border-color:var(--accent);color:var(--accent)}
+.real-filtre:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* L'état actif est plein, pas seulement coloré : sur une barre de treize
+   pastilles, une simple nuance de teinte ne se repère pas assez vite. */
+.real-filtre.actif{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+@media(max-width:640px){
+  .real-filtres{gap:8px;margin-top:32px;padding-top:24px}
+  .real-filtre{font-size:.78rem;padding:7px 13px}
+}
+
 .real-ouverture{
   display:grid;grid-template-columns:1.62fr 1fr;grid-template-rows:1fr 1fr;
   gap:14px;margin-top:64px;padding:0 var(--marge-laterale) 0;

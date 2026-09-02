@@ -54,7 +54,7 @@
        l'accueil c'est hero.js qui pose la classe après l'accroche ; cette page
        ne charge pas hero.js, donc on la met en dur. -->
   <header class="topbar scrolled marque-visible" id="siteHeader">
-    <a class="brand" href="/" aria-label="SPRO — Société Peinture Revêtement Ouest, retour à l'accueil">
+    <a class="brand" href="/" aria-label="SPRO — Société Peinture Revêtement de l'Ouest, retour à l'accueil">
       <img class="brand-logo" src="/brand/logo-blanc.png" alt="SPRO" width="1200" height="610" />
       <!-- Page à fond blanc : c'est cette variante-là qui s'affiche (voir
            `body.legal-page` dans styles.css). Le logo blanc reste dans le
@@ -109,10 +109,33 @@
           <p>Le <strong>marché privé</strong> représente 80&nbsp;% de notre activité — hôtellerie, commerce, automobile, tertiaire, santé et résidentiel collectif. Les 20&nbsp;% restants relèvent du <strong>marché public</strong>&nbsp;: collectivités, établissements scolaires et bailleurs sociaux, dans le cadre d'appels d'offres.</p>
         </div>
       </div>
+
+        <!-- Filtre par environnement (2026-09-02).
+             Ne masque rien pour un moteur de recherche : au chargement tous les
+             secteurs sont affichés, et le tri se fait ensuite dans le navigateur
+             sans rien retirer du document. Le bouton actif écrit son secteur
+             dans l'adresse, ce qui rend chaque vue partageable — utile pour
+             envoyer un client droit sur les références de son domaine.
+             Sans JavaScript, les douze secteurs restent visibles. -->
+        <div class="real-filtres" role="group" aria-label="Filtrer par environnement">
+          <button type="button" class="real-filtre actif" data-cible="tous" aria-pressed="true">Tous</button>
+          <button type="button" class="real-filtre" data-cible="ravalements-exterieurs" aria-pressed="false">Ravalements extérieurs</button>
+          <button type="button" class="real-filtre" data-cible="hotellerie-thalasso" aria-pressed="false">Hôtellerie &amp; Thalasso</button>
+          <button type="button" class="real-filtre" data-cible="bureaux-entreprise" aria-pressed="false">Accueils &amp; bureaux</button>
+          <button type="button" class="real-filtre" data-cible="magasins" aria-pressed="false">Magasins</button>
+          <button type="button" class="real-filtre" data-cible="concessions-automobile" aria-pressed="false">Concessions automobile</button>
+          <button type="button" class="real-filtre" data-cible="maisons-de-retraite" aria-pressed="false">Maisons de retraite</button>
+          <button type="button" class="real-filtre" data-cible="hopitaux-cliniques" aria-pressed="false">Hôpitaux &amp; cliniques</button>
+          <button type="button" class="real-filtre" data-cible="espaces-communs-residentiels" aria-pressed="false">Espaces communs résidentiels</button>
+          <button type="button" class="real-filtre" data-cible="hyper-supermarches" aria-pressed="false">Hyper/Supermarchés</button>
+          <button type="button" class="real-filtre" data-cible="ecoles" aria-pressed="false">Écoles</button>
+          <button type="button" class="real-filtre" data-cible="restaurants-bars" aria-pressed="false">Restaurants &amp; Bars</button>
+          <button type="button" class="real-filtre" data-cible="salons-de-coiffure" aria-pressed="false">Salons de coiffure</button>
+        </div>
     </div>
   </section>
 
-  <section class="section on-paper real-secteur">
+  <section class="section on-paper real-secteur" id="ravalements-exterieurs">
     <div class="section-inner">
       <div class="real-tete">
         <div>
@@ -151,7 +174,7 @@
       </div>
     </div>
   </section>
-  <section class="section on-ink real-secteur">
+  <section class="section on-ink real-secteur" id="hotellerie-thalasso">
     <div class="section-inner">
       <div class="real-tete">
         <div>
@@ -179,7 +202,7 @@
       </div>
     </div>
   </section>
-  <section class="section on-paper real-secteur">
+  <section class="section on-paper real-secteur" id="bureaux-entreprise">
     <div class="section-inner">
       <div class="real-tete">
         <div>
@@ -204,7 +227,7 @@
       </div>
     </div>
   </section>
-  <section class="section on-ink real-secteur">
+  <section class="section on-ink real-secteur" id="magasins">
     <div class="section-inner">
       <div class="real-tete">
         <div>
@@ -226,7 +249,7 @@
       </div>
     </div>
   </section>
-  <section class="section on-paper real-secteur">
+  <section class="section on-paper real-secteur" id="concessions-automobile">
     <div class="section-inner">
       <div class="real-tete">
         <div>
@@ -245,7 +268,7 @@
       </div>
     </div>
   </section>
-  <section class="section on-ink real-secteur">
+  <section class="section on-ink real-secteur" id="maisons-de-retraite">
     <div class="section-inner">
       <div class="real-tete">
         <div>
@@ -264,7 +287,7 @@
       </div>
     </div>
   </section>
-  <section class="section on-paper real-secteur">
+  <section class="section on-paper real-secteur" id="hopitaux-cliniques">
     <div class="section-inner">
       <div class="real-tete">
         <div>
@@ -281,7 +304,7 @@
       </div>
     </div>
   </section>
-  <section class="section on-ink real-secteur">
+  <section class="section on-ink real-secteur" id="espaces-communs-residentiels">
     <div class="section-inner">
       <div class="real-tete">
         <div>
@@ -298,7 +321,7 @@
       </div>
     </div>
   </section>
-  <section class="section on-paper real-secteur">
+  <section class="section on-paper real-secteur" id="hyper-supermarches">
     <div class="section-inner">
       <div class="real-tete">
         <div>
@@ -314,7 +337,7 @@
       </div>
     </div>
   </section>
-  <section class="section on-ink real-secteur">
+  <section class="section on-ink real-secteur" id="ecoles">
     <div class="section-inner">
       <div class="real-tete">
         <div>
@@ -330,7 +353,7 @@
       </div>
     </div>
   </section>
-  <section class="section on-paper real-secteur">
+  <section class="section on-paper real-secteur" id="restaurants-bars">
     <div class="section-inner">
       <div class="real-tete">
         <div>
@@ -345,7 +368,7 @@
       </div>
     </div>
   </section>
-  <section class="section on-ink real-secteur">
+  <section class="section on-ink real-secteur" id="salons-de-coiffure">
     <div class="section-inner">
       <div class="real-tete">
         <div>
@@ -386,7 +409,7 @@
     <div class="footer-haut">
       <div class="fcoords">
         <a class="fbrand" href="/" aria-label="SPRO — retour à l'accueil">
-          <img src="/brand/logo-blanc.png" alt="SPRO — Société de Peinture Revêtement de l'Ouest" width="1200" height="610" />
+          <img src="/brand/logo-blanc.png" alt="SPRO — Société Peinture Revêtement de l'Ouest" width="1200" height="610" />
         </a>
         <p class="fadresse">6, rue Alain Gerbault — Z.I. du Prat<br />56000 Vannes</p>
         <p class="ftel">
@@ -432,7 +455,7 @@
     </nav>
 
     <div class="footer-bas">
-      <p>Société de Peinture Revêtement de l'Ouest — Entreprise de peinture et peintre en bâtiment à Vannes et dans le Morbihan. Ravalement de façades, peinture de bureaux et de copropriétés, projection au pistolet Airless.<br /><span class="footer-ia">Site conçu avec l'assistance d'outils d'intelligence artificielle — <a href="/mentions-legales.html">en savoir plus</a></span></p>
+      <p>Société Peinture Revêtement de l'Ouest — Entreprise de peinture et peintre en bâtiment à Vannes et dans le Morbihan. Ravalement de façades, peinture de bureaux et de copropriétés, projection au pistolet Airless.<br /><span class="footer-ia">Site conçu avec l'assistance d'outils d'intelligence artificielle — <a href="/mentions-legales.html">en savoir plus</a></span></p>
       <nav aria-label="Liens légaux">
         <a href="/mentions-legales.html">Mentions légales</a>
         <a href="/confidentialite.html">Politique de confidentialité</a>
@@ -441,7 +464,6 @@
   </footer>
 
   <script type="module" src="/src/carte.js"></script>
-
-  <script type="module" src="/src/carte.js"></script>
+  <script type="module" src="/src/realisations-filtre.js"></script>
 </body>
 </html>

@@ -40,9 +40,9 @@
   // d'intérieur porte le nom du métier — d'où la façade Specialized (66-72 s)
   // suivie de son magasin de vélos.
   const SECTORS = [
-    { name: 'Concessions automobile', until: 0.1676 },       //  →  24,8 s
+    { name: 'Concessions automobile', until: 0.1823 },       //  →  27,0 s
     { name: 'Hyper/Supermarchés', until: 0.2377 },           //  →  35,2 s
-    { name: 'Hôtellerie & Thalasso', until: 0.4424 },        //  →  65,5 s
+    { name: 'Hôtellerie & Thalasso', until: 0.3816 },        //  →  56,5 s
     { name: 'Ravalements extérieurs', until: 0.4893 },       //  →  72,5 s
     { name: 'Magasins', until: 0.5808 },                     //  →  86,0 s
     { name: 'Accueils', until: 0.6236 },                     //  →  92,3 s

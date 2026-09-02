@@ -32,18 +32,8 @@
       "statusCode": 301
     },
     {
-      "source": "/artisan-peintre-vannes/plan-du-site.php",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
       "source": "/devis-peinture-revetement.php",
       "destination": "/#contact",
-      "statusCode": 301
-    },
-    {
-      "source": "/merci.php",
-      "destination": "/",
       "statusCode": 301
     },
     {
@@ -122,23 +112,8 @@
       "statusCode": 301
     },
     {
-      "source": "/entreprise-peinture-vannes/recrutement-peintre-batiment.php",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
       "source": "/entreprise-peinture-vannes/(.*)",
       "destination": "/#expertise",
-      "statusCode": 301
-    },
-    {
-      "source": "/captcha_code_file.php",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/show-captcha.php",
-      "destination": "/",
       "statusCode": 301
     },
     {
@@ -194,11 +169,6 @@
     {
       "source": "/realisations/(.*)",
       "destination": "/realisations",
-      "statusCode": 301
-    },
-    {
-      "source": "/(.*)\\.php",
-      "destination": "/",
       "statusCode": 301
     }
   ],
@@ -283,6 +253,10 @@
     {
       "source": "/realisations",
       "destination": "/realisations.html"
+    },
+    {
+      "source": "/(.*)\\.php",
+      "destination": "/api/gone"
     }
   ]
 }

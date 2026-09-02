@@ -127,18 +127,8 @@
       "statusCode": 301
     },
     {
-      "source": "/entreprise-peinture-vannes/:chemin*",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/administration/:chemin*",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/public/:chemin*",
-      "destination": "/",
+      "source": "/entreprise-peinture-vannes/(.*)",
+      "destination": "/#expertise",
       "statusCode": 301
     },
     {

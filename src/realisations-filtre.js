@@ -36,7 +36,29 @@ if (barre && sections.length) {
     }
   };
 
-  const appliquer = (cible, deplacer) => {
+  // Amène la barre de filtre en haut de l'écran, sous l'en-tête fixe.
+  //
+  // On se replace toujours, y compris au chargement, et c'est nécessaire : le
+  // navigateur saute bien à l'ancre demandée, mais il calcule cette position
+  // sur la page entière — puis le filtrage retire tout ce qui précède et la
+  // position devient fausse. Sans ça on atterrissait au milieu des photos.
+  //
+  // On vise la barre plutôt que la section : le visiteur doit voir tout de
+  // suite qu'un tri est actif, et comment en sortir. Sinon il croit que le
+  // site ne montre que des hôtels.
+  //
+  // L'en-tête est en `position:fixed` : sa hauteur ne compte pas dans le
+  // défilement, il faut la retrancher à la main sous peine de coiffer la barre.
+  const placer = (geste) => {
+    const entete = document.querySelector('.topbar');
+    const marge = (entete ? entete.getBoundingClientRect().height : 0) + 16;
+    const cible = barre.getBoundingClientRect().top + window.scrollY - marge;
+    window.scrollTo({ top: Math.max(cible, 0), behavior: geste ? 'smooth' : 'auto' });
+  };
+
+  // `geste` distingue une action de l'utilisateur d'une application au
+  // chargement : seule la première mérite un défilement animé.
+  const appliquer = (cible, geste) => {
     for (const section of sections) {
       section.hidden = cible !== 'tous' && section.id !== cible;
     }
@@ -51,9 +73,7 @@ if (barre && sections.length) {
     const adresse = cible === 'tous' ? location.pathname : `${location.pathname}#${cible}`;
     history.replaceState(null, '', adresse);
 
-    // On ne remonte que sur une action de l'utilisateur : au chargement, le
-    // navigateur a déjà placé la page sur l'ancre demandée.
-    if (deplacer) barre.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    placer(geste);
   };
 
   for (const bouton of boutons) {
@@ -67,11 +87,24 @@ if (barre && sections.length) {
   // main, lien vers un autre secteur depuis la même page, ou navigation qui
   // pose l'URL de base avant le fragment. `appliquer` passe par
   // `replaceState`, qui ne déclenche pas `hashchange` : pas de boucle.
-  const suivreAdresse = (deplacer) => {
+  const suivreAdresse = (geste) => {
     const demande = decodeURIComponent(location.hash.slice(1));
-    if (demande && sections.some((s) => s.id === demande)) appliquer(demande, deplacer);
+    if (demande && sections.some((s) => s.id === demande)) appliquer(demande, geste);
   };
 
+  // Le filtrage est appliqué tout de suite, sans attendre : un `hashchange`
+  // ou une image d'animation ne viendraient pas dans un onglet ouvert en
+  // arrière-plan — clic du milieu, « ouvrir dans un nouvel onglet » — et le
+  // visiteur y trouverait les douze secteurs au lieu du sien.
   suivreAdresse(false);
+
+  // Le replacement, lui, doit repasser après le saut du navigateur vers
+  // l'ancre, qui survient une fois la page chargée et écraserait notre
+  // position. `load` plutôt qu'une image d'animation, pour la même raison
+  // d'arrière-plan : il finit toujours par arriver.
+  window.addEventListener('load', () => {
+    if (location.hash) placer(false);
+  });
+
   window.addEventListener('hashchange', () => suivreAdresse(true));
 }

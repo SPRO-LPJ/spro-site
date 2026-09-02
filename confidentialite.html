@@ -79,13 +79,17 @@
         <li>Numéro de téléphone</li>
         <li>Contenu du message</li>
       </ul>
-      <p>Des données techniques peuvent également être collectées automatiquement :</p>
+      <!-- Reformulé le 2026-09-02 : la version précédente listait « données de
+           navigation » et « pages consultées » comme si le site mesurait
+           l'audience. Il n'y a aucun outil de mesure — seuls subsistent les
+           journaux techniques de l'hébergeur, qu'aucun site ne peut éviter. -->
+      <p>Le site ne comporte aucun outil de mesure d'audience ni de suivi publicitaire. Les seules données techniques enregistrées sont les journaux de connexion tenus par l'hébergeur pour assurer le fonctionnement et la sécurité du site :</p>
       <ul>
         <li>Adresse IP</li>
-        <li>Type de navigateur</li>
-        <li>Données de navigation</li>
-        <li>Pages consultées</li>
+        <li>Type de navigateur et système d'exploitation</li>
+        <li>Date, heure et adresse de la page demandée</li>
       </ul>
+      <p>Ces journaux ne sont pas exploités à des fins d'analyse commerciale et ne permettent pas d'établir de profil de navigation.</p>
 
       <h2>4. Finalités du traitement</h2>
       <p>Les données collectées sont utilisées afin de :</p>
@@ -108,9 +112,22 @@
       <p>Les données issues des formulaires de contact sont conservées pendant une durée maximale de 3 ans à compter du dernier échange avec l'utilisateur.</p>
       <p>Les données techniques sont conservées conformément aux obligations légales applicables.</p>
 
+      <!-- Sous-traitants nommés le 2026-09-02 : l'article 13 du RGPD demande
+           les catégories de destinataires, et la CNIL recommande de les
+           nommer. La version précédente parlait de « prestataires techniques »
+           sans dire lesquels, ni que deux d'entre eux sont hors Union
+           européenne — ce que l'article 13.1.f impose de signaler. -->
       <h2>7. Destinataires des données</h2>
-      <p>Les données collectées sont exclusivement destinées à SPRO et à ses prestataires techniques intervenant dans le fonctionnement du site (hébergeur, maintenance, solutions de formulaires).</p>
-      <p>Aucune donnée personnelle n'est vendue ou cédée à des tiers.</p>
+      <p>Les données collectées sont destinées à SPRO. Elles ne sont ni vendues, ni cédées, ni utilisées à des fins publicitaires.</p>
+      <p>Deux sous-traitants techniques interviennent, strictement pour le fonctionnement du site :</p>
+      <ul>
+        <li><strong>Vercel Inc.</strong> (États-Unis) — hébergement du site et journaux de connexion.</li>
+        <li><strong>Web3Forms</strong> — acheminement des demandes du formulaire vers <a href="mailto:contact@spro.fr">contact@spro.fr</a>. Le service conserve temporairement les demandes avant suppression automatique (30 jours en offre gratuite), selon sa propre <a href="https://web3forms.com/privacy" target="_blank" rel="noopener">politique de confidentialité</a>.</li>
+      </ul>
+
+      <h2>7 bis. Transferts hors Union européenne</h2>
+      <p>L'hébergement et l'acheminement du formulaire reposent sur des prestataires susceptibles de traiter les données en dehors de l'Union européenne, notamment aux États-Unis. Ces transferts sont encadrés par les clauses contractuelles types de la Commission européenne et, le cas échéant, par le cadre de protection des données UE–États-Unis.</p>
+      <p>Si vous préférez que votre demande ne transite par aucun prestataire, vous pouvez nous écrire directement à <a href="mailto:contact@spro.fr">contact@spro.fr</a> ou nous appeler au <a href="tel:+33297541213">02 97 54 12 13</a>.</p>
 
       <h2>8. Sécurité</h2>
       <p>SPRO met en œuvre les mesures techniques et organisationnelles appropriées afin de protéger les données personnelles contre toute perte, altération, accès non autorisé ou divulgation.</p>
@@ -131,9 +148,25 @@
       <h2>10. Réclamation</h2>
       <p>Si vous estimez que vos droits ne sont pas respectés, vous pouvez adresser une réclamation auprès de la CNIL.</p>
 
-      <h2>11. Cookies</h2>
-      <p>Le site peut utiliser des cookies nécessaires à son bon fonctionnement ainsi que des cookies de mesure d'audience.</p>
-      <p>L'utilisateur peut à tout moment modifier ses préférences via les paramètres de son navigateur ou le bandeau de gestion des cookies mis à disposition sur le site.</p>
+      <!-- Réécrit le 2026-09-02. La version précédente annonçait des « cookies
+           de mesure d'audience » et un « bandeau de gestion des cookies » :
+           ni l'un ni l'autre n'existent sur ce site. Annoncer un bandeau
+           absent est plus grave que de n'en avoir aucun — la CNIL n'exige pas
+           de bandeau quand rien ne le justifie, mais elle sanctionne les
+           mentions trompeuses. Le texte décrit désormais l'état réel, vérifié
+           dans le code : aucun cookie, deux stockages fonctionnels, et Google
+           Maps qui ne se charge qu'au clic (voir src/carte.js). -->
+      <h2>11. Cookies et stockage local</h2>
+      <p><strong>Ce site ne dépose aucun cookie</strong> et n'utilise aucun outil de mesure d'audience, de publicité ou de réseau social. C'est pourquoi aucun bandeau de consentement ne vous est présenté : il n'y a rien à consentir.</p>
+      <p>Deux informations sont enregistrées dans la mémoire de votre navigateur, uniquement pour le confort de navigation. Elles restent sur votre appareil, ne sont jamais transmises et ne permettent pas de vous identifier :</p>
+      <ul>
+        <li>Votre choix d'activer ou de couper le son de la vidéo d'accueil, conservé d'une visite à l'autre.</li>
+        <li>La fermeture du rappel de contact, conservée le temps de votre visite.</li>
+      </ul>
+      <p>Ces deux enregistrements sont strictement nécessaires au service que vous demandez : à ce titre, ils sont dispensés de consentement au sens de l'article 82 de la loi Informatique et Libertés. Vous pouvez les effacer à tout moment en vidant les données de site de votre navigateur.</p>
+      <p><strong>Plan Google Maps.</strong> Le plan affiché en bas de page est une image hébergée sur notre serveur, qui n'émet aucune requête vers Google. La carte Google interactive — qui, elle, dépose des cookies et transmet votre adresse IP à Google — ne se charge que si vous cliquez pour la demander. Tant que vous ne cliquez pas, aucune donnée n'est transmise à Google.</p>
+
+      <p class="legal-maj">Dernière mise à jour : 2 septembre 2026.</p>
     </div>
   </main>
 

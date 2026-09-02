@@ -1860,6 +1860,10 @@ body.legal-page .topbar .brand{opacity:1;pointer-events:auto}
 .legal ul{line-height:1.75;margin:0 0 12px;padding-left:22px}
 .legal li{margin-bottom:6px}
 .legal a{color:var(--accent)}
+/* Date de révision : détachée du corps du texte, elle date la version lue
+   sans se faire passer pour une clause. */
+.legal-maj{margin-top:46px;padding-top:18px;border-top:1px solid var(--line-ink);
+  font-size:.88rem;color:var(--ink-muted)}
 
 /* ---- Footer ----
    Repris de l'ancien spro.fr (site Eodys) : coordonnées complètes, horaires

@@ -132,8 +132,16 @@ document.querySelectorAll('.real-card[data-galerie]').forEach((carte) => {
     const photos = g && g[carte.dataset.galerie];
     if (!photos || !photos.length) {
       // Pas de photos pour ce secteur : on ne bloque pas le visiteur, on
-      // l'emmène là où le lien pointait de toute façon.
-      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+      // l'emmène là où le lien pointait de toute façon. On relit le `href`
+      // plutôt que de coder la cible en dur — les cartes pointent désormais
+      // vers /realisations, et un lien réécrit ne doit pas laisser ce repli
+      // derrière lui.
+      // La 13e carte est un <div> sans href, et le manifeste peut échouer pour
+      // toutes les cartes à la fois : on garde le défilement vers le contact
+      // en dernier recours plutôt que de laisser un clic sans effet.
+      const cible = carte.getAttribute('href');
+      if (cible) window.location.href = cible;
+      else document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
       return;
     }
     ouvrir(

@@ -87,6 +87,16 @@
       "statusCode": 301
     },
     {
+      "source": "/travaux-peinture-morbihan/contacter-SPRO.php",
+      "destination": "/#contact",
+      "statusCode": 301
+    },
+    {
+      "source": "/travaux-peinture-morbihan/devis-peinture-revetements.php",
+      "destination": "/#contact",
+      "statusCode": 301
+    },
+    {
       "source": "/travaux-peinture-morbihan/:chemin*",
       "destination": "/peinture-interieure-vannes",
       "statusCode": 301
@@ -114,6 +124,11 @@
     {
       "source": "/peintre-chantier-particulier.php",
       "destination": "/peinture-airless-vannes",
+      "statusCode": 301
+    },
+    {
+      "source": "/peintre-chantier-pro.php",
+      "destination": "/peinture-bureaux-vannes",
       "statusCode": 301
     },
     {
@@ -219,6 +234,81 @@
     {
       "source": "/realisations/(.*)",
       "destination": "/realisations",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/contact.html",
+      "destination": "/#contact",
+      "statusCode": 301
+    },
+    {
+      "source": "/services.html",
+      "destination": "/realisations",
+      "statusCode": 301
+    },
+    {
+      "source": "/actualites",
+      "destination": "/realisations",
+      "statusCode": 301
+    },
+    {
+      "source": "/actualites/(.*)",
+      "destination": "/realisations",
+      "statusCode": 301
+    },
+    {
+      "source": "/galeries-photos/(.*)",
+      "destination": "/realisations",
+      "statusCode": 301
+    },
+    {
+      "source": "/produits/ravalement-de-facades-9",
+      "destination": "/ravalement-facade-vannes",
+      "statusCode": 301
+    },
+    {
+      "source": "/produits",
+      "destination": "https://lespeinturesdejules.fr/showroom/",
+      "statusCode": 301
+    },
+    {
+      "source": "/produits/(.*)",
+      "destination": "https://lespeinturesdejules.fr/showroom/",
+      "statusCode": 301
+    },
+    {
+      "source": "/aqualine-mat-evo--ecolabel-c20.html",
+      "destination": "https://lespeinturesdejules.fr/showroom/",
+      "statusCode": 301
+    },
+    {
+      "source": "/plafonds-b8.html",
+      "destination": "https://lespeinturesdejules.fr/showroom/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ravalement-facade-vannes/",
+      "destination": "/ravalement-facade-vannes",
+      "statusCode": 301
+    },
+    {
+      "source": "/peinture-interieure-vannes/",
+      "destination": "/peinture-interieure-vannes",
+      "statusCode": 301
+    },
+    {
+      "source": "/peinture-airless-vannes/",
+      "destination": "/peinture-airless-vannes",
+      "statusCode": 301
+    },
+    {
+      "source": "/peinture-bureaux-vannes/",
+      "destination": "/peinture-bureaux-vannes",
       "statusCode": 301
     }
   ],

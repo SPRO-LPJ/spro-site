@@ -128,29 +128,44 @@ l'extension `.php` sur n'importe quel chemin (`.aspx` ou `.php5` passent, eux, e
 404 normal). Les `redirects` de `vercel.json` sont évalués **avant** cette
 protection — c'est ce qui rend la récupération possible sans toucher au pare-feu.
 
+⚠️ **L'ancien site n'était pas qu'en `.php`.** Le filet `/(.*)\.php` → 410 donnait
+une fausse impression d'exhaustivité : 26 anciennes adresses sans cette extension
+lui échappaient et répondaient 404, dont `/contact.html` et `/services.html`.
+Elles ont été récupérées le 03/09. Ne jamais auditer les redirections depuis cette
+table — la liste réelle se reconstitue avec l'API CDX de Wayback :
+
+```
+curl -s "http://web.archive.org/cdx/search/cdx?url=spro.fr*&output=text&fl=original,statuscode&collapse=urlkey&limit=3000"
+```
+
 Le JSON n'accepte pas de commentaires, d'où la carte ici. Les règles vont du plus
 précis au plus général ; Vercel s'arrête à la première correspondance.
 
 | Ancienne URL | Redirigée vers |
 | --- | --- |
-| `/vente-peinture-vannes/*`, `/magasin-peinture-vannes/*`, `/catalogue-page1.php` | `/#boutique` |
-| `/renovation-deco-vannes/*`, `/peintre-chantier-{pro,particulier}.php` | `/#domaines` |
-| `/peintre-decorateur-morbihan/*`, `/galerie_photo.php`, `/actualites.php` | `/#realisations` |
-| `/travaux-peinture-morbihan/*`, `/devis-peinture-revetement.php`, `/merci.php` | `/#contact` |
+| `/ravalement-facade.php`, `/peinture-exterieure.php`, `…/pour-ravalement-et-peinture-exterieure-3.php`, `/produits/ravalement-de-facades-9` | `/ravalement-facade-vannes` |
+| `/peinture-interieure.php`, `/renovation-deco-vannes/*`, `/travaux-peinture-morbihan/*` (reste) | `/peinture-interieure-vannes` |
+| `/peintre-chantier-particulier.php` | `/peinture-airless-vannes` |
+| `/peintre-chantier-pro.php` | `/peinture-bureaux-vannes` |
+| `/peintre-decorateur-morbihan/*`, `/galerie_photo.php`, `/actualites.php`, `/actualites/*`, `/galeries-photos/*`, `/realisations/*`, `/secteur/*`, `/services.html` | `/realisations` |
+| `/contact.php`, `/devis.php`, `/devis-peinture-revetement.php`, `/contact.html`, `…/contacter-SPRO.php`, `…/devis-peinture-revetements.php` | `/#contact` |
+| `/vente-peinture-vannes/*`, `/magasin-peinture-vannes/*`, `/catalogue-page1.php`, `/showroom.php`, `/magasin.php`, `/produits/*`, `/plafonds-b8.html`, `/aqualine-mat-evo--ecolabel-c20.html` | `lespeinturesdejules.fr/showroom/` |
 | `…/conseils-suivis-chantiers.php` | `/#methode` |
-| `…/recrutement-peintre-batiment.php` | `/#histoire` |
-| `/entreprise-peinture-vannes/*` (reste) | `/#expertise` |
+| `/entreprise-peinture-vannes/*` (reste), `/notre-expertise*` | `/#expertise` |
+| `/histoire*`, `/a-propos*` | `/#histoire` |
 | `…/mentions-legales.php` | `/mentions-legales.html` |
-| `/administration/*`, `/public/*`, captchas | `/` |
-| tout autre `*.php` | `/` (filet de sécurité) |
+| `/index.html` | `/` |
+| `/faq` | `/faq.html` |
+| `/{ravalement-facade,peinture-interieure,peinture-airless,peinture-bureaux}-vannes/` | même URL sans slash final |
+| `/*.html` des 5 pages métiers | même URL sans extension (308) |
+| tout autre `*.php` | 410 Gone via `api/gone.js` |
 
 Toute modification doit être validée par `vercel build --yes` avant d'être poussée :
-une erreur de schéma dans `vercel.json` fait échouer le déploiement entier.
+une erreur de schéma dans `vercel.json` fait échouer le déploiement entier. Vérifier
+aussi l'**ordre des règles compilées** dans `.vercel/output/config.json` : c'est là
+qu'on voit qu'une règle spécifique passe bien avant sa générique.
 
-⚠️ Cette table décrit l'intention d'origine et a divergé de `vercel.json` quand les
-pages de métier ont été créées le 01/09 : plusieurs cibles `/#ancre` ont été
-remplacées par les nouvelles pages, et `/entreprise-peinture-vannes/*` a perdu la
-sienne au passage. La source de vérité est `vercel.json`.
+La source de vérité reste `vercel.json`.
 
 ## Le cache HTTP (`vercel.json`, section `headers`)
 

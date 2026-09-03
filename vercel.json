@@ -242,6 +242,11 @@
       "statusCode": 301
     },
     {
+      "source": "/faq",
+      "destination": "/faq.html",
+      "statusCode": 301
+    },
+    {
       "source": "/contact.html",
       "destination": "/#contact",
       "statusCode": 301

@@ -267,6 +267,11 @@
       "statusCode": 301
     },
     {
+      "source": "/vente-peinture-vannes/les-peintures-facades-2.php",
+      "destination": "/ravalement-facade-vannes",
+      "permanent": true
+    },
+    {
       "source": "/catalogue-page1.php",
       "destination": "https://lespeinturesdejules.fr/showroom/",
       "statusCode": 301

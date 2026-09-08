@@ -222,11 +222,6 @@
       "statusCode": 301
     },
     {
-      "source": "/renovation-deco-vannes/pour-application-de-beton-cire-dans-le-morbihan-8.php",
-      "destination": "https://lespeinturesdejules.fr/beton-cire/",
-      "statusCode": 301
-    },
-    {
       "source": "/renovation-deco-vannes/pour-vente-de-peinture-professionnelle-aux-particuliers-1.php",
       "destination": "https://lespeinturesdejules.fr/showroom/",
       "statusCode": 301
@@ -288,7 +283,7 @@
     },
     {
       "source": "/vente-peinture-vannes/les-enduit-decoratif-5.php",
-      "destination": "https://lespeinturesdejules.fr/beton-cire/",
+      "destination": "https://lespeinturesdejules.fr/enduit-a-la-chaux/",
       "statusCode": 301
     },
     {

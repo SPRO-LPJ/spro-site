@@ -148,8 +148,8 @@
       <img class="brand-logo brand-logo-sombre" src="/brand/logo-noir.png" alt="SPRO" width="1200" height="610" />
     </a>
 
-    <!-- Sous 1100 px, `.nav` passe en display:none (styles.css) : pas de burger
-         ici, la page ne charge pas header.js. Les CTA restent accessibles. -->
+    <!-- Sous 1100 px, `.nav` passe en display:none (styles.css) : c'est le
+         burger du bloc CTA qui prend le relais, comme sur l'accueil. -->
     <nav class="nav" aria-label="Navigation principale">
       <div class="nav-groupe">
         <button type="button" class="nav-declencheur" aria-haspopup="true" aria-expanded="false">Prestations<span class="nav-fleche" aria-hidden="true"></span></button>
@@ -171,8 +171,38 @@
       <a class="lpdj" href="https://lespeinturesdejules.fr" target="_blank" rel="noopener">Les Peintures de Jules</a>
       <a class="boutique" href="https://peinturesdejules.store" target="_blank" rel="noopener">Boutique</a>
       <a class="devis" href="/#contact"><span class="devis-long">Demande de devis</span><span class="devis-court">Devis</span></a>
+      <button type="button" class="burger" id="burger"
+              aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menuMobile">
+        <span></span><span></span>
+      </button>
     </div>
   </header>
+
+  <!-- Menu mobile. Un visiteur arrivé de Google sur cette page n'avait aucun
+       menu sous 1100 px : il devait descendre au pied de page pour circuler.
+       Mêmes entrées que l'accueil, mais les ancres sont préfixées de `/` —
+       les sections vivent sur la page d'accueil, pas ici. -->
+  <div class="menu-mobile" id="menuMobile" hidden>
+    <nav aria-label="Navigation mobile">
+      <a href="/ravalement-facade-vannes">Ravalement de façade</a>
+      <a href="/peinture-interieure-vannes">Peinture intérieure</a>
+      <a href="/peinture-bureaux-vannes">Peinture de bureaux</a>
+      <a href="/peinture-airless-vannes">Peinture au pistolet Airless</a>
+      <a href="/#realisations">Réalisations</a>
+      <a href="/#expertise">Expertise</a>
+      <a href="/#histoire">Histoire</a>
+      <a href="/#domaines">Domaines</a>
+      <a href="/#hqe">Démarche HQE</a>
+      <a href="/#avis">Avis</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+    <div class="menu-mobile-pied">
+      <a class="mm-lpdj" href="https://lespeinturesdejules.fr" target="_blank" rel="noopener">Les Peintures de Jules ↗</a>
+      <a class="mm-boutique" href="https://peinturesdejules.store" target="_blank" rel="noopener">Boutique en ligne ↗</a>
+      <a class="mm-tel" href="tel:+33297541213">02 97 54 12 13</a>
+      <a class="btn btn-primary" href="/#contact">Demande de devis</a>
+    </div>
+  </div>
 
   <main class="service" id="content">
     <div class="service-inner">
@@ -357,5 +387,6 @@
   <script type="module" src="/src/carte.js"></script>
 
   <script type="module" src="/src/carte.js"></script>
+  <script type="module" src="/src/header.js"></script>
 </body>
 </html>

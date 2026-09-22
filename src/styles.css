@@ -596,6 +596,23 @@ a.promo-titre-accent:focus-visible{border-bottom-color:currentColor}
 }
 .promo-scrollhint span{color:var(--accent);display:inline-block;animation:promoHintBounce 1.6s ease-in-out infinite}
 .promo-scrollhint.masque{opacity:0;pointer-events:none}
+/* L'invite flotte au-dessus du contenu qui défile derrière elle : sans rien
+   dessous, les deux textes se superposaient et devenaient illisibles tant
+   qu'on n'avait pas commencé à défiler. Ce dégradé fond le bas du panneau
+   vers le blanc : le texte s'efface progressivement sous l'invite au lieu de
+   la percuter, et le « il y a la suite en dessous » se lit mieux.
+   Posé sur `.promo-secteur` (et non sur `.promo-scroll`, qui défile avec son
+   contenu) pour rester collé au bas de l'écran. z-index 2 : au-dessus du
+   contenu, sous l'invite (z-index 3) et sous la croix de fermeture. */
+.promo-secteur::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:160px;z-index:2;
+  pointer-events:none;transition:opacity .4s ease;
+  background:linear-gradient(180deg,rgba(255,255,255,0),#fff 72%);
+}
+/* Le dégradé s'en va avec l'invite, dès le premier défilement. `:has` non
+   supporté = dégradé simplement conservé : le bas du panneau reste fondu,
+   sans rien casser. */
+.promo-secteur:has(.promo-scrollhint.masque)::after{opacity:0}
 @keyframes promoHintBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
 .promo-close{
   /* Sous le header, qui reste affiché pendant l'annonce en version claire :

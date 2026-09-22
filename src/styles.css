@@ -112,6 +112,10 @@ body.promo-ouverte .topbar{
 }
 body.promo-ouverte .topbar::before{opacity:0}
 body.promo-ouverte .nav a{color:var(--ink)}
+/* Le déclencheur du sous-menu est un bouton, pas un lien : la règle ci-dessus
+   ne l'atteignait pas et il restait blanc sur le header passé au blanc. Le
+   menu s'ouvrait alors au survol d'un libellé invisible. */
+body.promo-ouverte .nav .nav-declencheur{color:var(--ink)}
 body.promo-ouverte .burger{border-color:rgba(14,17,20,.28)}
 body.promo-ouverte .burger span{background:var(--ink)}
 /* La marque est masquée tant que le hero affiche le grand logo ; sur l'annonce
@@ -435,7 +439,17 @@ h2.promo-titre{
   font-size:clamp(2rem,4vw,3.2rem);line-height:1.12;letter-spacing:-.02em;
   color:var(--ink);font-weight:700;
 }
+/* Le segment bleu du titre est le premier réflexe de clic du visiteur : il mène
+   à la page Airless. Filet discret pour signaler le lien sans alourdir le
+   titre, plein au survol. */
 .promo-titre-accent{color:var(--accent)}
+a.promo-titre-accent{
+  text-decoration:none;
+  border-bottom:2px solid rgba(0,77,149,.3);
+  transition:border-color .2s ease;
+}
+a.promo-titre-accent:hover,
+a.promo-titre-accent:focus-visible{border-bottom-color:currentColor}
 /* Contenu long (annonce détaillée) : texte un peu plus grand, interligne
    plus aéré et espacement vertical généreux entre paragraphes pour que
    chaque mot reste confortable à lire même en scrollant vite. */

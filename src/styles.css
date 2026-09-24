@@ -2625,3 +2625,11 @@ body.legal-page .nav .nav-declencheur{color:var(--ink)}
 /* Ancre /faq.html#airless (lien depuis la page Airless) : le titre ne doit
    pas finir sous le header fixe. */
 .faq-cat[id]{scroll-margin-top:108px}
+
+/* Page Airless : le bas de page suit l'axe centré de la vitrine du haut,
+   au lieu de repartir en colonne calée à gauche. Galerie et cartes de liens
+   gardent leur largeur ; seuls les textes sont centrés. */
+.service-airless .service-inner > h2,
+.service-airless .service-inner > h3,
+.service-airless .service-inner > p{text-align:center;margin-left:auto;margin-right:auto}
+.service-airless .service-inner > h2::before{left:50%;transform:translateX(-50%)}

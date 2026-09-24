@@ -2588,3 +2588,40 @@ body.legal-page .nav .nav-declencheur{color:var(--ink)}
 @media(prefers-reduced-motion:reduce){
   .nav-sous,.nav-fleche{transition:none}
 }
+
+/* ---- Page Airless : visuel de l'annonce « Découvrir cette offre » ----
+   Le haut de la page réutilise les blocs .promo-* et .etapes de l'annonce de
+   l'accueil. Les règles génériques `.service p/h2/h3/ul` sont plus
+   spécifiques que ces blocs : on les neutralise ici, dans la vitrine seulement. */
+.airless-vitrine{max-width:720px;text-align:center;padding-bottom:40px}
+.airless-vitrine .kicker{justify-content:center}
+.service h1.promo-titre{
+  margin:18px 0 0;font-size:clamp(2rem,4vw,3.2rem);line-height:1.12;
+  letter-spacing:-.02em;font-weight:700;color:var(--ink);
+}
+.service .airless-vitrine p{max-width:none}
+.service .airless-vitrine .lead{max-width:62ch;margin:22px auto 0}
+.service .airless-vitrine .lead-strong{margin:28px auto 0;max-width:32ch}
+.service .airless-vitrine .h3{margin:68px 0 18px;font-size:clamp(1.3rem,2.2vw,1.85rem);line-height:1.25;font-weight:700}
+.service .airless-vitrine ul{padding-left:0;max-width:none}
+.service .airless-vitrine .promo-list{max-width:560px;margin:26px auto 0}
+.service .airless-vitrine .promo-badges li,
+.service .airless-vitrine .promo-list li{margin-bottom:0}
+.service .airless-vitrine h3.etape-titre{margin:0 0 6px;font-size:1rem;line-height:1.25}
+.service .airless-vitrine .etape-spro h3.etape-titre{font-size:1.12rem}
+.service .airless-vitrine .etape-texte{margin:0;line-height:1.55}
+.service .airless-vitrine .etapes-groupe{margin:0 0 14px}
+.service .airless-vitrine * + .etapes-groupe{margin-top:28px}
+.service .airless-vitrine .promo-signature{margin:56px auto;max-width:640px}
+.service .airless-vitrine .promo-boutique-texte p{margin:0}
+.service .airless-vitrine .promo-boutique-texte a:not(.btn-pro){color:var(--accent)}
+.service .airless-vitrine .btn{margin-top:44px}
+.service .airless-vitrine h2.h3{border-top:0;padding-top:0}
+.service .airless-vitrine h2.h3::before{content:none}
+/* `.service a` peint tous les liens en bleu, boutons compris : on leur rend
+   leur texte blanc. */
+.service .airless-vitrine a.btn,
+.service .airless-vitrine a.btn-pro{color:#fff}
+/* Ancre /faq.html#airless (lien depuis la page Airless) : le titre ne doit
+   pas finir sous le header fixe. */
+.faq-cat[id]{scroll-margin-top:108px}

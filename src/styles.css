@@ -2234,8 +2234,11 @@ body.legal-page .topbar .brand{opacity:1;pointer-events:auto}
   color:var(--accent);border-bottom:1px solid currentColor;
 }
 .exp-lien::after{content:" \2192"}
-.exp-lien:hover{color:var(--paper)}
-body.legal-page .exp-lien:hover{color:var(--ink)}
+/* Au survol, le lien fonce vers la couleur du texte plutôt que vers le blanc :
+   sur fond clair (réalisations, annonce Airless), du blanc le faisait
+   disparaître au clic. Sur fond encre, il s'éclaircit vers le papier. */
+.exp-lien:hover{color:var(--ink)}
+.on-ink .exp-lien:hover{color:var(--paper)}
 
 /* Bloc de liens métier ajouté au pied de page : présent sur toutes les pages,
    c'est le maillage qui fait circuler l'autorité vers les pages de service. */

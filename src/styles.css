@@ -2633,3 +2633,36 @@ body.legal-page .nav .nav-declencheur{color:var(--ink)}
 .service-airless .service-inner > h3,
 .service-airless .service-inner > p{text-align:center;margin-left:auto;margin-right:auto}
 .service-airless .service-inner > h2::before{left:50%;transform:translateX(-50%)}
+
+/* Bandeau de consentement à la mesure d'audience (src/consentement.js).
+   Même famille que le rappel de contact : carte sombre flottante. Il se place
+   à gauche parce que le rappel occupe la droite, et passe sous le menu mobile
+   (z-index 55) comme sous l'en-tête. Les deux boutons sont identiques : la
+   CNIL exige que refuser soit aussi simple et aussi visible qu'accepter. */
+.consentement{
+  position:fixed;left:var(--marge-laterale);bottom:26px;z-index:50;
+  width:min(26rem,calc(100vw - 40px));
+  background:var(--ink-soft);color:var(--paper);
+  border:1px solid rgba(243,241,236,.16);border-radius:4px;
+  padding:22px 24px 20px;
+  box-shadow:0 26px 60px -24px rgba(0,0,0,.75);
+  animation:consentement-entree .5s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes consentement-entree{from{opacity:0;transform:translateY(18px)}}
+@media(prefers-reduced-motion:reduce){.consentement{animation:none}}
+.consentement-titre{font-family:var(--font-display);font-weight:600;font-size:1.05rem;
+  line-height:1.2;letter-spacing:-.01em;margin:0 0 8px}
+.consentement-texte{font-size:.88rem;line-height:1.55;color:var(--paper-lisible);margin:0}
+.consentement-texte a{color:var(--paper);text-decoration:underline;text-underline-offset:3px}
+.consentement-actions{display:flex;gap:10px;margin-top:18px}
+.consentement-actions button{
+  flex:1;font-family:var(--font-display);font-weight:600;font-size:.9rem;letter-spacing:.03em;
+  padding:12px 16px;border-radius:2px;cursor:pointer;
+  background:transparent;color:var(--paper);border:1px solid rgba(243,241,236,.55);
+  transition:background .2s,color .2s,border-color .2s;
+}
+.consentement-actions button:hover{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.consentement-actions button:focus-visible{outline:2px solid var(--bleu-clair);outline-offset:2px}
+@media(max-width:560px){
+  .consentement{left:12px;right:12px;bottom:12px;width:auto;padding:18px 18px 16px}
+}

@@ -98,10 +98,10 @@ const ouvrirBandeau = (focaliser) => {
   if (!bandeau) {
     bandeau = document.createElement('section');
     bandeau.className = 'consentement';
-    bandeau.setAttribute('aria-label', 'Cookies de mesure d’audience');
+    bandeau.setAttribute('aria-label', 'Cookies');
     bandeau.innerHTML = `
-      <p class="consentement-titre">Mesure d’audience</p>
-      <p class="consentement-texte">Avec votre accord, nous utilisons Google Analytics pour savoir quelles pages sont lues et comment vous nous avez trouvés. Aucune publicité, aucun suivi d’un site à l’autre. <a href="/confidentialite.html#cookies">En savoir plus</a></p>
+      <p class="consentement-titre">Acceptez-vous les cookies&nbsp;?</p>
+      <p class="consentement-texte">Avec votre accord, nous utilisons les cookies de Google Analytics pour savoir quelles pages sont lues et comment vous nous avez trouvés. Aucune publicité, aucun suivi d’un site à l’autre. <a href="/confidentialite.html#cookies">En savoir plus</a></p>
       <div class="consentement-actions">
         <button type="button" data-choix="refuse">Refuser</button>
         <button type="button" data-choix="accepte">Accepter</button>

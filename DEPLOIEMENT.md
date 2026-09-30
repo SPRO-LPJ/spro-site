@@ -183,11 +183,14 @@ revalidait l'intégralité du site.
 Les pages HTML gardent volontairement le défaut sans cache : leur contenu change, et
 elles sont légères.
 
+## Mesure d'audience (depuis le 2026-09-30)
+Google Analytics 4, propriété spro.fr, ID `G-6DSCX1P79E`, compte « SPRO – Peintures
+de Jules » sous djoan.burban56@gmail.com. Chargé par `src/consentement.js`
+uniquement après « Accepter » dans le bandeau cookies ; le lien « Gestion des
+cookies » du pied de page le rouvre. Toute nouvelle page doit charger ce module,
+sinon elle échappe à la mesure.
+
 ## Ce qui reste ouvert
 - **Les avis Google.** `VITE_GOOGLE_PLACES_KEY` est vide : le site affiche les
   7 témoignages statiques. C'est un repli volontaire, pas une panne.
-- **Bandeau cookies.** La politique de confidentialité en mentionne un. Tant
-  qu'aucun outil de mesure d'audience n'est branché, aucun cookie n'est déposé et
-  le bandeau n'est pas nécessaire — mais il le deviendra le jour où une analytics
-  arrive.
 - **Le 404.** Aucune page d'erreur personnalisée ; l'hébergeur affichera la sienne.

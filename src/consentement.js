@@ -23,6 +23,7 @@ const DESACTIVATION = `ga-disable-${ID_MESURE}`;
 
 let analyticsCharge = false;
 let bandeau = null;
+let ouvreur = null; // lien « Gestion des cookies » qui a ouvert le bandeau
 
 const lireChoix = () => {
   try {
@@ -57,7 +58,11 @@ const chargerAnalytics = () => {
     ad_personalization: 'denied',
   });
   window.gtag('js', new Date());
-  window.gtag('config', ID_MESURE, { cookie_expires: TREIZE_MOIS_S });
+  window.gtag('config', ID_MESURE, {
+    cookie_expires: TREIZE_MOIS_S,
+    allow_google_signals: false,
+    allow_ad_personalization_signals: false,
+  });
   const script = document.createElement('script');
   script.async = true;
   script.src = `https://www.googletagmanager.com/gtag/js?id=${ID_MESURE}`;
@@ -86,10 +91,14 @@ const appliquerChoix = (choix) => {
   else couperAnalytics();
 };
 
+// Le focus revient au lien qui a ouvert le bandeau : sans ça, il tombe sur
+// <body> et un visiteur au clavier perd sa place dans la page.
 const fermerBandeau = () => {
   if (!bandeau) return;
   bandeau.remove();
   bandeau = null;
+  if (ouvreur) ouvreur.focus();
+  ouvreur = null;
 };
 
 // `focaliser` seulement quand le visiteur a demandé le bandeau : à l'arrivée
@@ -124,8 +133,10 @@ export const mesurer = (evenement, parametres = {}) => {
 };
 
 document.addEventListener('click', (e) => {
-  if (e.target.closest('[data-consentement-ouvrir]')) {
+  const lienCookies = e.target.closest('[data-consentement-ouvrir]');
+  if (lienCookies) {
     e.preventDefault();
+    ouvreur = lienCookies;
     ouvrirBandeau(true);
     return;
   }
@@ -137,4 +148,9 @@ document.addEventListener('click', (e) => {
 
 const choix = lireChoix();
 if (choix === 'accepte') chargerAnalytics();
-else if (choix === null) ouvrirBandeau(false);
+else if (choix === null) {
+  // Choix jamais donné, ou expiré après six mois : les cookies d'un ancien
+  // accord ne doivent pas survivre à la question qu'on repose.
+  couperAnalytics();
+  ouvrirBandeau(false);
+}

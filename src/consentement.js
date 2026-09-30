@@ -101,7 +101,7 @@ const ouvrirBandeau = (focaliser) => {
     bandeau.setAttribute('aria-label', 'Cookies');
     bandeau.innerHTML = `
       <p class="consentement-titre">Acceptez-vous les cookies&nbsp;?</p>
-      <p class="consentement-texte">Avec votre accord, nous utilisons les cookies de Google Analytics pour savoir quelles pages sont lues et comment vous nous avez trouvés. Aucune publicité, aucun suivi d’un site à l’autre. <a href="/confidentialite.html#cookies">En savoir plus</a></p>
+      <p class="consentement-texte">Ils nous permettent de mesurer la fréquentation du site et de comprendre ce qui vous est utile, pour l’améliorer. Pas de publicité, aucune donnée revendue. <a href="/confidentialite.html#cookies">En savoir plus</a></p>
       <div class="consentement-actions">
         <button type="button" data-choix="refuse">Refuser</button>
         <button type="button" data-choix="accepte">Accepter</button>

@@ -11,6 +11,8 @@
 // Tant que l'endpoint n'est pas renseigné, le formulaire le dit franchement et
 // bascule sur le téléphone et l'e-mail plutôt que de faire semblant.
 
+import { mesurer } from './consentement.js';
+
 const ENDPOINT = (import.meta.env.VITE_CONTACT_ENDPOINT || '').trim();
 const CLE = (import.meta.env.VITE_CONTACT_KEY || '').trim();
 const MAIL_DE_SECOURS = 'contact@spro.fr';
@@ -72,6 +74,9 @@ if (form && done) {
       if (!reponse.ok) throw new Error('HTTP ' + reponse.status);
 
       form.reset();
+      // Compté seulement ici, après confirmation du service d'envoi : un clic sur
+      // « Envoyer » qui échoue n'est pas une demande de devis.
+      mesurer('generate_lead');
       bouton.textContent = 'Demande envoyée';
       message('Merci, votre demande est bien arrivée. Nous vous recontactons rapidement.', 'ok');
     } catch (err) {

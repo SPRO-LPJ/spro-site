@@ -2543,6 +2543,40 @@ main#content{counter-reset:secteur}
    toute la largeur disponible. */
 .service-grille{max-width:none}
 
+/* Références nommées (page ravalement) : une carte par client, photo au
+   format 4/3. Pour un avant/après, deux bandeaux 8/3 empilés font le même
+   4/3, ce qui garde les trois cartes alignées. `.service ul/li/p/h3` posent
+   marges et largeurs de lecture : on les neutralise dans les cartes. */
+.service .refs-ravalement{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;margin:28px 0 22px;padding:0;list-style:none;max-width:none;
+}
+.service .ref-carte{
+  margin:0;display:flex;flex-direction:column;
+  border:1px solid var(--line-ink);border-radius:2px;overflow:hidden;
+}
+.ref-media{aspect-ratio:4/3;background:var(--paper-2);overflow:hidden}
+.ref-media img{display:block;width:100%;height:100%;object-fit:cover}
+.ref-avant-apres{display:grid;grid-template-rows:1fr 1fr;gap:3px}
+.ref-avant-apres figure{margin:0;position:relative;min-height:0;overflow:hidden}
+/* Photos de chantier : le bâtiment occupe le bas du cadre, le ciel le haut.
+   Un recadrage centré en bandeau couperait la façade. */
+.ref-avant-apres img{object-position:50% 72%}
+.ref-avant-apres figcaption{
+  position:absolute;left:10px;top:10px;padding:4px 9px;border-radius:2px;
+  background:rgba(14,17,20,.8);color:var(--paper);
+  font-family:var(--font-display);font-size:.7rem;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;
+}
+.ref-corps{padding:18px 20px 22px}
+.service .ref-carte h3{margin:0 0 6px;font-size:1.08rem;line-height:1.3}
+.service .ref-carte .ref-meta{
+  margin:0 0 10px;font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink-muted);
+}
+.service .ref-carte p{margin:0;font-size:.94rem;line-height:1.6;max-width:none}
+#references{scroll-margin-top:108px}
+
 @media(max-width:640px){
   .service h2{margin-top:52px;padding-top:18px}
 }

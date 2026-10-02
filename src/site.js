@@ -1,6 +1,8 @@
 // SPRO — Couche premium : scroll fluide (Lenis), parallaxe, titres en masque,
 // barre de progression, révélations, compteurs. Tout se dégrade proprement
 // sans JS / en prefers-reduced-motion.
+import { lectureDifferee } from './lecture-differee.js';
+
 (function(){
   document.documentElement.classList.add('js');
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -373,6 +375,9 @@
     videosCanal.forEach((video) => {
       video.style.cursor = 'pointer';
       video.addEventListener('click', () => ouvrirVideo(video));
+      // Plus d'autoplay dans le HTML : la vidéo ne se charge et ne se lance
+      // qu'à l'approche de son bloc (voir lecture-differee.js).
+      lectureDifferee(video, video.closest('.canal') || video.parentElement);
     });
   }
 })();

@@ -13,6 +13,8 @@
 // Étape précédente pour les gammes, abandonnée depuis : une photo produit
 // (packshot fabricant, 225 px seulement) puis une carte de teinte peinte —
 // remplacées maintenant par les vidéos ci-dessus.
+import { lire, surApproche } from './lecture-differee.js';
+
 (function(){
   const deck = document.getElementById('hqeDeck');
   const volet = document.getElementById('hqeVolet');
@@ -125,8 +127,11 @@
       // la recadrerait en une mince bande zoomée. `hqe-media-portrait` bascule
       // en `contain` sur fond sombre pour la montrer entière, en incrustation.
       const cls = e.portrait ? ' class="hqe-media-portrait"' : '';
-      return `<video${cls} src="${e.video}" poster="${e.poster}" muted loop playsinline autoplay
-                     preload="metadata" aria-label="${e.legende}"></video>
+      // Ni autoplay ni préchargement : la section est loin sous le hero, et
+      // la vidéo ECODDS (affichée d'office) pesait 4,9 Mo dès l'ouverture de
+      // la page. `lancerSiProche()` la démarre quand le volet approche.
+      return `<video${cls} src="${e.video}" poster="${e.poster}" muted loop playsinline
+                     preload="none" aria-label="${e.legende}"></video>
               <figcaption>${e.legende}</figcaption>`;
     }
     if (e.image) {
@@ -157,7 +162,25 @@
         <p>${e.texte}</p>
         ${e.liste ? `<ul class="hqe-points">${e.liste.map(x => `<li>${x}</li>`).join('')}</ul>` : ''}
       </div>`;
+    lancerSiProche();
   }
+
+  // Lecture différée : la vidéo du volet ne part que lorsque le volet est
+  // proche de l'écran, et s'arrête quand il s'en éloigne. On observe le volet
+  // lui-même (conteneur stable), pas la vidéo, remplacée à chaque choix.
+  let voletProche = false;
+  const videoDuVolet = () => volet.querySelector('video');
+  function lancerSiProche(){
+    const v = videoDuVolet();
+    if (v && voletProche) lire(v);
+  }
+  surApproche(volet, (proche) => {
+    voletProche = proche;
+    const v = videoDuVolet();
+    if (!v) return;
+    if (proche) lire(v);
+    else v.pause();
+  });
 
   choisir(0);
 })();

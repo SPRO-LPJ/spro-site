@@ -148,6 +148,11 @@ body.promo-ouverte .scroll-progress{opacity:0;pointer-events:none}
    commencerait à manger le hero. */
 .brand{display:block;text-decoration:none;color:#fff;line-height:0;transition:opacity .6s ease}
 .brand-logo{display:block;height:64px;width:auto}
+/* Les logos passent par un <picture> (WebP sans perte, plusieurs tailles, PNG
+   en repli). `display:contents` efface l'enveloppe de la mise en page : l'<img>
+   reste l'enfant direct de son conteneur (flex du hero, .brand, .fbrand), et
+   toutes les règles existantes s'appliquent comme avant. */
+.logo-pic{display:contents}
 /* Sur le hero, le grand logo au-dessus du titre porte l'identité au départ ;
    celui du header reste invisible tant qu'il est affiché, puis prend le relais
    dès que l'accroche s'efface (hero.js bascule `.marque-visible` au même

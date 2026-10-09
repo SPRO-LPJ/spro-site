@@ -65,10 +65,40 @@ const datesMaj = () => ({
   },
 });
 
+// Retire les commentaires HTML des pages publiées.
+//
+// Les sources sont abondamment commentées (choix de mise en page, arbitrages
+// SEO, historique des décisions) : ces notes sont utiles à l'équipe, mais
+// n'importe quel visiteur les lisait via « Afficher le code source ». Elles
+// restent dans les fichiers du dépôt ; seul le HTML servi en est débarrassé.
+// Le contenu des balises <script>, <style>, <textarea> et <pre> est laissé
+// intact : une séquence « <!-- » peut y avoir un sens.
+const BLOCS_INTACTS = /(<(script|style|textarea|pre)\b[^>]*>[\s\S]*?<\/\2>)/gi;
+const sansCommentaires = () => ({
+  name: 'spro-sans-commentaires',
+  apply: 'build',
+  transformIndexHtml: {
+    order: 'post',
+    handler(html) {
+      return html
+        .split(BLOCS_INTACTS)
+        .map((morceau, i) => {
+          // split() avec deux groupes capturants : 0 = texte, 1 = bloc, 2 = nom de balise.
+          if (i % 3 !== 0) return i % 3 === 1 ? morceau : '';
+          return morceau
+            .replace(/<!--[\s\S]*?-->/g, '')
+            // Les lignes vidées par le retrait ne laissent pas de trou.
+            .replace(/\n[ \t]*(?=\n)/g, '');
+        })
+        .join('');
+    },
+  },
+});
+
 // Sans cette liste, `vite build` ne construit que index.html : les pages légales
 // seraient absentes du dossier dist/ et les liens du footer tomberaient en 404.
 export default defineConfig({
-  plugins: [mouchard(), datesMaj()],
+  plugins: [mouchard(), datesMaj(), sansCommentaires()],
   build: {
     rollupOptions: {
       input: {

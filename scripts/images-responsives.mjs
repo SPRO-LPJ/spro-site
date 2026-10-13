@@ -23,7 +23,9 @@
 //   entrée du `srcset` et le `src` de repli. Un grand écran Retina reçoit donc
 //   exactement l'image d'avant.
 // - Aucune variante n'est agrandie : demander une largeur supérieure à
-//   l'original est une erreur.
+//   l'original est une erreur. Demander exactement sa largeur est permis : c'est
+//   un simple réencodage en WebP, pour un original resté en JPEG trop lourd
+//   (hist-2026-pj.jpg : 1,9 Mo pour 1086 px). L'original reste le `src` de repli.
 // - Photos : WebP qualité 92 (au-dessus des 84-86 des originaux, eux-mêmes en
 //   WebP). Logos : WebP SANS PERTE et `exact` (même les pixels transparents
 //   gardent leur couleur) : en pleine taille, identique au PNG octet pour
@@ -31,6 +33,14 @@
 // - Les `sizes` des pages ont été calés sur la largeur réellement affichée,
 //   mesurée de 320 à 1920 px de fenêtre (object-fit:cover compris), +5 % de
 //   marge. Si une mise en page change, ils sont à revoir.
+// - Téléphones en triple densité (iPhone, la plupart des Android récents) :
+//   chaque `sizes` de index.html commence par des entrées
+//   `(-webkit-min-device-pixel-ratio: 3) and (max-width: …)` qui annoncent
+//   les deux tiers de la largeur affichée. Le navigateur y choisit donc la
+//   variante d'un écran double densité au lieu de l'original : 7,3 Mo de
+//   photos ramenés à 4,2 Mo sur un iPhone, sans différence visible à l'œil.
+//   Une nouvelle image doit reprendre ces entrées (valeur normale × 2/3).
+//   Ordinateurs, tablettes et téléphones double densité ne sont pas touchés.
 // - `.rotate()` applique l'orientation EXIF : sans lui, une photo prise à la
 //   verticale ressortirait couchée (sips l'ignore, sharp aussi par défaut).
 
@@ -91,13 +101,13 @@ async function produire({ source, cible, largeur, logo }) {
   // Orientation EXIF 5 à 8 : l'image est pivotée, sa largeur réelle est sa hauteur.
   const pivotee = meta.orientation >= 5 && meta.orientation <= 8;
   const largeurReelle = pivotee ? meta.height : meta.width;
-  if (largeur && largeur >= largeurReelle) {
+  if (largeur && largeur > largeurReelle) {
     throw new Error(`${cible} : ${largeur} px demandés, l'original n'en fait que ${largeurReelle}`);
   }
 
   await mkdir(dirname(cible), { recursive: true });
   const image = sharp(source).rotate();
-  if (largeur) image.resize({ width: largeur });
+  if (largeur && largeur < largeurReelle) image.resize({ width: largeur });
   await image
     .webp(logo
       ? { lossless: true, exact: true, effort: 6 }

@@ -21,6 +21,23 @@ const TEL = '02 97 54 12 13';
 const form = document.getElementById('contactForm');
 const done = document.getElementById('cfDone');
 
+// Un lien portant data-campagne (encart ravalement 2027) préremplit le message
+// s'il est vide et marque la demande, pour la reconnaître dans la boîte mail.
+const MESSAGES_CAMPAGNE = {
+  'Ravalement 2027': 'Je souhaite réserver un créneau au printemps 2027 pour le ravalement de ma maison.\n',
+};
+
+if (form) {
+  document.querySelectorAll('a[data-campagne]').forEach((lien) => {
+    lien.addEventListener('click', () => {
+      const campagne = lien.dataset.campagne;
+      form.dataset.campagne = campagne;
+      const champ = form.elements.message;
+      if (champ && !champ.value.trim()) champ.value = MESSAGES_CAMPAGNE[campagne] || '';
+    });
+  });
+}
+
 if (form && done) {
   const bouton = form.querySelector('button[type="submit"]');
   const libelleInitial = bouton.textContent;
@@ -65,9 +82,11 @@ if (form && done) {
           ...donnees,
           // Objet et destinataire lisibles dans la boîte de réception : sans ça
           // les demandes arrivent sous un objet générique du prestataire.
-          subject: `Demande de devis — ${donnees.nom || 'site spro.fr'}`,
+          subject: `${form.dataset.campagne || 'Demande de devis'} — ${donnees.nom || 'site spro.fr'}`,
           from_name: 'Site spro.fr',
-          origine: 'spro.fr — formulaire accueil',
+          origine: form.dataset.campagne
+            ? `spro.fr — encart ${form.dataset.campagne}`
+            : 'spro.fr — formulaire accueil',
           ...(CLE ? { access_key: CLE } : {}),
         }),
       });

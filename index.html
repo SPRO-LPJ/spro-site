@@ -304,8 +304,6 @@
       </div>
     </section>
 
-
-
     <!-- ===== Promo secteur — Peinture au pistolet airless =====
          13e mise en avant, pas encore dans la grille "Nos réalisations"
          (pas de photo pour l'instant — background uni en attendant, à remplacer
@@ -1253,6 +1251,32 @@
 
   </main>
 
+  <!-- ===== Annonce ravalement printemps 2027 (particuliers) =====
+       Fenêtre centrée ouverte par campagne.js sous la carte
+       « Ravalements extérieurs » des réalisations, une fois par chargement
+       de page. Hors de <main> : .content crée un contexte d'empilement
+       (z-index 10) qui la ferait passer sous le header. Temporaire : à
+       retirer quand les créneaux de printemps sont pourvus. Titre en <p> et non en <h2> :
+       c'est une annonce, elle n'a pas à peser dans le plan de la page.
+       contact.js lit data-campagne pour préremplir le message. -->
+  <div class="campagne-fond" id="campagneRavalement" data-lenis-prevent hidden>
+    <div class="campagne on-paper" role="dialog" aria-modal="true" aria-labelledby="campagneTitre">
+      <button class="campagne-fermer" type="button" aria-label="Fermer l'annonce">✕</button>
+      <figure class="campagne-media">
+        <img src="/img/galeries/ravalement-16.webp" srcset="/img/tailles/galeries/ravalement-16-480.webp 480w, /img/tailles/galeries/ravalement-16-800.webp 800w, /img/tailles/galeries/ravalement-16-1200.webp 1200w" sizes="(max-width: 700px) 92vw, 380px" alt="Maison repeinte en blanc après ravalement, jardin fleuri au premier plan" loading="lazy" decoding="async" />
+      </figure>
+      <div class="campagne-texte">
+        <div class="kicker">Particuliers · Printemps 2027</div>
+        <p class="campagne-titre" id="campagneTitre">Ravalement de votre maison : réservez votre créneau du printemps 2027</p>
+        <p>Les chantiers de façade se préparent en hiver pour être réalisés au printemps. Contactez-nous dès maintenant : visite technique, devis détaillé, puis nous fixons ensemble la date du chantier.</p>
+        <div class="campagne-actions">
+          <a class="btn btn-primary" href="#contact" data-campagne="Ravalement 2027">Réserver mon créneau 2027</a>
+          <a class="exp-lien" href="/ravalement-facade-vannes">Le ravalement en détail</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer repris de l'ancien spro.fr : coordonnées, horaires, mention
        d'activité et mentions légales. La carte est une image locale engendrée
        par scripts/carte-statique.mjs — aucun iframe, aucune requête tierce. -->
@@ -1355,6 +1379,7 @@
   <script type="module" src="/src/site.js"></script>
   <script type="module" src="/src/reviews.js"></script>
   <script type="module" src="/src/contact.js"></script>
+  <script type="module" src="/src/campagne.js"></script>
   <script type="module" src="/src/anim-texte.js"></script>
   <script type="module" src="/src/galerie.js"></script>
   <script type="module" src="/src/consentement.js"></script>

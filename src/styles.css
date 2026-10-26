@@ -1362,6 +1362,43 @@ a.promo-titre-accent:focus-visible{border-bottom-color:currentColor}
   .exp-cta-actions{margin-top:26px}
 }
 
+/* Annonce ravalement 2027 : fenêtre claire aux couleurs du logo (filet bleu,
+   bordeaux, taupe ; mention bordeaux ; bouton bleu) sur page légèrement
+   voilée, ouverte par campagne.js. Au-dessus du header (60) et de la bannière cookies (50), sous la visionneuse (200). */
+.campagne-fond{position:fixed;inset:0;z-index:90;display:grid;place-items:center;
+  padding:20px;background:rgba(14,17,20,.32);backdrop-filter:blur(2px);
+  opacity:0;transition:opacity .35s ease}
+.campagne-fond[hidden]{display:none}
+.campagne-fond.visible{opacity:1}
+.campagne{position:relative;width:min(860px,100%);max-height:calc(100dvh - 40px);overflow-y:auto;
+  display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
+  border-radius:4px;box-shadow:0 40px 90px -30px rgba(0,0,0,.7);
+  transform:translateY(18px) scale(.97);transition:transform .45s cubic-bezier(.22,1,.36,1)}
+.campagne-fond.visible .campagne{transform:none}
+.campagne::before{content:"";position:absolute;top:0;left:0;right:0;height:6px;z-index:1;
+  background:linear-gradient(90deg,var(--bleu) 0 33.4%,var(--bordeaux) 33.4% 66.7%,var(--taupe) 66.7%)}
+.campagne .kicker{color:var(--bordeaux)}
+.campagne .kicker::before{background:var(--bordeaux)}
+.campagne-media{margin:0}
+.campagne-media img{display:block;width:100%;height:100%;object-fit:cover}
+.campagne-texte{padding:clamp(28px,3.6vw,52px)}
+.campagne-titre{font-family:var(--font-display);font-weight:600;
+  font-size:clamp(1.5rem,2.4vw,2.1rem);line-height:1.08;letter-spacing:-.02em}
+.campagne-texte p:not(.campagne-titre){margin-top:18px;font-size:.98rem;line-height:1.75;color:var(--ink-muted)}
+.campagne-actions{display:flex;align-items:center;gap:22px;margin-top:28px;flex-wrap:wrap}
+.campagne-fermer{position:absolute;top:12px;right:12px;z-index:1;width:40px;height:40px;
+  border:1px solid var(--line-ink);border-radius:50%;background:var(--paper);color:var(--ink);
+  font-size:1rem;cursor:pointer;box-shadow:0 4px 14px -6px rgba(14,17,20,.4)}
+.campagne-fermer:hover{background:var(--bleu);color:#fff}
+
+@media(max-width:700px){
+  .campagne{grid-template-columns:minmax(0,1fr)}
+  .campagne-media img{aspect-ratio:16/9;height:auto}
+}
+@media(prefers-reduced-motion:reduce){
+  .campagne-fond,.campagne{transition:none}
+}
+
 /* La révélation mot par mot a été retirée le 23/07/2026 : sa règle de départ
    `.js .a-reveler .mot-i{transform:translateY(105%)}` gardait chaque mot hors de
    son masque en attendant une animation qui ne se déclenchait jamais — titres de

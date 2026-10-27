@@ -219,7 +219,7 @@
       <p>Le ravalement de façade constitue un enjeu essentiel pour la pérennité et l'image d'un bâtiment. Une façade dégradée n'est pas seulement inesthétique&nbsp;: les micro-fissures laissent pénétrer l'eau, qui fragilise le support, dégrade l'isolation et finit par se voir à l'intérieur.</p>
       <p>C'est pourquoi un ravalement ne commence jamais par la peinture. Il commence par un <strong>diagnostic du support</strong>, qui détermine seul le système à mettre en œuvre&nbsp;: un enduit fissuré, un béton carbonaté, une façade exposée aux embruns de la presqu'île de Rhuys ou un bardage n'appellent pas les mêmes réponses.</p>
 
-      <h2>Nos prestations de ravalement</h2>
+      <h2 id="prestations">Nos prestations de ravalement</h2>
       <ul>
         <li><strong>Diagnostic des façades</strong> — relevé de l'état du support, des fissures et des zones d'infiltration.</li>
         <li><strong>Nettoyage</strong> — élimination des mousses, salissures et anciennes couches non adhérentes.</li>
@@ -372,6 +372,30 @@
     </div>
   </section>
 
+  <!-- ===== Annonce ravalement printemps 2027 (particuliers) =====
+       Même fenêtre que sur l'accueil, ouverte par campagne.js une fois par
+       chargement, quand la section des prestations est passée. Pas de
+       formulaire ici : le bouton mène à celui de l'accueil, que contact.js
+       préremplit grâce à ?campagne=ravalement-2027. Temporaire : à retirer
+       avec celle de l'accueil quand les créneaux de printemps sont pourvus. -->
+  <div class="campagne-fond" id="campagneRavalement" data-apres="#prestations" data-sauf=".service-cta" hidden>
+    <div class="campagne on-paper" role="dialog" aria-modal="true" aria-labelledby="campagneTitre">
+      <button class="campagne-fermer" type="button" aria-label="Fermer l'annonce">✕</button>
+      <figure class="campagne-media">
+        <img src="/img/galeries/ravalement-16.webp" srcset="/img/tailles/galeries/ravalement-16-480.webp 480w, /img/tailles/galeries/ravalement-16-800.webp 800w, /img/tailles/galeries/ravalement-16-1200.webp 1200w" sizes="(max-width: 700px) 92vw, 380px" alt="Maison repeinte en blanc après ravalement, jardin fleuri au premier plan" loading="lazy" decoding="async" />
+      </figure>
+      <div class="campagne-texte">
+        <div class="kicker">Particuliers · Printemps 2027</div>
+        <p class="campagne-titre" id="campagneTitre">Ravalement de votre maison : réservez votre créneau du printemps 2027</p>
+        <p>Les chantiers de façade se préparent en hiver pour être réalisés au printemps. Contactez-nous dès maintenant : visite technique, devis détaillé, puis nous fixons ensemble la date du chantier.</p>
+        <div class="campagne-actions">
+          <a class="btn btn-primary" href="/?campagne=ravalement-2027#contact">Réserver mon créneau 2027</a>
+          <a class="exp-lien" href="tel:+33297541213">02 97 54 12 13</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <footer class="footer">
     <div class="footer-haut">
       <div class="fcoords">
@@ -435,5 +459,6 @@
   <script type="module" src="/src/carte.js"></script>
   <script type="module" src="/src/consentement.js"></script>
   <script type="module" src="/src/header.js"></script>
+  <script type="module" src="/src/campagne.js"></script>
 </body>
 </html>

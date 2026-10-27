@@ -27,14 +27,21 @@ const MESSAGES_CAMPAGNE = {
   'Ravalement 2027': 'Je souhaite réserver un créneau au printemps 2027 pour le ravalement de ma maison.\n',
 };
 
+// Depuis une autre page, l'annonce arrive par /?campagne=ravalement-2027#contact.
+const CAMPAGNES_PAR_URL = { 'ravalement-2027': 'Ravalement 2027' };
+
+const marquerCampagne = (campagne) => {
+  form.dataset.campagne = campagne;
+  const champ = form.elements.message;
+  if (champ && !champ.value.trim()) champ.value = MESSAGES_CAMPAGNE[campagne] || '';
+};
+
 if (form) {
+  const campagneUrl = CAMPAGNES_PAR_URL[new URLSearchParams(window.location.search).get('campagne')];
+  if (campagneUrl) marquerCampagne(campagneUrl);
+
   document.querySelectorAll('a[data-campagne]').forEach((lien) => {
-    lien.addEventListener('click', () => {
-      const campagne = lien.dataset.campagne;
-      form.dataset.campagne = campagne;
-      const champ = form.elements.message;
-      if (champ && !champ.value.trim()) champ.value = MESSAGES_CAMPAGNE[campagne] || '';
-    });
+    lien.addEventListener('click', () => marquerCampagne(lien.dataset.campagne));
   });
 }
 

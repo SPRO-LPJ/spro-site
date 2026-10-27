@@ -1,22 +1,28 @@
 // SPRO — Annonce « ravalement printemps 2027 ».
 //
 // Fenêtre centrée qui s'ouvre une seule fois par chargement de page, quand le
-// visiteur a dépassé la carte « Ravalements extérieurs » des réalisations.
+// visiteur a dépassé l'élément désigné par data-apres sur #campagneRavalement
+// (accueil : la carte « Ravalements extérieurs » ; page ravalement : la
+// section des prestations).
 // Rien n'est mémorisé : elle revient à chaque visite (choix du user).
 // Fermeture : croix, clic sur le fond, touche Échap, ou bouton « Réserver »
 // qui emmène au formulaire.
 
 const fond = document.getElementById('campagneRavalement');
-const carteRavalement = document.querySelector('#realisations [data-galerie="ravalement"]');
+const repere = fond && document.querySelector(fond.dataset.apres);
 const contact = document.getElementById('contact');
+const appelFinal = fond && fond.dataset.sauf && document.querySelector(fond.dataset.sauf);
 
-// L'annonce part quand le bas de cette carte remonte au milieu de l'écran,
-// et pas si le formulaire est déjà visible (arrivée directe par un
-// lien #contact) : elle masquerait ce que le visiteur cherche.
-const SEUIL_BAS_CARTE = 0.5;
+// L'annonce part quand le bas du repère remonte au milieu de l'écran, et pas
+// si l'appel à l'action est déjà visible (arrivée directe par un lien
+// #contact) : elle masquerait ce que le visiteur cherche.
+const SEUIL_BAS_REPERE = 0.5;
+// Arrivé par le bouton de l'annonce d'une autre page (?campagne=…) : il l'a
+// déjà vue, on ne la lui remontre pas par-dessus le formulaire.
+const venuParAnnonce = new URLSearchParams(window.location.search).has('campagne');
 const DUREE_FERMETURE_MS = 350;
 
-if (fond && carteRavalement) {
+if (fond && repere && !venuParAnnonce) {
   const fenetre = fond.querySelector('[role="dialog"]');
   const croix = fond.querySelector('.campagne-fermer');
   const reserver = fond.querySelector('a[href="#contact"]');
@@ -46,9 +52,9 @@ if (fond && carteRavalement) {
 
   const verifier = () => {
     if (dejaOuverte) return;
-    const basCarte = carteRavalement.getBoundingClientRect().bottom;
-    const contactVisible = contact && contact.getBoundingClientRect().top < window.innerHeight;
-    if (basCarte < window.innerHeight * SEUIL_BAS_CARTE && !contactVisible) {
+    const basRepere = repere.getBoundingClientRect().bottom;
+    const appelVisible = appelFinal && appelFinal.getBoundingClientRect().top < window.innerHeight;
+    if (basRepere < window.innerHeight * SEUIL_BAS_REPERE && !appelVisible) {
       ouvrir();
       window.removeEventListener('scroll', verifier);
     }
@@ -57,9 +63,11 @@ if (fond && carteRavalement) {
   croix.addEventListener('click', fermer);
   fond.addEventListener('click', (e) => { if (!fenetre.contains(e.target)) fermer(); });
 
-  // Lenis ignore scrollTo tant qu'il est arrêté : on le relance d'abord, puis
-  // on fait le défilement nous-mêmes (contact.js préremplit le message).
-  if (reserver) reserver.addEventListener('click', (e) => {
+  // Sur l'accueil, le formulaire est sur la page. Lenis ignore scrollTo tant
+  // qu'il est arrêté : on le relance d'abord, puis on fait le défilement
+  // nous-mêmes (contact.js préremplit le message). Ailleurs, le bouton est un
+  // lien ordinaire vers /?campagne=…#contact.
+  if (reserver && contact) reserver.addEventListener('click', (e) => {
     e.preventDefault();
     fermer();
     if (window.lenis) window.lenis.scrollTo('#contact', { offset: -72 });

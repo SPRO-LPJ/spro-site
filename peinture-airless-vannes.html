@@ -95,7 +95,7 @@
           "name": "Que se passe-t-il si ma préparation n'est pas suffisante ?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Nous vérifions l'état des supports à notre arrivée. Le pistolet Airless ne masque rien : un rebouchage approximatif ou un ponçage incomplet se verront après application. Nous vous indiquons précisément le niveau de préparation attendu en amont, et nous vous le disons franchement si le chantier n'est pas prêt."
+            "text": "Nous vérifions l'état des supports à notre arrivée. La projection Airless ne masque aucun défaut : un rebouchage approximatif ou un ponçage incomplet resteraient visibles après application. C'est pourquoi nous vous indiquons précisément, en amont, le niveau de préparation attendu, et nous vous conseillons en toute transparence si une reprise est nécessaire avant notre intervention."
           }
         },
         {
@@ -103,7 +103,7 @@
           "name": "La peinture est-elle uniquement blanche ?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Oui. Un blanc unique dans toutes les pièces, c'est ce qui permet de tenir le prix et les délais de la formule."
+            "text": "Oui. Un blanc unique dans toutes les pièces est ce qui nous permet de vous garantir le prix et les délais de la formule. Il constitue une base lumineuse, facile à personnaliser ensuite selon vos envies."
           }
         }
       ],
@@ -196,17 +196,22 @@
     </div>
   </div>
 
-  <main class="service service-airless" id="content">
+  <main class="service service-airless sv" id="content">
     <div class="service-inner">
-      <nav class="fil" aria-label="Fil d'Ariane">
-        <a href="/">Accueil</a> <span aria-hidden="true">/</span> <span aria-current="page">Peinture au pistolet Airless</span>
-      </nav>
 
       <!-- L'en-tête et le déroulé reprennent le visuel de l'annonce
            « Découvrir cette offre » de l'accueil (mêmes classes .promo-*,
            .etapes), avec les textes propres à cette page. -->
       <div class="promo-inner airless-vitrine">
-        <div class="kicker">Notre nouveau secteur</div>
+        <!-- Premier écran texte + photo (28/10, refonte visuelle, texte inchangé). -->
+        <section class="sv-hero" aria-label="Murs et plafonds d'un grand volume peints par SPRO">
+        <img class="sv-hero-fond" src="/img/heros/airless-hero-1600.webp" srcset="/img/heros/airless-hero-1000.webp 1000w, /img/heros/airless-hero-1600.webp 1600w, /img/heros/airless-hero-2200.webp 2200w" sizes="100vw" alt="" fetchpriority="high" decoding="async" />
+        <div class="sv-hero-inner">
+          <nav class="fil" aria-label="Fil d'Ariane">
+        <a href="/">Accueil</a> <span aria-hidden="true">/</span> <span aria-current="page">Peinture au pistolet Airless</span>
+      </nav>
+          <div class="sv-head-texte">
+        <div class="kicker">Notre nouvelle formule</div>
         <h1 class="promo-titre"><span class="promo-titre-accent">Peinture au pistolet Airless</span> à Vannes&nbsp;: la solution la plus rapide et économique pour vos murs et plafonds</h1>
         <p class="lead-strong">Réalisez vous-même les préparatifs et réduisez le coût de vos travaux</p>
         <ul class="promo-badges">
@@ -214,8 +219,11 @@
           <li>Économique</li>
           <li>Finition professionnelle</li>
         </ul>
-        <p class="lead">Vous souhaitez réaliser votre intérieur à moindre coût sans renoncer à une finition professionnelle&nbsp;? Notre formule est faite pour vous.</p>
-        <p class="lead">Vous réalisez vous-même les travaux de préparation selon le niveau de finition souhaité&nbsp;:</p>
+        <p class="lead">Vous souhaitez réaliser votre intérieur à moindre coût sans renoncer à une finition professionnelle&nbsp;? Notre formule participative a été conçue pour vous&nbsp;: vous préparez, nos peintres projettent, et vous profitez d'un intérieur blanc, lumineux et prêt à vivre.</p>
+          </div>
+        </div>
+      </section>
+        <p class="lead">Vous réalisez vous-même les travaux de préparation selon le niveau de finition souhaité, et nous adaptons notre intervention à votre avancement&nbsp;:</p>
         <div class="etapes">
           <p class="etapes-groupe"><span>Vous préparez</span></p>
           <ol class="etapes-grille">
@@ -309,11 +317,15 @@
             <div class="etape-spro-texte">
               <span class="etape-num">07</span>
               <h3 class="etape-titre">Retrait des protections</h3>
-              <p class="etape-texte">Après notre intervention, il ne vous reste plus qu'à retirer les protections et effectuer le nettoyage final.</p>
+              <p class="etape-texte">Après notre intervention, vous retirez les protections et effectuez le nettoyage final, à votre rythme.</p>
             </div>
           </div>
         </div>
-        <h2 class="h3">Pourquoi choisir cette formule</h2>
+        <section class="sv-bande" aria-label="Photo de chantier">
+        <img src="/img/heros/airless-bande-1600.webp" srcset="/img/heros/airless-bande-1000.webp 1000w, /img/heros/airless-bande-1600.webp 1600w, /img/heros/airless-bande-2200.webp 2200w" sizes="100vw" alt="" loading="lazy" decoding="async" />
+        <p class="sv-bande-texte">Réalisez vous-même les préparatifs et réduisez le coût de vos travaux.</p>
+      </section>
+      <h2 class="h3">Pourquoi choisir cette formule</h2>
         <ul class="promo-list">
           <li>Jusqu'à plusieurs jours de chantier économisés.</li>
           <li>Une réduction importante du coût de la main-d'œuvre.</li>
@@ -322,7 +334,7 @@
           <li>Une solution idéale pour les maisons neuves, les appartements et les investissements locatifs.</li>
         </ul>
         <h2 class="h3">Un excellent compromis entre qualité et budget</h2>
-        <p class="lead">Cette formule est particulièrement appréciée des particuliers qui souhaitent participer à leur chantier afin d'en réduire le coût, tout en confiant l'application de la peinture à des professionnels. Elle est également très adaptée aux <strong>maisons neuves</strong> et aux <strong>investissements locatifs</strong>, où les surfaces sont importantes, les supports sains et les délais courts.</p>
+        <p class="lead">Cette formule est particulièrement appréciée des particuliers qui souhaitent participer à leur chantier afin d'en réduire le coût, tout en confiant l'application de la peinture à des professionnels. Elle est également très adaptée aux <strong>maisons neuves</strong> et aux <strong>investissements locatifs</strong>, où les surfaces sont importantes, les supports sains et les délais courts. Vous gardez la maîtrise de votre budget et confiez la partie la plus technique à des professionnels.</p>
         <p class="promo-signature">
           <span>Vous préparez.</span>
           <span class="promo-signature-accent">Nous peignons.</span>
@@ -342,19 +354,19 @@
       </div>
 
       <h2>L'Airless sur les chantiers professionnels</h2>
-      <p>Si cette formule existe, c'est d'abord parce que la projection Airless a fait ses preuves sur nos chantiers professionnels. La technique a été pensée pour répondre aux besoins des <strong>constructeurs et des professionnels du bâtiment</strong>, avec un modèle adapté aux chantiers de finition en série.</p>
-      <p>Elle prend tout son sens dès que les surfaces deviennent importantes et les délais courts&nbsp;: <strong>grandes surfaces alimentaires</strong>, entrepôts, plateaux de bureaux avant emménagement, bâtiments d'activité, programmes de logements livrés par tranches.</p>
-      <p>Les plafonds en sont le meilleur exemple&nbsp;: longs et fatigants à traiter au rouleau, surtout sur les grandes portées, ce sont eux qui gagnent le plus à la projection.</p>
+      <p>Cette formule est née de notre expérience&nbsp;: la projection Airless a fait ses preuves depuis de nombreuses années sur nos chantiers professionnels. La technique a été pensée pour répondre aux besoins des <strong>constructeurs et des professionnels du bâtiment</strong>, avec un modèle adapté aux chantiers de finition en série.</p>
+      <p>Elle prend tout son sens dès que les surfaces deviennent importantes et les délais courts&nbsp;: <strong>grandes surfaces alimentaires</strong>, entrepôts, bureaux avant emménagement, bâtiments d'activité, programmes de logements livrés par tranches.</p>
+      <p>Les plafonds en sont le meilleur exemple&nbsp;: longs à traiter au rouleau, surtout sur les grandes portées, ce sont eux qui bénéficient le plus de la projection.</p>
 
       <h2>Ce que la projection exige</h2>
       <p>La contrepartie de cette rapidité est une exigence de préparation supérieure. La peinture est envoyée sous haute pression&nbsp;: tout ce qui n'est pas masqué reçoit du brouillard de peinture. Le masquage est donc plus long et plus rigoureux qu'avant une application au rouleau — sols, menuiseries, vitrages, réseaux apparents, équipements en place.</p>
-      <p>L'application elle-même demande du matériel professionnel et un vrai savoir-faire&nbsp;: réglage de la pression, choix de la buse selon le produit et le support, distance et vitesse de passe constantes. Une pression mal réglée produit des coulures ou un voile irrégulier qui ne se rattrape qu'en reprenant la surface.</p>
+      <p>L'application elle-même demande du matériel professionnel et un vrai savoir-faire&nbsp;: réglage de la pression, choix de la buse selon le produit et le support, distance et vitesse de passe constantes. Une pression mal réglée produit des coulures ou un voile irrégulier, qui imposent de reprendre la surface. C'est pourquoi l'application reste confiée à nos peintres&nbsp;: vous bénéficiez d'un résultat uniforme, sans traces ni reprises.</p>
 
       <h2>Questions fréquentes</h2>
       <h3>Que se passe-t-il si ma préparation n'est pas suffisante&nbsp;?</h3>
-      <p>Nous vérifions l'état des supports à notre arrivée. Le pistolet Airless ne masque rien&nbsp;: un rebouchage approximatif ou un ponçage incomplet se verront après application. Nous vous indiquons précisément le niveau de préparation attendu en amont, et nous vous le disons franchement si le chantier n'est pas prêt.</p>
+      <p>Nous vérifions l'état des supports à notre arrivée. La projection Airless ne masque aucun défaut&nbsp;: un rebouchage approximatif ou un ponçage incomplet resteraient visibles après application. C'est pourquoi nous vous indiquons précisément, en amont, le niveau de préparation attendu, et nous vous conseillons en toute transparence si une reprise est nécessaire avant notre intervention.</p>
       <h3>La peinture est-elle uniquement blanche&nbsp;?</h3>
-      <p>Oui. Un blanc unique dans toutes les pièces, c'est ce qui permet de tenir le prix et les délais de la formule.</p>
+      <p>Oui. Un blanc unique dans toutes les pièces est ce qui nous permet de vous garantir le prix et les délais de la formule. Il constitue une base lumineuse, facile à personnaliser ensuite selon vos envies.</p>
       <p><a class="exp-lien" href="/faq.html#airless">Toutes nos questions sur la peinture Airless</a></p>
 
       <h2>Exemples de finitions au pistolet Airless</h2>
@@ -371,7 +383,7 @@
 
       <h2>À voir également</h2>
       <ul class="service-liens">
-        <li><a href="/peinture-bureaux-vannes"><b>Peinture de bureaux</b><span>Plateaux, halls d'accueil et circulations, avec un phasage qui laisse l'entreprise travailler.</span></a></li>
+        <li><a href="/peinture-bureaux-vannes"><b>Peinture de bureaux</b><span>Bureaux, halls d'accueil et circulations, avec un phasage qui laisse votre entreprise travailler.</span></a></li>
         <li><a href="/peinture-interieure-vannes"><b>Peinture intérieure</b><span>Bureaux, commerces, hôtels, santé, résidences collectives et tertiaire.</span></a></li>
         <li><a href="/ravalement-facade-vannes"><b>Ravalement de façade</b><span>Diagnostic, traitement des fissures et finitions extérieures.</span></a></li>
         <li><a href="/faq.html"><b>Questions fréquentes</b><span>Plus de 130 réponses sur nos prestations, nos délais, nos devis et nos produits.</span></a></li>

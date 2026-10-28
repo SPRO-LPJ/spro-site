@@ -89,11 +89,11 @@ if (form && done) {
           ...donnees,
           // Objet et destinataire lisibles dans la boîte de réception : sans ça
           // les demandes arrivent sous un objet générique du prestataire.
-          subject: `${form.dataset.campagne || 'Demande de devis'} — ${donnees.nom || 'site spro.fr'}`,
+          subject: `${form.dataset.campagne || form.dataset.objet || 'Demande de devis'} — ${donnees.nom || 'site spro.fr'}`,
           from_name: 'Site spro.fr',
           origine: form.dataset.campagne
             ? `spro.fr — encart ${form.dataset.campagne}`
-            : 'spro.fr — formulaire accueil',
+            : form.dataset.origine || 'spro.fr — formulaire accueil',
           ...(CLE ? { access_key: CLE } : {}),
         }),
       });

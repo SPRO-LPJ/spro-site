@@ -1,0 +1,189 @@
+// Fabrique la carte « zone d'intervention » de la page ravalement.
+//
+// Fond : la carte OpenStreetMap standard, telle quelle (« une carte normale »,
+// demande du user), assemblée ici une fois et servie comme une image — aucune
+// requête externe pour le visiteur. Attribution (ODbL) affichée sur la carte.
+//
+// Zone : les communes entières dont le centre est à 35 km ou moins du siège,
+// plus les villes de chantiers plus lointaines (Ploërmel). Contours officiels
+// des communes : geo.api.gouv.fr (IGN, Licence Ouverte), téléchargés ici.
+// La limite tracée en tirets ne suit que la terre ferme : on ne garde que les
+// segments partagés entre une commune de la zone et une commune hors zone ;
+// la côte n'est donc jamais soulignée.
+//
+// Le script affiche le tracé (repère de l'image, viewBox 1600 × 2000) et la
+// position des lieux, à recopier dans le SVG de la page.
+//
+// Usage : node scripts/carte-zone-ravalement.mjs
+
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { dirname, join, resolve } from 'node:path';
+import sharp from 'sharp';
+
+const SPRO = { lat: 47.666838, lon: -2.734788 };
+const RAYON_KM = 35;
+// Communes ajoutées en entier au-delà du rayon : Ploërmel (chantiers) et
+// Quiberon (centre à 35,3 km, toute la presqu'île est desservie).
+const EN_PLUS = ['Ploërmel', 'Quiberon'];
+const ZOOM = 11;
+const LARGEUR = 1600;
+const HAUTEUR = 2000;
+const DECALAGE_Y = 40;
+const SORTIE = resolve(process.cwd(), 'public/img/carte-zone-osm.webp');
+const CACHE = join(tmpdir(), 'spro-tuiles-osm');
+const TUILE = 256;
+
+const versPixel = (lat, lon) => {
+  const n = 2 ** ZOOM * TUILE;
+  const rad = (lat * Math.PI) / 180;
+  return {
+    x: ((lon + 180) / 360) * n,
+    y: ((1 - Math.log(Math.tan(rad) + 1 / Math.cos(rad)) / Math.PI) / 2) * n,
+  };
+};
+const centre = versPixel(SPRO.lat, SPRO.lon);
+const gauche = centre.x - LARGEUR / 2;
+const haut = centre.y - HAUTEUR / 2 + DECALAGE_Y;
+const local = (lat, lon) => {
+  const p = versPixel(lat, lon);
+  return [p.x - gauche, p.y - haut];
+};
+const distanceKm = (a, b) => {
+  const r = Math.PI / 180;
+  const h = Math.sin(((b.lat - a.lat) * r) / 2) ** 2 +
+    Math.cos(a.lat * r) * Math.cos(b.lat * r) * Math.sin(((b.lon - a.lon) * r) / 2) ** 2;
+  return 2 * 6371 * Math.asin(Math.sqrt(h));
+};
+
+// ---- Fond OSM ------------------------------------------------------------
+const recupere = async (x, y) => {
+  const fichier = join(CACHE, `${ZOOM}-${x}-${y}.png`);
+  try {
+    return await readFile(fichier);
+  } catch {}
+  const r = await fetch(`https://tile.openstreetmap.org/${ZOOM}/${x}/${y}.png`, {
+    // La politique d'usage d'OpenStreetMap impose un User-Agent identifiable.
+    headers: { 'User-Agent': 'spro.fr-site-build/1.0 (contact@spro.fr)' },
+  });
+  if (!r.ok) throw new Error(`tuile ${x}/${y} : HTTP ${r.status}`);
+  const data = Buffer.from(await r.arrayBuffer());
+  await mkdir(CACHE, { recursive: true });
+  await writeFile(fichier, data);
+  return data;
+};
+const MARGE = TUILE;
+const composites = [];
+for (let x = Math.floor(gauche / TUILE); x <= Math.floor((gauche + LARGEUR) / TUILE); x++) {
+  for (let y = Math.floor(haut / TUILE); y <= Math.floor((haut + HAUTEUR) / TUILE); y++) {
+    composites.push({ input: await recupere(x, y), left: Math.round(x * TUILE - gauche) + MARGE, top: Math.round(y * TUILE - haut) + MARGE });
+  }
+}
+// Deux passes : dans une même chaîne sharp, extract() s'applique AVANT composite().
+const assemblage = await sharp({ create: { width: LARGEUR + 2 * MARGE, height: HAUTEUR + 2 * MARGE, channels: 3, background: '#f2efe9' } })
+  .composite(composites).png().toBuffer();
+await mkdir(dirname(SORTIE), { recursive: true });
+const fond = await sharp(assemblage)
+  .extract({ left: MARGE, top: MARGE, width: LARGEUR, height: HAUTEUR })
+  // Qualité haute : les noms de villes de la carte restent nets.
+  .webp({ quality: 92, smartSubsample: true })
+  .toFile(SORTIE);
+// Version 800 px pour les téléphones (srcset de la page).
+await sharp(SORTIE).resize(800, null, { kernel: 'lanczos3' }).sharpen(0.6).webp({ quality: 90, smartSubsample: true }).toFile(SORTIE.replace('.webp', '-800.webp'));
+
+// ---- Communes ------------------------------------------------------------
+// Morbihan, plus les départements voisins : leurs communes ne sont jamais
+// dans la zone, mais il les faut pour tracer la limite le long de la Vilaine
+// et des frontières départementales.
+const features = [];
+for (const dep of ['56', '44', '35', '22', '29']) {
+  const r = await fetch(`https://geo.api.gouv.fr/departements/${dep}/communes?fields=nom,code&format=geojson&geometry=contour`);
+  if (!r.ok) throw new Error(`geo.api.gouv.fr ${dep} : HTTP ${r.status}`);
+  const { features: f } = await r.json();
+  features.push(...f.map((x) => ({ ...x, properties: { ...x.properties, dep } })));
+}
+const anneaux = (g) => (g.type === 'Polygon' ? [g.coordinates[0]] : g.coordinates.map((p) => p[0]));
+const centroide = (anneau) => {
+  let a = 0, x = 0, y = 0;
+  for (let i = 0; i < anneau.length - 1; i++) {
+    const [x0, y0] = anneau[i], [x1, y1] = anneau[i + 1];
+    const k = x0 * y1 - x1 * y0;
+    a += k; x += (x0 + x1) * k; y += (y0 + y1) * k;
+  }
+  return { lon: x / (3 * a), lat: y / (3 * a) };
+};
+const communes = features.map((f) => {
+  const principal = anneaux(f.geometry).sort((a, b) => b.length - a.length)[0];
+  const c = centroide(principal);
+  return { nom: f.properties.code, libelle: f.properties.nom, dep: f.properties.dep, anneaux: anneaux(f.geometry), km: distanceKm(SPRO, c) };
+});
+const dansZone = new Set(communes.filter((c) => c.dep === '56' && (c.km <= RAYON_KM || EN_PLUS.includes(c.libelle))).map((c) => c.nom));
+
+// Segments : clé = extrémités arrondies, sans sens. Un segment de la zone
+// partagé avec une commune hors zone = limite terrestre.
+const cle = (p) => `${p[0].toFixed(5)},${p[1].toFixed(5)}`;
+const proprietaires = new Map();
+for (const c of communes) {
+  for (const a of c.anneaux) {
+    for (let i = 0; i < a.length - 1; i++) {
+      const k1 = cle(a[i]), k2 = cle(a[i + 1]);
+      const k = k1 < k2 ? `${k1}|${k2}` : `${k2}|${k1}`;
+      if (!proprietaires.has(k)) proprietaires.set(k, { a: a[i], b: a[i + 1], communes: new Set() });
+      proprietaires.get(k).communes.add(c.nom);
+    }
+  }
+}
+const limite = [...proprietaires.values()].filter(({ communes: cs }) => {
+  const liste = [...cs];
+  return liste.some((n) => dansZone.has(n)) && liste.some((n) => !dansZone.has(n));
+});
+
+// Chaînage des segments en polylignes.
+const suivants = new Map();
+for (const s of limite) {
+  for (const [p, q] of [[s.a, s.b], [s.b, s.a]]) {
+    const k = cle(p);
+    if (!suivants.has(k)) suivants.set(k, []);
+    suivants.get(k).push({ s, vers: q });
+  }
+}
+const vus = new Set();
+const lignes = [];
+for (const s of limite) {
+  if (vus.has(s)) continue;
+  vus.add(s);
+  const ligne = [s.a, s.b];
+  for (const sens of [1, -1]) {
+    for (;;) {
+      const bout = sens === 1 ? ligne.at(-1) : ligne[0];
+      const suite = (suivants.get(cle(bout)) || []).find((o) => !vus.has(o.s));
+      if (!suite) break;
+      vus.add(suite.s);
+      if (sens === 1) ligne.push(suite.vers); else ligne.unshift(suite.vers);
+    }
+  }
+  lignes.push(ligne);
+}
+// Simplification (Douglas-Peucker, tolérance d'un pixel) : le contour IGN a
+// bien plus de détail que l'image n'en montre.
+const simplifier = (pts, tol) => {
+  if (pts.length < 3) return pts;
+  const [a, b] = [pts[0], pts.at(-1)];
+  const dx = b[0] - a[0], dy = b[1] - a[1], l = Math.hypot(dx, dy) || 1;
+  let max = 0, idx = 0;
+  for (let i = 1; i < pts.length - 1; i++) {
+    const d = Math.abs(dy * pts[i][0] - dx * pts[i][1] + b[0] * a[1] - b[1] * a[0]) / l;
+    if (d > max) { max = d; idx = i; }
+  }
+  if (max <= tol) return [a, b];
+  return simplifier(pts.slice(0, idx + 1), tol).slice(0, -1).concat(simplifier(pts.slice(idx), tol));
+};
+const chemin = lignes
+  .map((l) => simplifier(l.map(([lon, lat]) => local(lat, lon)), 1))
+  .map((l) => 'M' + l.map((p) => p.map((v) => Math.round(v)).join(',')).join('L'))
+  .join('');
+
+console.error(`fond ${Math.round(fond.size / 1024)} Ko · ${dansZone.size} communes · ${limite.length} segments, ${lignes.length} lignes`);
+console.error(communes.filter((c) => dansZone.has(c.nom)).map((c) => c.libelle).sort().join(', '));
+console.error(`tracé : ${chemin.length} caractères`);
+console.log(chemin);

@@ -9,7 +9,11 @@
 // qui emmène au formulaire.
 
 const fond = document.getElementById('campagneRavalement');
-const repere = fond && document.querySelector(fond.dataset.apres);
+const repere = fond && fond.dataset.apres && document.querySelector(fond.dataset.apres);
+// Variante « à l'arrivée » (page ravalement) : data-delai="1500" ouvre la
+// fenêtre peu après le chargement, seulement si le visiteur est encore en
+// haut de page, et jamais au défilement.
+const delaiArrivee = fond && fond.dataset.delai ? Number(fond.dataset.delai) : null;
 const contact = document.getElementById('contact');
 const appelFinal = fond && fond.dataset.sauf && document.querySelector(fond.dataset.sauf);
 
@@ -22,7 +26,7 @@ const SEUIL_BAS_REPERE = 0.5;
 const venuParAnnonce = new URLSearchParams(window.location.search).has('campagne');
 const DUREE_FERMETURE_MS = 350;
 
-if (fond && repere && !venuParAnnonce) {
+if (fond && (repere || delaiArrivee !== null) && !venuParAnnonce) {
   const fenetre = fond.querySelector('[role="dialog"]');
   const croix = fond.querySelector('.campagne-fermer');
   const reserver = fond.querySelector('a[href="#contact"]');
@@ -74,5 +78,11 @@ if (fond && repere && !venuParAnnonce) {
     else contact.scrollIntoView({ behavior: 'smooth' });
   });
 
-  window.addEventListener('scroll', verifier, { passive: true });
+  if (delaiArrivee !== null) {
+    setTimeout(() => {
+      if (!dejaOuverte && window.scrollY < window.innerHeight * 0.5) ouvrir();
+    }, delaiArrivee);
+  } else {
+    window.addEventListener('scroll', verifier, { passive: true });
+  }
 }

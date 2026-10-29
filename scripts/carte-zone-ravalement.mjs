@@ -40,7 +40,9 @@ const HAUTEUR = 1500;
 const DECALAGE_Y = -138;
 // Repère du SVG de la page : 1600 × 2000, soit l'image agrandie de 4/3.
 const ECHELLE_SVG = 1600 / LARGEUR;
-const SORTIE = resolve(process.cwd(), 'public/img/carte-zone-osm.webp');
+// Nouveau nom à chaque refonte de la carte : /img/ est mis en cache 30 jours
+// (vercel.json), un même nom ferait voir l'ancienne image sous les nouveaux tracés.
+const SORTIE = resolve(process.cwd(), 'public/img/carte-zones-35-50.webp');
 const CACHE = join(tmpdir(), 'spro-tuiles-osm');
 const TUILE = 256;
 

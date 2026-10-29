@@ -4,15 +4,18 @@
 // demande du user), assemblée ici une fois et servie comme une image — aucune
 // requête externe pour le visiteur. Attribution (ODbL) affichée sur la carte.
 //
-// Zone : les communes entières dont le centre est à 35 km ou moins du siège,
-// plus les villes de chantiers plus lointaines (Ploërmel). Contours officiels
+// Deux zones, deux tracés : le ravalement de maisons de particuliers (communes
+// entières dont le centre est à 35 km ou moins du siège, plus Ploërmel et
+// Quiberon) et le reste de l'activité (communes du Morbihan dont le centre est
+// à 50 km ou moins). Le fond est au zoom 10 pour que les 50 km tiennent dans
+// le cadre. Contours officiels
 // des communes : geo.api.gouv.fr (IGN, Licence Ouverte), téléchargés ici.
 // La limite tracée en tirets ne suit que la terre ferme : on ne garde que les
 // segments partagés entre une commune de la zone et une commune hors zone ;
 // la côte n'est donc jamais soulignée.
 //
-// Le script affiche le tracé (repère de l'image, viewBox 1600 × 2000) et la
-// position des lieux, à recopier dans le SVG de la page.
+// Le script affiche les deux tracés dans le repère du SVG de la page (viewBox
+// 1600 × 2000, l'image de 1200 × 1500 y est agrandie), à recopier dans la page.
 //
 // Usage : node scripts/carte-zone-ravalement.mjs
 
@@ -23,13 +26,20 @@ import sharp from 'sharp';
 
 const SPRO = { lat: 47.666838, lon: -2.734788 };
 const RAYON_KM = 35;
+const RAYON_GENERAL_KM = 50;
 // Communes ajoutées en entier au-delà du rayon : Ploërmel (chantiers) et
 // Quiberon (centre à 35,3 km, toute la presqu'île est desservie).
 const EN_PLUS = ['Ploërmel', 'Quiberon'];
-const ZOOM = 11;
-const LARGEUR = 1600;
-const HAUTEUR = 2000;
-const DECALAGE_Y = 40;
+// Belle-Île : une partie de l'île tombe sous les 50 km, l'autre non ; un
+// tracé couperait l'île en deux. On la laisse hors zone.
+const EXCLUS = ['Le Palais', 'Bangor', 'Sauzon', 'Locmaria'];
+const ZOOM = 10;
+const LARGEUR = 1200;
+const HAUTEUR = 1500;
+// Décalage vers le nord : les deux zones au centre du cadre, moins de mer.
+const DECALAGE_Y = -138;
+// Repère du SVG de la page : 1600 × 2000, soit l'image agrandie de 4/3.
+const ECHELLE_SVG = 1600 / LARGEUR;
 const SORTIE = resolve(process.cwd(), 'public/img/carte-zone-osm.webp');
 const CACHE = join(tmpdir(), 'spro-tuiles-osm');
 const TUILE = 256;
@@ -117,7 +127,7 @@ const communes = features.map((f) => {
   const c = centroide(principal);
   return { nom: f.properties.code, libelle: f.properties.nom, dep: f.properties.dep, anneaux: anneaux(f.geometry), km: distanceKm(SPRO, c) };
 });
-const dansZone = new Set(communes.filter((c) => c.dep === '56' && (c.km <= RAYON_KM || EN_PLUS.includes(c.libelle))).map((c) => c.nom));
+const tracer = (dansZone) => {
 
 // Segments : clé = extrémités arrondies, sans sens. Un segment de la zone
 // partagé avec une commune hors zone = limite terrestre.
@@ -179,11 +189,16 @@ const simplifier = (pts, tol) => {
   return simplifier(pts.slice(0, idx + 1), tol).slice(0, -1).concat(simplifier(pts.slice(idx), tol));
 };
 const chemin = lignes
-  .map((l) => simplifier(l.map(([lon, lat]) => local(lat, lon)), 1))
+  .map((l) => simplifier(l.map(([lon, lat]) => local(lat, lon).map((v) => v * ECHELLE_SVG)), 1))
   .map((l) => 'M' + l.map((p) => p.map((v) => Math.round(v)).join(',')).join('L'))
   .join('');
 
-console.error(`fond ${Math.round(fond.size / 1024)} Ko · ${dansZone.size} communes · ${limite.length} segments, ${lignes.length} lignes`);
-console.error(communes.filter((c) => dansZone.has(c.nom)).map((c) => c.libelle).sort().join(', '));
-console.error(`tracé : ${chemin.length} caractères`);
-console.log(chemin);
+console.error(`${dansZone.size} communes · ${limite.length} segments, ${lignes.length} lignes · ${chemin.length} caractères`);
+return chemin;
+};
+
+const zoneMaisons = new Set(communes.filter((c) => c.dep === '56' && (c.km <= RAYON_KM || EN_PLUS.includes(c.libelle))).map((c) => c.nom));
+const zoneGenerale = new Set(communes.filter((c) => c.dep === '56' && !EXCLUS.includes(c.libelle) && (c.km <= RAYON_GENERAL_KM || zoneMaisons.has(c.nom))).map((c) => c.nom));
+console.error(`fond ${Math.round(fond.size / 1024)} Ko`);
+const siege = local(SPRO.lat, SPRO.lon).map((v) => Math.round(v * ECHELLE_SVG));
+console.log(JSON.stringify({ siege, maisons: tracer(zoneMaisons), general: tracer(zoneGenerale) }));

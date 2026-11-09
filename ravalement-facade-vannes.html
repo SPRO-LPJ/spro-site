@@ -390,45 +390,6 @@
       </div>
     </section>
 
-    <!-- ===== Maison bretonne, avant / pendant / après ===== Gardée à la
-         demande du user quand le film a pris le premier écran. 13, 14, 17 et
-         16 sont la MÊME maison ; ne pas nommer la commune du chantier. -->
-    <section class="section on-paper rv-maison" id="avant-apres">
-      <div class="rv-maison-grille">
-        <div class="rv-maison-texte">
-          <div class="kicker">Particuliers</div>
-          <h2 class="h2">Ravalement d'une maison bretonne, avant et après</h2>
-          <p class="lead">Nettoyage, échafaudage, traitement du support, puis la façade blanche. Les photos défilent seules, ou faites-les glisser.</p>
-          <a class="btn btn-primary" href="#contact" data-campagne="Ravalement 2027">Je veux être contacté</a>
-        </div>
-        <div class="rv-carrousel" data-carrousel>
-          <div class="rv-piste" tabindex="0" aria-label="Avant, pendant et après le ravalement de la maison : faites glisser">
-            <figure class="rv-vue">
-              <img src="/img/tailles/galeries/ravalement-13-1200.webp" srcset="/img/tailles/galeries/ravalement-13-800.webp 800w, /img/tailles/galeries/ravalement-13-1200.webp 1200w, /img/galeries/ravalement-13.webp 1920w" sizes="(max-width: 900px) 92vw, 46vw" alt="Façade de la maison encrassée avant les travaux, vue depuis le jardin" loading="lazy" decoding="async" width="1920" height="2560" />
-              <figcaption><span class="rv-etiquette">Avant</span> Façade encrassée avant les travaux</figcaption>
-            </figure>
-            <figure class="rv-vue">
-              <img src="/img/tailles/galeries/ravalement-14-1200.webp" srcset="/img/tailles/galeries/ravalement-14-800.webp 800w, /img/tailles/galeries/ravalement-14-1200.webp 1200w, /img/galeries/ravalement-14.webp 1920w" sizes="(max-width: 900px) 92vw, 46vw" alt="La même maison sous échafaudage sur ses trois niveaux" loading="lazy" decoding="async" width="1920" height="2560" />
-              <figcaption><span class="rv-etiquette rv-etiquette-pendant">Pendant</span> Échafaudage sur les trois niveaux</figcaption>
-            </figure>
-            <figure class="rv-vue">
-              <img src="/img/galeries/ravalement-17.webp" srcset="/img/tailles/galeries/ravalement-17-800.webp 800w, /img/galeries/ravalement-17.webp 1365w" sizes="(max-width: 900px) 92vw, 46vw" alt="La façade principale après ravalement, menuiseries dégagées et appuis nettoyés" loading="lazy" decoding="async" width="1365" height="2048" />
-              <figcaption><span class="rv-etiquette rv-etiquette-apres">Après</span> Façade blanche, appuis nettoyés</figcaption>
-            </figure>
-            <figure class="rv-vue">
-              <img class="rv-vue-droite" src="/img/tailles/galeries/ravalement-16-1200.webp" srcset="/img/tailles/galeries/ravalement-16-800.webp 800w, /img/tailles/galeries/ravalement-16-1200.webp 1200w, /img/galeries/ravalement-16.webp 2048w" sizes="(max-width: 900px) 92vw, 46vw" alt="Le pignon de la maison repeint en blanc, côté jardin" loading="lazy" decoding="async" width="2048" height="1365" />
-              <figcaption><span class="rv-etiquette rv-etiquette-apres">Après</span> Le pignon, côté jardin</figcaption>
-            </figure>
-          </div>
-          <div class="rv-commandes" hidden>
-            <button type="button" class="rv-fleche" data-sens="-1" aria-label="Photo précédente">←</button>
-            <div class="rv-points" role="tablist" aria-label="Choisir une photo"></div>
-            <button type="button" class="rv-fleche" data-sens="1" aria-label="Photo suivante">→</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- ===== Prestations ===== `#prestations` sert de repère à campagne.js
          (data-apres) : ne pas renommer. -->
     <section class="section on-ink rv-prestations" id="prestations">
@@ -493,21 +454,27 @@
         <div class="rv-lavage-texte">
           <div class="kicker">Lavage et nettoyage de façade</div>
           <h2 class="h2">Nettoyage et lavage de façade&nbsp;: tout commence par un support propre</h2>
-          <p class="lead">Avant toute peinture de façade, nous lavons et démoussons le support&nbsp;: c'est la condition d'un ravalement extérieur qui tient dans le temps.</p>
+          <p class="lead">Une façade montre l'état d'un bâtiment avant même que l'on en franchisse le seuil. Sous le climat breton, l'humidité et les mousses l'abîment sans relâche, tout comme la pollution, les variations de température, le rayonnement UV et l'air marin.</p>
+          <!-- 06/11, demande du user : les textes viennent de l'espace ravalement
+               des Peintures de Jules (étapes validées par le user le 30/10), le
+               visuel ne bouge pas. Mêmes cartes à filet bleu, même grille, mêmes
+               photos : seuls les trois points vagues (« Lavage de façade »,
+               « Démoussage », « Un support prêt à peindre ») deviennent les
+               étapes réelles du chantier. -->
           <ul class="rv-lavage-points">
-            <li><b>Lavage de façade</b><p>Salissures, pollution et traces de ruissellement sont éliminées, sur enduit, crépi, pierre, béton ou bardage.</p></li>
-            <li><b>Démoussage et traitement</b><p>Mousses, lichens et algues sont traités, pas seulement effacés.</p></li>
-            <li><b>Un support prêt à peindre</b><p>Les anciennes couches qui n'adhèrent plus sont retirées, un fixateur est appliqué si le support est pulvérulent&nbsp;: la finition s'accroche sur une façade saine.</p></li>
+            <li><b>Le nettoyage de la façade</b><p>Protection des abords, mise en place d'un moyen d'élévation, pulvérisation d'un nettoyant décontaminant, rinçage basse pression.</p></li>
+            <li><b>Le traitement des toitures</b><p>Pulvérisation d'un produit anti-mousse à action progressive et rémanente.</p></li>
+            <li><b>Puis le ravalement, si le support l'exige</b><p>Protection dédiée à la mise en peinture, travaux préparatoires, application d'un fixateur adapté aux supports, puis d'un système deux couches de finitions adapté aux supports.</p></li>
           </ul>
           <p class="rv-lavage-note">Lorsque le diagnostic montre une façade saine mais encrassée, un lavage suivi d'une peinture de façade suffit&nbsp;: nous vous le dirons, et le devis s'en tiendra là.</p>
         </div>
         <div class="rv-lavage-photos">
           <figure>
-            <img src="/img/tailles/galeries/ravalement-31-800.webp" srcset="/img/tailles/galeries/ravalement-31-480.webp 480w, /img/tailles/galeries/ravalement-31-800.webp 800w, /img/tailles/galeries/ravalement-31-1200.webp 1200w" sizes="(max-width: 900px) 46vw, 24vw" alt="Façade de maison encrassée avant lavage et ravalement" loading="lazy" decoding="async" />
+            <img src="/img/tailles/galeries/ravalement-31-800.webp" srcset="/img/tailles/galeries/ravalement-31-480.webp 480w, /img/tailles/galeries/ravalement-31-800.webp 800w, /img/tailles/galeries/ravalement-31-1200.webp 1200w" sizes="(max-width: 560px) 92vw, (max-width: 900px) 45vw, (max-width: 1324px) 40vw, 530px" alt="Façade de maison encrassée avant lavage et ravalement" loading="lazy" decoding="async" />
             <figcaption><span class="rv-etiquette rv-etiquette-avant">Avant</span> Façade encrassée</figcaption>
           </figure>
           <figure>
-            <img src="/img/tailles/galeries/ravalement-16-800.webp" srcset="/img/tailles/galeries/ravalement-16-480.webp 480w, /img/tailles/galeries/ravalement-16-800.webp 800w, /img/tailles/galeries/ravalement-16-1200.webp 1200w" sizes="(max-width: 900px) 46vw, 24vw" alt="La même façade après lavage, traitement et peinture de façade" loading="lazy" decoding="async" />
+            <img src="/img/tailles/galeries/ravalement-16-800.webp" srcset="/img/tailles/galeries/ravalement-16-480.webp 480w, /img/tailles/galeries/ravalement-16-800.webp 800w, /img/tailles/galeries/ravalement-16-1200.webp 1200w" sizes="(max-width: 560px) 92vw, (max-width: 900px) 45vw, (max-width: 1324px) 40vw, 530px" alt="La même façade après lavage, traitement et peinture de façade" loading="lazy" decoding="async" />
             <figcaption><span class="rv-etiquette rv-etiquette-apres">Après</span> Façade lavée, traitée et repeinte</figcaption>
           </figure>
         </div>
@@ -652,12 +619,12 @@
         <li class="meth-step">
           <span class="meth-pic" aria-hidden="true"><svg viewBox="0 0 200 200"><circle cx="66" cy="76" r="17"/><path d="M40 132a26 26 0 0 1 52 0"/><circle cx="134" cy="76" r="17"/><path d="M108 132a26 26 0 0 1 52 0"/><path d="M86 48h28"/></svg></span>
           <span class="meth-num">01</span><h3>Visite</h3><span class="meth-rule"></span>
-          <p>Nous venons voir votre façade, gratuitement, et écoutons vos attentes, vos délais et votre budget.</p>
+          <p>Nous venons à votre rencontre, sur place, pour examiner les possibilités propres à votre façade et vous établir un devis correspondant à vos attentes.</p>
         </li>
         <li class="meth-step">
           <span class="meth-pic" aria-hidden="true"><svg viewBox="0 0 200 200"><path d="M52 34h76l20 20v112H52z"/><path d="M128 34v20h20"/><path d="M70 84h60v46H70z"/><path d="M100 84v46M70 107h60"/></svg></span>
           <span class="meth-num">02</span><h3>Étude technique</h3><span class="meth-rule"></span>
-          <p>Notre bureau d'études diagnostique le support et choisit le système adapté à son état réel.</p>
+          <p>Lors d'un second échange, nous affinons les différentes solutions techniques envisageables, tout en tenant compte de vos attentes esthétiques et de votre budget.</p>
         </li>
         <li class="meth-step">
           <span class="meth-pic" aria-hidden="true"><svg viewBox="0 0 200 200"><rect x="52" y="30" width="96" height="140" rx="11"/><path d="M70 50h60v26H70z"/><path d="M74 100h12M94 100h12M114 100h12M74 124h12M94 124h12M114 124h12M74 148h32M114 148h12"/></svg></span>
@@ -667,12 +634,12 @@
         <li class="meth-step">
           <span class="meth-pic" aria-hidden="true"><svg viewBox="0 0 200 200"><path d="M70 58a30 22 0 0 1 60 0"/><path d="M54 64h92v18H54z"/><path d="M60 82h80v76a10 10 0 0 1-10 10H70a10 10 0 0 1-10-10z"/><path d="M60 122c14 8 28 8 40 0s26-8 40 0"/></svg></span>
           <span class="meth-num">04</span><h3>Chantier</h3><span class="meth-rule"></span>
-          <p>Un conducteur de travaux pilote le chantier et reste votre contact.</p>
+          <p>Nous définissons avec vous la date d'intervention et vous présentons le déroulement des travaux. Un conducteur de travaux pilote ensuite le chantier et reste votre contact.</p>
         </li>
         <li class="meth-step">
           <span class="meth-pic" aria-hidden="true"><svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="64"/><path d="M70 101l20 22 40-46"/></svg></span>
           <span class="meth-num">05</span><h3>Réception</h3><span class="meth-rule"></span>
-          <p>Nous faisons le tour de la façade avec vous et levons les réserves avant de partir.</p>
+          <p>Tout au long des travaux, votre conducteur de travaux reste disponible et répond à vos questions. À la réception, nous faisons le tour de la façade avec vous et levons les réserves avant de partir.</p>
         </li>
       </ol>
       <p class="rv-relance">Première étape&nbsp;: la visite, gratuite et sans engagement. <a href="#contact">Prendre rendez-vous&nbsp;→</a></p>

@@ -2934,47 +2934,11 @@ body.legal-page .nav .nav-declencheur{color:var(--ink)}
   .rv-tel{align-self:center}
   }
 
-/* Maison bretonne avant / après, sous le premier écran. */
-.rv .rv-maison{background:#fff;border-top:1px solid var(--line-ink)}
-.rv-maison-grille{max-width:1180px;margin:0 auto;display:grid;
-  grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(36px,6vw,88px);align-items:center}
-.rv-maison .lead{margin-bottom:30px}
-.rv-maison .rv-vue{max-height:calc(100vh - 160px)}
-.rv-coches{list-style:none;margin:26px 0 30px;padding:0;display:grid;gap:12px}
-.rv-coches li{position:relative;padding-left:34px;line-height:1.55}
-.rv-coches li::before{content:"";position:absolute;left:0;top:.15em;width:20px;height:20px;border-radius:50%;
-  background:var(--bleu) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5.5 10.5l3 3 6-7' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat}
-
-.rv-carrousel{position:relative;min-width:0}
-.rv-piste{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;
-  gap:12px;border-radius:4px;scrollbar-width:none;overscroll-behavior-x:contain}
-.rv-piste::-webkit-scrollbar{display:none}
-.rv-piste:focus-visible{outline:2px solid var(--bleu);outline-offset:4px}
-.rv-vue{flex:0 0 100%;margin:0;position:relative;scroll-snap-align:start;
-  aspect-ratio:4/5;overflow:hidden;border-radius:4px;background:var(--paper-2)}
-.rv-vue img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 60%}
-.rv-vue img.rv-vue-droite{object-position:68% 50%}
-.rv-vue figcaption{position:absolute;left:0;right:0;bottom:0;padding:44px 20px 18px;
-  background:linear-gradient(180deg,rgba(14,17,20,0),rgba(14,17,20,.78));
-  color:var(--paper);font-size:.95rem;line-height:1.4}
+/* Etiquettes Avant / Apres des vignettes (bloc lavage). */
 .rv-etiquette{display:inline-block;margin-right:8px;padding:4px 10px;border-radius:2px;
   background:var(--bordeaux);color:#fff;font-family:var(--font-display);font-weight:600;
   font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;vertical-align:1px}
-.rv-etiquette-pendant{background:var(--taupe);color:var(--ink)}
 .rv-etiquette-apres{background:var(--bleu)}
-.rv-commandes{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:16px}
-.rv-commandes[hidden]{display:none}
-.rv-fleche{width:46px;height:46px;border-radius:50%;border:1px solid var(--line-ink);
-  background:#fff;color:var(--ink);font-size:1.1rem;cursor:pointer;transition:border-color .2s,background .2s}
-.rv-fleche:hover{border-color:var(--bleu);background:rgba(0,77,149,.06)}
-.rv-fleche:disabled{opacity:.35;cursor:default}
-.rv-points{display:flex;gap:8px}
-.rv-points button{width:30px;height:4px;padding:0;border:0;border-radius:2px;
-  background:rgba(14,17,20,.18);cursor:pointer;transition:background .2s,width .2s}
-.rv-points button[aria-selected="true"]{background:var(--bleu);width:46px}
-/* Zone de clic confortable malgré un trait de 4 px. */
-.rv-points button{position:relative}
-.rv-points button::after{content:"";position:absolute;inset:-14px -3px}
 
 /* Prestations : six cartes à pictogramme. */
 .rv-prestations > *{max-width:1180px;margin-left:auto;margin-right:auto}
@@ -3022,8 +2986,6 @@ body.legal-page .nav .nav-declencheur{color:var(--ink)}
 @media(max-width:900px){
   .rv-ouverture-grille,.rv-savoir-grille{grid-template-columns:minmax(0,1fr)}
   .rv-carte-cadre{max-height:none}
-  .rv-maison-grille{grid-template-columns:minmax(0,1fr)}
-  .rv-maison .rv-vue{max-height:none}
   /* Sur téléphone, la maison passe juste sous le titre au lieu d'attendre
      la fin du texte : on « ouvre » le bloc texte pour ordonner ses enfants. */
   .rv-ouverture-grille{gap:0}
@@ -3109,8 +3071,6 @@ body.legal-page .nav .nav-declencheur{color:var(--ink)}
 .rv-avis-inner,.rv-contact .contact-wrap{max-width:1180px;margin:0 auto}
 .rv .rv-contact{border-top:1px solid var(--line)}
 .rv-contact .contact-copy .h2{font-size:clamp(2.2rem,4.4vw,3.6rem)}
-
-@media(prefers-reduced-motion:reduce){.rv-piste{scroll-behavior:auto}}
 
 /* ============ RÉALISATIONS : mosaïque d'ouverture (28/10) ============ */
 .real-titre{max-width:22ch;text-wrap:balance}
@@ -3337,7 +3297,11 @@ body.legal-page .nav .nav-declencheur{color:var(--ink)}
 @media (max-width:1000px){.service-airless.sv .promo-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:560px){.service-airless.sv .promo-list{grid-template-columns:1fr}}
 
-/* Lavage et nettoyage de façade (28/10) : texte à gauche, avant / après à droite. */
+/* Lavage et nettoyage de façade (28/10) : texte à gauche, avant / après à droite.
+   06/11 : les deux photos étaient côte à côte, petites, centrées dans leur
+   colonne, qui laissait un grand vide blanc au-dessus et au-dessous d'elles.
+   Elles passent l'une sous l'autre et remplissent toute la hauteur du texte,
+   légende posée dessus comme sur les cartes de références (.ref-avant-apres). */
 .rv-lavage > .rv-lavage-grille{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(32px,5vw,72px);align-items:center}
 .rv-lavage .rv-lavage-texte .h2{margin-bottom:14px}
 .rv-lavage-points{list-style:none;margin:30px 0 0;padding:0;display:grid;gap:14px}
@@ -3345,10 +3309,21 @@ body.legal-page .nav .nav-declencheur{color:var(--ink)}
 .rv-lavage-points b{display:block;font-family:var(--font-display);font-weight:600;font-size:1.05rem;margin-bottom:4px}
 .rv-lavage-points p{margin:0;font-size:.97rem;line-height:1.6;color:var(--ink-muted)}
 .rv-lavage-note{margin-top:26px;font-size:1.02rem;line-height:1.7;max-width:56ch}
-.rv-lavage-photos{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.rv-lavage-photos figure{margin:0}
-.rv-lavage-photos img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:8px;box-shadow:0 30px 60px -40px rgba(14,17,20,.45)}
-.rv-lavage-photos figcaption{margin-top:12px;font-size:.9rem;color:var(--ink-muted)}
+/* Format impose plutot qu etirement : l image a une hauteur naturelle, et
+   height:100% dans une case sans hauteur definie la laissait la dicter. */
+.rv-lavage-photos{display:grid;gap:14px}
+.rv-lavage-photos figure{margin:0;position:relative;aspect-ratio:4/3;overflow:hidden;border-radius:8px;
+  background:var(--paper-2);box-shadow:0 30px 60px -40px rgba(14,17,20,.45)}
+/* Photos de chantier : la façade occupe le bas du cadre, le ciel le haut. */
+.rv-lavage-photos img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 62%}
+/* Le degrade descend plus bas et finit plus sombre : sur telephone la legende
+   passe sur deux lignes, et la seconde tombait sur la photo nue. */
+.rv-lavage-photos figcaption{position:absolute;left:0;right:0;bottom:0;padding:56px 18px 16px;
+  background:linear-gradient(180deg,rgba(14,17,20,0) 0%,rgba(14,17,20,.58) 45%,rgba(14,17,20,.9) 100%);
+  color:var(--paper);font-size:.95rem;line-height:1.4}
 .rv-etiquette-avant{background:var(--ink);color:var(--paper)}
-@media (max-width:900px){.rv-lavage > .rv-lavage-grille{grid-template-columns:1fr}}
-@media (max-width:480px){.rv-lavage-photos{grid-template-columns:1fr}.rv-lavage-photos img{aspect-ratio:4/3}}
+@media (max-width:900px){
+  .rv-lavage > .rv-lavage-grille{grid-template-columns:1fr}
+  .rv-lavage-photos{grid-template-columns:1fr 1fr}
+}
+@media (max-width:560px){.rv-lavage-photos{grid-template-columns:1fr}}

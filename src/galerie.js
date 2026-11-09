@@ -43,9 +43,9 @@ vue.innerHTML = `
       </div>
       <button type="button" class="gal-fermer" data-fermer aria-label="Fermer la galerie">✕</button>
     </header>
-    <div class="gal-scene">
+    <div class="gal-scene" data-fermer>
       <button type="button" class="gal-nav gal-prec" aria-label="Photo précédente">‹</button>
-      <figure class="gal-figure"><img alt="" /></figure>
+      <figure class="gal-figure" data-fermer><img alt="" /></figure>
       <button type="button" class="gal-nav gal-suiv" aria-label="Photo suivante">›</button>
     </div>
     <footer class="gal-pied">

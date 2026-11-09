@@ -3082,7 +3082,6 @@ body.legal-page .nav .nav-declencheur{color:var(--ink)}
 .rv-produit-lien{margin:auto 18px 0;padding-top:12px;font-family:var(--font-display);font-weight:600;font-size:.9rem;color:var(--bleu)}
 .rv-produit-lien span{display:inline-block;transition:transform .25s}
 .rv-produits-cartes a:hover .rv-produit-lien span{transform:translateX(4px)}
-.rv-produits-note{margin-top:18px;font-size:.8rem;color:var(--ink-muted)}
 @media(max-width:900px){
   .rv-atouts-produit{grid-template-columns:minmax(0,1fr)}
   .rv-produits-cartes{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}

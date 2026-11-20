@@ -1450,6 +1450,13 @@ a.promo-titre-accent:focus-visible{border-bottom-color:currentColor}
 .meth-steps::before{content:"";position:absolute;left:10%;right:10%;top:44px;
   height:1px;background:var(--line)}
 .meth-step{position:relative;padding:0 26px;text-align:center}
+/* Variante à six étapes (page ravalement, 20/11) : seulement au-dessus de 1180 px,
+   en dessous la règle d'empilement s'applique comme pour cinq. */
+@media(min-width:1181px){
+  .meth-steps.six{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .meth-steps.six .meth-step{padding:0 16px}
+  .meth-steps.six::before{left:8%;right:8%}
+}
 
 .meth-pic{position:relative;display:grid;place-items:center;
   width:88px;height:88px;margin:0 auto 26px;
